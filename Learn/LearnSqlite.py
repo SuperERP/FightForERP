@@ -1,10 +1,14 @@
-import sqlite3
-conn = sqlite3.connect('mrsoft.db')
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/create')
+def hello_world():
+
+   return 'Hello World'
 
 
 
-cursor = conn.cursor()
-cursor.close()
 
 
-conn.close()
+if __name__ == '__main__':
+   app.run()
