@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
 #flask的路由是基于装饰器的
-@app.route('/login',methods=['post'])
+@app.route('/fuck',methods=['post'])
 def hello_world():
     print('dfasd')
     data = request.get_json(silent=True)

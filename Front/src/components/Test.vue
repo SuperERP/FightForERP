@@ -18,7 +18,7 @@ export default {
     postLoginInfor () {
       this.axios({
         method: 'post',
-        url: 'http://127.0.0.1:5000/login',
+        url: 'http://127.0.0.1:5000/fuck',
         data: {
           name: '张辉',
           sex: '男'
