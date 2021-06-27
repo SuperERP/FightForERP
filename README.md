@@ -71,7 +71,7 @@ a[File]--->b[clone Repo]
 
 然后会显示出以下页面
 
-![](/home/supercb/PycharmProjects/myERP/source/gitk2.png)
+![](./source/gitk2.png)
 
 请将 **https://github.com/SuperERP/FightForERP.git** 填入到URL中，即可完成工作。
 
@@ -94,13 +94,17 @@ d[commit操作]--->e[pull操作]
 e[pull操作]--->f[push操作]
 ```
 
-+ <img src="/home/supercb/PycharmProjects/myERP/source/gitk4.png" style="zoom:67%;" />pull操作。代表将远程库的代码与本地更新。**我们可以很容易的在Gitkraken的操作面板上找到pull按钮。**
++ 首先要完成pull操作。pull代表将远程库的代码与本地库的代码同步。**我们可以很容易的在Gitkraken的操作面板上找到pull按钮。**
 
-+ 当你成功完成pull操作的时候
++ 当你成功完成pull操作的时候，会看到以下结果
+
+  <img src="./source/git5.png" style="zoom:67%;" />
+
+  
 
 + 当你完成代码的编写工作之后，你的**Gitkraken界面**应该是这样的。请特别注意**file changes**这一行，如果没有显示这一行的话，这说明你并没有在项目中编写代码。
 
-  ![](/home/supercb/PycharmProjects/myERP/source/gitk3.png)
+  ![](./source/gitk3.png)
 
   
 
@@ -108,7 +112,7 @@ e[pull操作]--->f[push操作]
 
   你会看到以下界面，
 
-  <img src="/home/supercb/PycharmProjects/myERP/source/gitk4.png" style="zoom:67%;" />
+  <img src="./source/gitk4.png" style="zoom:67%;" />
 
   **下一步，你必须在Commit Message中加入对你这次编程工作的总结。这一步骤是必须的，请在这个步骤中写入对你编程工作的准确概括。**
 
@@ -117,9 +121,7 @@ e[pull操作]--->f[push操作]
 + 然后再次点击**pull按钮**
 + 最后点击**push按钮**
 
-  
 
-  
 
 ### 如何完成前端开发？
 
