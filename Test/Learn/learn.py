@@ -1,6 +1,6 @@
 from sqlalchemy import *
-
-engine = create_engine('sqlite:///tutorial.db')
+engine = create_engine("sqlite+pysqlite:///:memory:", echo=True, future=True)
+# engine = create_engine('sqlite:///tutorial.db',echo=True)
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, Column, Integer, String
