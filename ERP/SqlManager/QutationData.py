@@ -10,11 +10,12 @@ class Discount(Base):
     name = Column(Text())
     DiscountCalcu = Column(Text())
 
+
 class Quotation(Base):
     __tablename__ = 'Quotation'
     id = Column(String(10), primary_key=True)
     # 客户编号
-    CustomerId = Column(String(10), ForeignKey('CustomerInformation.id'))
+    CustomerId = Column(String(10), ForeignKey('Customer.id'))
     warehouseId = Column(String(), ForeignKey('Warehouse.id'))
     POcode = Column(String(10))
     PODate = Column(Date())
@@ -48,10 +49,10 @@ class SalesOrder(Base):
     '''
     销售订单
     '''
-    __tablename__ = 'Salesorder'
+    __tablename__ = 'SalesOrder'
     id = Column(String(10), primary_key=True)
 
-    customerId = Column(String(10), ForeignKey('CustomerInformation.id'))
+    customerId = Column(String(10), ForeignKey('Customer.id'))
     warehouse = Column(String(10), ForeignKey('Warehouse.id'))
     POcode = Column(String(10))
     PODate = Column(Date())
@@ -65,3 +66,28 @@ class SalesOrder(Base):
     discountId = Column(String(10), ForeignKey('Discount.id'))
     ## 总体折扣数量
     totalDiscountNum = Column(Integer())
+
+
+class QutationDataManager:
+    def __init__(self, session, idrecord, logging):
+        '''
+        :param session:
+        :param idrecord:
+        :param logging:
+        '''
+        self.session = session
+        self.logging = logging
+
+    def createSalesOrder(self, data):
+        newSalesOrder = SalesOrder(
+            customerId=data['customerId'],
+            warehouseId=data['warehouseId'],
+            POcode=data['POcode'],
+            PODate=data['PODate'],
+            effectiveDate=data['effectiveDate'],
+            expirationDate=data['expirationDate'],
+            requestedDeliveryDate=data['requestedDeliveryDate'],
+            discountId=data['discountId'],
+            totalDiscountNum=data['totalDiscountNum']
+        )
+        return newSalesOrder
