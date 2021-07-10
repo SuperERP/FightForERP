@@ -308,5 +308,238 @@ B3[发货管理]--->E4[发货过账]
 
 
 
+###  数据库设计与实现
+
+#### 数据库建表语句
+
+```sql
+CREATE TABLE "MaterialDic" (
+	id VARCHAR(10) NOT NULL, 
+	name TEXT, 
+	price FLOAT, 
+	PRIMARY KEY (id)
+)
+
+
+2021-07-10 14:36:44,387 INFO sqlalchemy.engine.Engine [no key 0.00006s] ()
+2021-07-10 14:36:44,390 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "Warehouse" (
+	id VARCHAR(10) NOT NULL, 
+	name VARCHAR(50), 
+	PRIMARY KEY (id)
+)
+
+
+2021-07-10 14:36:44,390 INFO sqlalchemy.engine.Engine [no key 0.00007s] ()
+2021-07-10 14:36:44,392 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "RelationshipDic" (
+	"relationType" VARCHAR(10) NOT NULL, 
+	definition TEXT, 
+	PRIMARY KEY ("relationType")
+)
+
+
+2021-07-10 14:36:44,392 INFO sqlalchemy.engine.Engine [no key 0.00005s] ()
+2021-07-10 14:36:44,394 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "CustomerInformation" (
+	id VARCHAR(10) NOT NULL, 
+	name VARCHAR(50), 
+	street VARCHAR(50), 
+	postcode VARCHAR(10), 
+	"Country" VARCHAR(10), 
+	language VARCHAR(10), 
+	"accountantId" VARCHAR(10), 
+	paycode VARCHAR(10), 
+	distribution_channel VARCHAR(100), 
+	distribution_area VARCHAR(50), 
+	"Tcl" VARCHAR(10), 
+	"POcode" VARCHAR(10), 
+	PRIMARY KEY (id)
+)
+
+
+2021-07-10 14:36:44,394 INFO sqlalchemy.engine.Engine [no key 0.00005s] ()
+2021-07-10 14:36:44,396 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "ContactPersonInformation" (
+	id VARCHAR(10), 
+	"PrefixName" VARCHAR(10), 
+	first_name VARCHAR(10), 
+	last_name VARCHAR(10), 
+	language VARCHAR(10), 
+	country VARCHAR(10), 
+	area VARCHAR(10), 
+	"POcode" VARCHAR(10), 
+	PRIMARY KEY (id)
+)
+
+
+2021-07-10 14:36:44,396 INFO sqlalchemy.engine.Engine [no key 0.00007s] ()
+2021-07-10 14:36:44,398 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "Inquiry" (
+	id VARCHAR(10) NOT NULL, 
+	"POcode" VARCHAR(10), 
+	"PODate" DATE, 
+	"effectiveDate" DATE, 
+	"invalidDate" DATE, 
+	PRIMARY KEY (id)
+)
+
+
+2021-07-10 14:36:44,398 INFO sqlalchemy.engine.Engine [no key 0.00005s] ()
+2021-07-10 14:36:44,400 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "Discount" (
+	id VARCHAR(10) NOT NULL, 
+	name TEXT, 
+	"DisCalcu" TEXT, 
+	PRIMARY KEY (id)
+)
+
+
+2021-07-10 14:36:44,400 INFO sqlalchemy.engine.Engine [no key 0.00005s] ()
+2021-07-10 14:36:44,402 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "Inventory" (
+	"warehouseId" VARCHAR(10) NOT NULL, 
+	"materialDicId" VARCHAR(10) NOT NULL, 
+	volume FLOAT, 
+	"requestVolume" FLOAT, 
+	"onOrderStock" FLOAT, 
+	PRIMARY KEY ("warehouseId", "materialDicId"), 
+	FOREIGN KEY("warehouseId") REFERENCES "Warehouse" (id), 
+	FOREIGN KEY("materialDicId") REFERENCES "MaterialDic" (id)
+)
+
+
+2021-07-10 14:36:44,402 INFO sqlalchemy.engine.Engine [no key 0.00005s] ()
+2021-07-10 14:36:44,404 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "CustomerAndContactPerson" (
+	"customerId" VARCHAR(10) NOT NULL, 
+	"contactId" VARCHAR(10) NOT NULL, 
+	"relationType" VARCHAR(10) NOT NULL, 
+	"POcode" VARCHAR(10), 
+	PRIMARY KEY ("customerId", "contactId", "relationType"), 
+	FOREIGN KEY("customerId") REFERENCES "CustomerInformation" (id), 
+	FOREIGN KEY("contactId") REFERENCES "ContactPersonInformation" (id), 
+	FOREIGN KEY("relationType") REFERENCES "RelationshipDic" ("relationType")
+)
+
+
+2021-07-10 14:36:44,404 INFO sqlalchemy.engine.Engine [no key 0.00005s] ()
+2021-07-10 14:36:44,407 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "InquiryItem" (
+	"inquiryId" VARCHAR(10) NOT NULL, 
+	"materialId" VARCHAR(10) NOT NULL, 
+	descpription TEXT, 
+	count INTEGER, 
+	unit VARCHAR(10), 
+	probability FLOAT, 
+	PRIMARY KEY ("inquiryId", "materialId"), 
+	FOREIGN KEY("inquiryId") REFERENCES "Inquiry" (id), 
+	FOREIGN KEY("materialId") REFERENCES "MaterialDic" (id)
+)
+
+
+2021-07-10 14:36:44,407 INFO sqlalchemy.engine.Engine [no key 0.00005s] ()
+2021-07-10 14:36:44,409 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "Quotation" (
+	id VARCHAR(10) NOT NULL, 
+	"CustomerId" VARCHAR(10), 
+	"warehouseId" VARCHAR, 
+	"POcode" VARCHAR(10), 
+	"PODate" DATE, 
+	"effectiveDate" DATE, 
+	"expirationDate" DATE, 
+	"requestedDeliveryDate" DATE, 
+	"discountId" VARCHAR(10), 
+	"totalDiscountNum" INTEGER, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY("CustomerId") REFERENCES "CustomerInformation" (id), 
+	FOREIGN KEY("warehouseId") REFERENCES "Warehouse" (id), 
+	FOREIGN KEY("discountId") REFERENCES "Discount" (id)
+)
+
+
+2021-07-10 14:36:44,409 INFO sqlalchemy.engine.Engine [no key 0.00005s] ()
+2021-07-10 14:36:44,411 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "Salesorder" (
+	id VARCHAR(10) NOT NULL, 
+	"customerId" VARCHAR(10), 
+	warehouse VARCHAR(10), 
+	"POcode" VARCHAR(10), 
+	"PODate" DATE, 
+	"effectiveDate" DATE, 
+	"expirationDate" DATE, 
+	"requestedDeliveryDate" DATE, 
+	"discountId" VARCHAR(10), 
+	"totalDiscountNum" INTEGER, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY("customerId") REFERENCES "CustomerInformation" (id), 
+	FOREIGN KEY(warehouse) REFERENCES "Warehouse" (id), 
+	FOREIGN KEY("discountId") REFERENCES "Discount" (id)
+)
+
+
+2021-07-10 14:36:44,411 INFO sqlalchemy.engine.Engine [no key 0.00005s] ()
+2021-07-10 14:36:44,413 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "Quotationitem" (
+	"quotationId" VARCHAR(10) NOT NULL, 
+	"materialId" VARCHAR(10) NOT NULL, 
+	description TEXT, 
+	amount INTEGER, 
+	unit VARCHAR(10), 
+	"disId" VARCHAR(10), 
+	"disAmount" VARCHAR, 
+	PRIMARY KEY ("quotationId", "materialId"), 
+	FOREIGN KEY("quotationId") REFERENCES "Quotation" (id), 
+	FOREIGN KEY("materialId") REFERENCES "MaterialDic" (id), 
+	FOREIGN KEY("disId") REFERENCES "Discount" (id)
+)
+
+
+2021-07-10 14:36:44,413 INFO sqlalchemy.engine.Engine [no key 0.00005s] ()
+2021-07-10 14:36:44,415 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "Invoice" (
+	id VARCHAR(10) NOT NULL, 
+	"plannedDeliveryTime" DATE, 
+	"actualDeliveryTime" DATE, 
+	"salesOrderId" VARCHAR(10), 
+	warehouse VARCHAR(10), 
+	"deliveryPhase" VARCHAR(1), 
+	PRIMARY KEY (id), 
+	FOREIGN KEY("salesOrderId") REFERENCES "Salesorder" (id), 
+	FOREIGN KEY(warehouse) REFERENCES "Warehouse" (id)
+)
+
+
+2021-07-10 14:36:44,415 INFO sqlalchemy.engine.Engine [no key 0.00006s] ()
+2021-07-10 14:36:44,417 INFO sqlalchemy.engine.Engine 
+CREATE TABLE "InvoiceItem" (
+	"invoiceId" VARCHAR(10) NOT NULL, 
+	"materialId" VARCHAR(10) NOT NULL, 
+	description TEXT, 
+	amount INTEGER, 
+	unit VARCHAR(10), 
+	pickingstatus VARCHAR, 
+	"pickingAmount" INTEGER, 
+	"materialState" VARCHAR, 
+	PRIMARY KEY ("invoiceId", "materialId"), 
+	FOREIGN KEY("invoiceId") REFERENCES "Invoice" (id), 
+	FOREIGN KEY("materialId") REFERENCES "MaterialDic" (id)
+)
+```
+
+
+
+#### 数据表
+
+#####  客户信息表
+
+Cu
+
+
+
+|      | 表   |
+| ---- | ---- |
+|      |      |
+
 
 
