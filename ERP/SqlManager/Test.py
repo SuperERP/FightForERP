@@ -1,17 +1,13 @@
 from WareHouse import *
-
-Base.metadata.create_all()  # 将模型映射到数据库中
+import socket
+# Base.metadata.create_all()  # 将模型映射到数据库中
 # def
 # 法1
 # 法2
 
 # session.add(
-#     Inquiry(**data),
+#     MaterialDic(id='fuck', name='das', price=19.0),
 # )
-
-session.add(
-    MaterialDic(id='fuck', name='das', price=19.0),
-)
 
 # try:
 #     session.add(

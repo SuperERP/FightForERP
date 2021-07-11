@@ -1,8 +1,12 @@
 import logging
 from logging.handlers import RotatingFileHandler
-
+import socket
 from colorlog import ColoredFormatter
 
+hostname = socket.gethostname()
+# session.add(
+#     Inquiry(**data),
+# )
 ErpLogger = logging.getLogger('autotest')
 ErpLogger.setLevel(logging.DEBUG)
 
