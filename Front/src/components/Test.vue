@@ -2,7 +2,6 @@
   <div>
 
     <el-button type="primary" plain @click="postLoginInfor"  >主要按钮</el-button>
-
   </div>
 </template>
 
