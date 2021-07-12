@@ -11,7 +11,8 @@ CORS(app, supports_credentials=True)
 def hello_world():
     print('dfasd')
     data = request.get_json(silent=True)
-    print(data)
+    print(type(data))
+    # 这个东西是一个字典
 
     return 'Hello World!'
 
