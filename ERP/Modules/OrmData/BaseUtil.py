@@ -1,7 +1,7 @@
 from sqlalchemy import *
 # import DataClass
-# engine = create_engine("sqlite+pysqlite:///:memory:",echo=True, future=True)
-engine = create_engine('sqlite:///tutorial.db', echo=True)
+engine = create_engine("sqlite+pysqlite:///:memory:",echo=True, future=True)
+# engine = create_engine('sqlite:///tutorial.db', echo=True)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
