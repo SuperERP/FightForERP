@@ -1,7 +1,7 @@
 from sqlalchemy import *
 # import DataClass
-engine = create_engine("sqlite+pysqlite:///:memory:",echo=True, future=True)
-# engine = create_engine('sqlite:///tutorial.db', echo=True)
+# engine = create_engine("sqlite+pysqlite:///:memory:",echo=True, future=True)
+engine = create_engine('sqlite:///tutorial.db', echo=True)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -32,7 +32,7 @@ log_colors = {
 }
 formatter = ColoredFormatter(fmt=fmt, log_colors=log_colors, reset=True, secondary_log_colors={},
                              style='%')
-log_path = '/home/supercb/PycharmProjects/myERP/erp'
+log_path = '/Users/zhaohantong/FightForERP/erp'
 log_name = log_path + '.log'
 logfile = log_name
 fh = logging.FileHandler(logfile, mode='w')
