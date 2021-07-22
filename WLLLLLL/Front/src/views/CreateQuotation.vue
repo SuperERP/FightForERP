@@ -155,10 +155,38 @@
             <el-input style="width:60px;" placeholder="USD" size='mini' v-model="form.netValue2" :disabled="true"></el-input>
           </el-form-item>
         </el-col></el-row>
+      <!--      plant搜索框-->
       <el-form-item label="Plant:" prop="plant">
         <el-input style="width:110px;" v-model.number="form.plant">
+          <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantVisible = true"></el-button>
         </el-input>
+        <el-dialog
+            width="55%"
+            title="Choose plant"
+            :visible.sync="plantVisible"
+            append-to-body>
+          <el-table
+              ref="plantList"
+              height="250"
+              :data="plantList"
+              highlight-current-row
+              @current-change="handleCurrentChange"
+              @row-click="plantTextClick"
+              style="width: 100%">
+            <el-table-column
+                property="plantNum"
+                label="Plant Number"
+                width="120">
+            </el-table-column>
+            <el-table-column
+                property="plantName"
+                label="Plant Name"
+                width="120">
+            </el-table-column>
+          </el-table>
+        </el-dialog>
       </el-form-item>
+
       <el-row :gutter="50" >
         <el-col :span="8">
           <el-form-item label="Cust. Reference:" prop="custReference">
@@ -184,8 +212,8 @@
             <el-input style="width:60px;" placeholder="USD" size='mini' :disabled="true"></el-input>
           </el-form-item></el-col></el-row>
 <!--总体折扣-->
-          <el-row :gutter="10">
-        <el-col  :span="7">
+          <el-row :gutter="50">
+        <el-col  :span="8">
           <el-form-item label="Total Cnty:" prop="totalCnty">
             <el-input style="width:110px;" size='mini' v-model="form.totalCnty">
             <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible8 = true"></el-button></el-input>
@@ -196,7 +224,7 @@
                 :visible.sync="Visible8"
                 append-to-body>
               <el-table
-                  ref="cntyListe"
+                  ref="cntyList"
                   height="250"
                   :data="cntyList"
                   highlight-current-row
@@ -221,13 +249,11 @@
               </el-table>
             </el-dialog>
           </el-form-item></el-col>
-        <el-col  :span="6">
+        <el-col  :span="8">
           <el-form-item label="Total Cnty Percent(%):" prop="totalCntyPercent">
-            <el-input style="width:110px;" size='mini' v-model.number="form.totalCntyPercent"></el-input>
+            <el-input style="width:110px;" size='mini' v-model="form.totalCntyPercent" @change="cntyActivate"></el-input>
           </el-form-item></el-col>
-          <el-col :span="6">
-            <el-button type="primary" size="mini" icon="el-icon-search" plain @click="cntyActivate">Activate</el-button>
-          </el-col></el-row>
+       </el-row>
       <h4 style="margin-left: 30px;margin-bottom:7px">All Items<el-button size="mini" style="margin-left:30px" type="primary" @click="totalAdd">Add Material</el-button></h4>
       <!--    添加material对话框-->
       <el-dialog title="Add Material" :visible.sync="Visible3" @close="dialogClosed2">
@@ -435,6 +461,8 @@ export default {
       Visible7: false, // inquiry第二层表格
       Visible8: false, // cnty列表
       Visible9: false, // 单项cnty查询列表（其实与总体相同）
+      plantVisible: false, // plant列表选择
+
       // 数据填充
       form: {
         soldToParty: '',
@@ -498,6 +526,10 @@ export default {
         amount: 30
       }
       ],
+      plantList: [{
+        plantNum: 'MI00',
+        plantName: 'Miami Plant'
+      }],
       // 规则
       rules: {
         soldToParty: [
@@ -695,8 +727,11 @@ export default {
       this.Visible9 = false
       this.editMaterialForm.cnty = row.name
     },
+    plantTextClick (row) {
+      this.plantVisible = false
+      this.form.plant = row.plantNum
+    },
     submitForm (formName) {
-      console.log(this.materialList)
       if (this.materialList.length === 0) {
         this.$message.error('At least one material is required!')
       } else {
@@ -814,16 +849,20 @@ export default {
     },
     // 激活整体折扣
     cntyActivate () {
-      if (this.form.totalCnty === '' | this.form.totalCntyPercent === '') { this.$message.error('Please Enter Total Cnty and Total Cnty Percent!') } else {
-        ExpectOrdVal = 0
-        var temp = 0
-        var price = 20
-        this.materialList.forEach((row) => {
-          // 后端调取数据库，查出该物料对应的price
-          temp += row.orderQuantity * price - row.amount
-        })
-        ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
-        this.form.expectOrdVal = ExpectOrdVal
+      if (this.materialList.length === 0) {
+        this.$message.error('At least one material is required!')
+      } else {
+        if (this.form.totalCnty === '' | this.form.totalCntyPercent === '') { this.$message.error('Please Enter Total Cnty and Total Cnty Percent!') } else {
+          ExpectOrdVal = 0
+          var temp = 0
+          var price = 20
+          this.materialList.forEach((row) => {
+            // 后端调取数据库，查出该物料对应的price
+            temp += row.orderQuantity * price - row.amount
+          })
+          ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
+          this.form.expectOrdVal = ExpectOrdVal
+        }
       }
     },
     // 将询价单信息复制到报价单

@@ -83,10 +83,38 @@
             <el-input style="width:60px;" placeholder="USD" size='mini' v-model="form.netValue2" :disabled="true"></el-input>
           </el-form-item>
         </el-col></el-row>
+<!--      plant搜索框-->
       <el-form-item label="Plant:" prop="plant">
         <el-input style="width:110px;" v-model.number="form.plant">
+          <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantVisible = true"></el-button>
         </el-input>
+        <el-dialog
+            width="55%"
+            title="Choose plant"
+            :visible.sync="plantVisible"
+            append-to-body>
+          <el-table
+              ref="plantList"
+              height="250"
+              :data="plantList"
+              highlight-current-row
+              @current-change="handleCurrentChange"
+              @row-click="plantTextClick"
+              style="width: 100%">
+            <el-table-column
+                property="plantNum"
+                label="Plant Number"
+                width="120">
+            </el-table-column>
+            <el-table-column
+                property="plantName"
+                label="Plant Name"
+                width="120">
+            </el-table-column>
+          </el-table>
+        </el-dialog>
       </el-form-item>
+
       <el-row :gutter="50" >
         <el-col :span="8">
           <el-form-item label="Cust. Reference:" prop="custReference">
@@ -240,6 +268,7 @@ export default {
       Visible2: false, // 第二层表格
       Visible3: false, // 添加Material表单
       Visible4: false, // 修改Material表单
+      plantVisible: false, // plant列表选择
       form: {
         soldToParty: '',
         custReference: '',
@@ -288,6 +317,10 @@ export default {
         orderProbability: 20
       }
       ],
+      plantList: [{
+        plantNum: 'MI00',
+        plantName: 'Miami Plant'
+      }],
       // 规则
       rules: {
         soldToParty: [
@@ -429,6 +462,10 @@ export default {
       this.Visible1 = false
       this.Visible2 = false
       this.form.soldToParty = parseInt(row.Customer)
+    },
+    plantTextClick (row) {
+      this.plantVisible = false
+      this.form.plant = row.plantNum
     },
     submitForm (formName) {
       console.log(this.materialList)

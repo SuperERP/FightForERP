@@ -4,7 +4,8 @@
       <el-header>Display Standard Order: Overview
       </el-header>
     <el-form ref="form" :inline="true" :model="form"  label-width="200px" size="mini" >
-      <el-button type="text" style="margin-left:20px">Change</el-button>
+<!--点击change按钮，跳转到changeSalesOrder界面-->
+      <router-link to="/ChangeSalesOrder"><el-button type="text" style="margin-left:20px">Change</el-button></router-link>
       <el-row :gutter="50" style="margin-top:10px">
         <el-col :span="8">
           <el-form-item label="Standard Order:" prop="standardOrder" >
