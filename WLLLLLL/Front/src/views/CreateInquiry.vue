@@ -145,7 +145,51 @@
       <!--      添加material表单-->
       <el-form :model="addMaterialForm" :rules="addMaterialFormRules" ref="addMaterialFormRef">
         <el-form-item label="Material" prop="material" :label-width="formLabelWidth1">
-          <el-input v-model="addMaterialForm.material" size="mini" autocomplete="off" ref="addTest"></el-input>
+          <el-input v-model.number="addMaterialForm.material" size="mini" autocomplete="off">
+            <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialVisible = true"></el-button></el-input>
+          <el-dialog
+              width="55%"
+              title="Choose material"
+              :visible.sync="materialVisible"
+              append-to-body>
+            <el-table
+                ref="searchMaterialList"
+                height="250"
+                :data="searchMaterialList.filter(data => !search || data.material.toLowerCase().includes(search.toLowerCase()))"
+                highlight-current-row
+                @current-change="handleCurrentChange"
+                @row-click="materialTextClick"
+                style="width: 100%">
+              <el-table-column
+                  property="material"
+                  label="Material"
+                  width="120">
+              </el-table-column>
+              <el-table-column
+                  property="itemDescription"
+                  label="Item Description"
+                  width="200">
+              </el-table-column>
+              <el-table-column
+                  property="price"
+                  label="Price(USD)"
+                  width="120">
+              </el-table-column>
+              <el-table-column
+                  property="salesUnit"
+                  label="Sales Unit"
+                  width="120">
+              </el-table-column>
+              <el-table-column
+                  align="right">
+                <template slot="header" slot-scope="{}">
+                  <el-input
+                      v-model="search"
+                      size="mini"
+                      placeholder="Search Material"/>
+                </template></el-table-column>
+            </el-table>
+          </el-dialog>
         </el-form-item>
         <el-form-item label="Order Quantity" prop="orderQuantity" :label-width="formLabelWidth1">
           <el-input v-model.number="addMaterialForm.orderQuantity" size="mini" autocomplete="off"></el-input>
@@ -172,7 +216,51 @@
       <!--      修改material表单-->
       <el-form :model="editMaterialForm" :rules="editMaterialFormRules" ref="editMaterialFormRef">
         <el-form-item label="Material" prop="material" :label-width="formLabelWidth1">
-          <el-input v-model="editMaterialForm.material" size="mini" autocomplete="off"></el-input>
+          <el-input v-model.number="editMaterialForm.material" size="mini" autocomplete="off">
+            <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialVisible = true"></el-button></el-input>
+          <el-dialog
+              width="55%"
+              title="Choose material"
+              :visible.sync="materialVisible"
+              append-to-body>
+            <el-table
+                ref="searchMaterialList"
+                height="250"
+                :data="searchMaterialList.filter(data => !search || data.material.toLowerCase().includes(search.toLowerCase()))"
+                highlight-current-row
+                @current-change="handleCurrentChange"
+                @row-click="materialTextClick1"
+                style="width: 100%">
+              <el-table-column
+                  property="material"
+                  label="Material"
+                  width="120">
+              </el-table-column>
+              <el-table-column
+                  property="itemDescription"
+                  label="Item Description"
+                  width="200">
+              </el-table-column>
+              <el-table-column
+                  property="price"
+                  label="Price(USD)"
+                  width="120">
+              </el-table-column>
+              <el-table-column
+                  property="salesUnit"
+                  label="Sales Unit"
+                  width="120">
+              </el-table-column>
+              <el-table-column
+                  align="right">
+                <template slot="header" slot-scope="{}">
+                  <el-input
+                      v-model="search"
+                      size="mini"
+                      placeholder="Search Material"/>
+                </template></el-table-column>
+            </el-table>
+          </el-dialog>
         </el-form-item>
         <el-form-item label="Order Quantity" prop="orderQuantity" :label-width="formLabelWidth1">
           <el-input v-model.number="editMaterialForm.orderQuantity" size="mini" autocomplete="off"></el-input>
@@ -269,6 +357,8 @@ export default {
       Visible3: false, // 添加Material表单
       Visible4: false, // 修改Material表单
       plantVisible: false, // plant列表选择
+      materialVisible: false, // material列表选择
+      search: '',
       form: {
         soldToParty: '',
         custReference: '',
@@ -320,6 +410,19 @@ export default {
       plantList: [{
         plantNum: 'MI00',
         plantName: 'Miami Plant'
+      }],
+      // 查询material对话框出现的表格
+      searchMaterialList: [{
+        material: 'DXTR',
+        itemDescription: 'Deluxe Touring Bike(black)',
+        salesUnit: 'EA',
+        price: '20'
+      },
+      {
+        material: 'PXTR',
+        itemDescription: 'Professional Touring Bike(black)',
+        salesUnit: 'EA',
+        price: '20'
       }],
       // 规则
       rules: {
@@ -466,6 +569,18 @@ export default {
     plantTextClick (row) {
       this.plantVisible = false
       this.form.plant = row.plantNum
+    },
+    materialTextClick (row) {
+      this.materialVisible = false
+      this.addMaterialForm.material = row.material
+      this.addMaterialForm.itemDescription = row.itemDescription
+      this.addMaterialForm.salesUnit = row.salesUnit
+    },
+    materialTextClick1 (row) {
+      this.materialVisible = false
+      this.editMaterialForm.material = row.material
+      this.editMaterialForm.itemDescription = row.itemDescription
+      this.editMaterialForm.salesUnit = row.salesUnit
     },
     submitForm (formName) {
       console.log(this.materialList)
