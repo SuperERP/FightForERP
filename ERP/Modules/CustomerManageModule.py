@@ -52,4 +52,3 @@ class CustomerManagerModule(AbstractModule):
         new_data = Customer(**data)
         if self.insertData(new_data):
             self.customerRecord += 1
-        session.commit()

@@ -26,6 +26,7 @@ class AbstractModule:
         ans = True
         try:
             self.session.add(ormData)
+            self.session.commit()
             self.logging.info('success insert data %s' % (str(ormData)))
         except Exception as e:
             ans = False
