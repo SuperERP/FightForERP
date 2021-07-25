@@ -58,7 +58,12 @@
   </div>
 </template>
 
-<style>
+<style scoped="scoped">
+.el-divider__text{
+  background-color: #eff4f9;
+  color: #606266;
+  font-weight: bold;
+}
 .el-header {
   text-align: center;
 }
@@ -89,11 +94,14 @@ export default {
       },
       // 规则
       rules: {
-        correspondenceLang: [
+        firstName: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        country: [
+        lastName: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
+        ],
+        title: [
+          { required: true, message: 'Please choose title', trigger: 'change' }
         ]
       }
     }

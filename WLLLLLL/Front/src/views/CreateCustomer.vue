@@ -76,7 +76,15 @@
   </div>
 </template>
 
-<style>
+<style scoped="scoped">
+body{
+  margin: 0 0;
+}
+.el-divider__text{
+  background-color: #eff4f9;
+  color: #606266;
+  font-weight: bold;
+}
 .el-header {
   text-align: center;
 }
@@ -114,10 +122,6 @@ export default {
         name: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        searchTerm: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
-        ],
         postalCode: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
@@ -126,6 +130,9 @@ export default {
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         country: [
+          { required: true, message: 'Please enter...', trigger: 'blur' }
+        ],
+        language: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       }

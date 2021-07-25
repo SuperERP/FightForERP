@@ -43,12 +43,12 @@
         <el-divider content-position="left" >Default</el-divider>
         <div>
 <!--        business partner1输入框-->
-        <el-form-item label="Business Partner 1:" prop="businessPartner1">
-          <el-input v-model.number="form.businessPartner1">
+        <el-form-item label="Business Customer:" prop="businessCustomer">
+          <el-input v-model.number="form.businessCustomer">
             <!--带搜索按钮的输入框-->
             <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
           <!-- 第一层查询 -->
-          <el-dialog title="Business Partner 1" :visible.sync="Visible1" @close="dialogClosed1">
+          <el-dialog title="Business Customer" :visible.sync="Visible1" @close="dialogClosed1">
             <!-- 查询表单-->
             <el-form :model="dialogForm1" :rules="dialogForm1rules" ref="dialogForm1">
               <el-form-item label="Name 1:" prop="name" :label-width="formLabelWidth">
@@ -62,7 +62,7 @@
             <!-- 第二层表格    -->
             <el-dialog
                 width="55%"
-                title="Choose your business partner"
+                title="Choose your business customer"
                 :visible.sync="Visible2"
                 append-to-body>
               <el-table
@@ -99,8 +99,8 @@
         </el-form-item></div>
         <div>
         <!--        business partner2输入框-->
-        <el-form-item label="Business Partner 2:" prop="businessPartner2">
-          <el-input  v-model.number="form.businessPartner2">
+        <el-form-item label="Contact Person:" prop="contactPerson">
+          <el-input  v-model.number="form.contactPerson">
             <!--带搜索按钮的输入框-->
             <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible3 = true"></el-button></el-input>
           <!-- 第一层查询 -->
@@ -184,7 +184,12 @@
   </div>
 </template>
 
-<style>
+<style scoped="scoped">
+.el-divider__text{
+  background-color: #eff4f9;
+  color: #606266;
+  font-weight: bold;
+}
 .el-header {
   text-align: center;
 }
@@ -214,19 +219,19 @@ export default {
         relationshipCategory: '',
         validFrom: '',
         validTo: '',
-        businessPartner1: '',
-        businessPartner2: ''
+        businessCustomer: '',
+        contactPerson: ''
       },
       // 规则
       rules: {
         relationshipCategory: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        businessPartner1: [
+        businessCustomer: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ],
-        businessPartner2: [
+        contactPerson: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ],
@@ -313,12 +318,12 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.form.businessPartner1 = parseInt(row.partner)
+      this.form.businessCustomer = parseInt(row.partner)
     },
     textclick1 (row) {
       this.Visible3 = false
       this.Visible4 = false
-      this.form.businessPartner2 = parseInt(row.partner)
+      this.form.contactPerson = parseInt(row.partner)
     },
     textclick2 (row) {
       this.Visible8 = false
