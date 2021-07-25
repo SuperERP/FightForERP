@@ -22,7 +22,7 @@ class AbstractModule:
         from dateutil import parser
         return parser.parse(dateStr).date()
 
-    def insetData(self, ormData):
+    def insertData(self, ormData):
         ans = True
         try:
             self.session.add(ormData)

@@ -20,7 +20,7 @@ class WareHouseDataManager(AbstractModule):
         :return:
         '''
         newData = Inventory(**data)
-        self.insetData(newData)
+        self.insertData(newData)
 
     def insertWarehouse(self, data: dict):
         '''
@@ -29,7 +29,7 @@ class WareHouseDataManager(AbstractModule):
         :return:
         '''
         newData = Warehouse(**data)
-        self.insetData(newData)
+        self.insertData(newData)
 
 
     def insertMaterialDic(self, data: dict):
@@ -39,4 +39,4 @@ class WareHouseDataManager(AbstractModule):
         :return:
         '''
         newData = MaterialDic(**data)
-        self.insetData(newData)
+        self.insertData(newData)
