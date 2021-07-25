@@ -21,7 +21,7 @@ class Customer(Base):
     __tablename__ = 'Customer'
 
     id = Column(String(10), primary_key=True)
-    name = Column(String(50), nullable=false)
+    name = Column(String(50))
     street = Column(String(50), nullable=false)
     postcode = Column(String(10), nullable=false)
     country = Column(String(10), nullable=false)
@@ -46,7 +46,7 @@ class Customer(Base):
         self.distribution_channel = data['distribution_channel'],
         self.distribution_area = data['distribution_area'],
         self.sales_channel_number = data['sales_channel_number'],
-        self.POcode = data['POcdoe']
+        self.POcode = data['POcode']
 
     def __repr__(self):
         return '<Customer(id=%r,name=%r, street=%r,postcode=%r,country=%r,language=%r,accountantId=%r,paycode=%r,' \

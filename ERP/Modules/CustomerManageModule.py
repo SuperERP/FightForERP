@@ -47,7 +47,9 @@ class CustomerManagerModule(AbstractModule):
         :param data:
         :return:
         '''
+        Base.metadata.create_all()
         data['id'] = str(self.customerRecord).zfill(10)
         new_data = Customer(**data)
         if self.insertData(new_data):
             self.customerRecord += 1
+        session.commit()
