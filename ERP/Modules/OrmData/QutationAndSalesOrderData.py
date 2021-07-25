@@ -102,14 +102,14 @@ class SalesOrder(Base):
 
     def __init__(self, **data):
         self.id = data['id']
-        self.customerId = data['customerId'],
-        self.warehouseId = data['warehouseId'],
-        self.POcode = data['POcode'],
-        self.PODate = data['PODate'],
-        self.effectiveDate = data['effectiveDate'],
-        self.expirationDate = data['expirationDate'],
-        self.requestedDeliveryDate = data['requestedDeliveryDate'],
-        self.discountId = data['discountId'],
+        self.customerId = data['customerId']
+        self.warehouseId = data['warehouseId']
+        self.POcode = data['POcode']
+        self.PODate = data['PODate']
+        self.effectiveDate = data['effectiveDate']
+        self.expirationDate = data['expirationDate']
+        self.requestedDeliveryDate = data['requestedDeliveryDate']
+        self.discountId = data['discountId']
         self.totalDiscountNum = data['totalDiscountNum']
 
     def __repr__(self):

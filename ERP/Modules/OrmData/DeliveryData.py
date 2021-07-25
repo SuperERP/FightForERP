@@ -12,10 +12,10 @@ class DeliveryOrder(Base):
     deliveryPhase = Column(Enum('1', '2', '3'))
 
     def __init__(self, **data):
-        self.plannedDeliveryTime = data['plannedDeliveryTime'],
-        self.actualDeliveryTime = data['actualDeliveryTime'],
-        self.salesOrderId = data['salesOrderId'],
-        self.warehouse = data['warehouse'],
+        self.plannedDeliveryTime = data['plannedDeliveryTime']
+        self.actualDeliveryTime = data['actualDeliveryTime']
+        self.salesOrderId = data['salesOrderId']
+        self.warehouse = data['warehouse']
         self.deliveryPhase = data['deliveryPhase']
 
     def __repr__(self):
@@ -50,13 +50,13 @@ class DeliveryItem(Base):
     )
 
     def __init__(self, **data):
-        self.deliveryOrderId = data['deliveryOrderId'],
-        self.materialId = data['materialId'],
-        self.description = data['description'],
-        self.amount = data['amount'],
-        self.unit = data['unit'],
-        self.pickingStatus = data['pickingStatus'],
-        self.pickingAmount = data['pickingAmount'],
+        self.deliveryOrderId = data['deliveryOrderId']
+        self.materialId = data['materialId']
+        self.description = data['description']
+        self.amount = data['amount']
+        self.unit = data['unit']
+        self.pickingStatus = data['pickingStatus']
+        self.pickingAmount = data['pickingAmount']
         self.materialState = data['materialState']
 
     def __repr__(self):

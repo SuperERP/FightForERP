@@ -36,16 +36,16 @@ class Customer(Base):
 
     def __init__(self, **data):
         self.id = data['id']
-        self.name = data['name'],
-        self.street = data['street'],
-        self.postcode = data['postcode'],
-        self.country = data['country'],
-        self.language = data['language'],
-        self.accountantId = data['accountantId'],
-        self.paycode = data['paycode'],
-        self.distribution_channel = data['distribution_channel'],
-        self.distribution_area = data['distribution_area'],
-        self.sales_channel_number = data['sales_channel_number'],
+        self.name = data['name']
+        self.street = data['street']
+        self.postcode = data['postcode']
+        self.country = data['country']
+        self.language = data['language']
+        self.accountantId = data['accountantId']
+        self.paycode = data['paycode']
+        self.distribution_channel = data['distribution_channel']
+        self.distribution_area = data['distribution_area']
+        self.sales_channel_number = data['sales_channel_number']
         self.POcode = data['POcode']
 
     def __repr__(self):
@@ -73,13 +73,13 @@ class ContactPerson(Base):
 
     def __init__(self, **data):
         self.id = data['name']
-        self.name = data['name'],
-        self.prefixName = data['prefixName'],
-        self.first_name = data['first_name'],
-        self.second_name = data['second_name'],
-        self.language = data['language'],
-        self.country = data['country'],
-        self.area = data['area'],
+        self.name = data['name']
+        self.prefixName = data['prefixName']
+        self.first_name = data['first_name']
+        self.second_name = data['second_name']
+        self.language = data['language']
+        self.country = data['country']
+        self.area = data['area']
         self.POcode = data['POcode']
 
     def __repr__(self):
@@ -99,9 +99,9 @@ class CustomerAndContactPersonRelationship(Base):
     )
 
     def __init__(self, **data):
-        self.customerId = data['customerId'],
-        self.contactId = data['contactId'],
-        self.relationType = data['relationType'],
+        self.customerId = data['customerId']
+        self.contactId = data['contactId']
+        self.relationType = data['relationType']
         self.POcode = data['Pocode']
 
     def __repr__(self):
