@@ -20,7 +20,7 @@ class DeliveryManagerModule(AbstractModule):
         :return:
         '''
         newData = DeliveryOrder(**data)
-        self.insetData(newData)
+        self.insertData(newData)
 
     def insertDeliveryItem(self, data):
         '''
@@ -29,4 +29,4 @@ class DeliveryManagerModule(AbstractModule):
         :return:
         '''
         newData = DeliveryItem(**data)
-        self.insetData(newData)
+        self.insertData(newData)

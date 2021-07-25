@@ -20,7 +20,7 @@ class OrderManagerModule(AbstractModule):
         :return:
         '''
         newData = Discount(**data)
-        self.insetData(newData)
+        self.insertData(newData)
 
     def createSalesOrder(self, data):
         '''

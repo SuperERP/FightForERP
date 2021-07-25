@@ -29,7 +29,7 @@ class CustomerManagerModule(AbstractModule):
         '''
 
         new_data = CustomerAndContactPersonRelationship(**data)
-        self.insetData(new_data)
+        self.insertData(new_data)
 
     def insertContactPerson(self, data: dict):
         '''
@@ -39,7 +39,7 @@ class CustomerManagerModule(AbstractModule):
         '''
         data['id'] = 'CP' + self.getTimeId()
         new_data = ContactPerson(**data)
-        self.insetData(new_data)
+        self.insertData(new_data)
 
     def insertCustomer(self, data: dict):
         '''
@@ -47,7 +47,9 @@ class CustomerManagerModule(AbstractModule):
         :param data:
         :return:
         '''
+        Base.metadata.create_all()
         data['id'] = str(self.customerRecord).zfill(10)
         new_data = Customer(**data)
-        if self.insetData(new_data):
+        if self.insertData(new_data):
             self.customerRecord += 1
+        session.commit()

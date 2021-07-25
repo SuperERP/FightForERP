@@ -778,6 +778,8 @@ export default {
       Visible8: false, // cnty列表
       Visible9: false, // 单项cnty查询列表（其实与总体相同）
       plantVisible: false, // plant列表选择
+      materialVisible: false, // material列表选择
+      search: '',
       // 数据填充
       form: {
         soldToParty: '',
@@ -1043,6 +1045,18 @@ export default {
       this.plantVisible = false
       this.form.plant = row.plantNum
     },
+    materialTextClick (row) {
+      this.materialVisible = false
+      this.addMaterialForm.material = row.material
+      this.addMaterialForm.itemDescription = row.itemDescription
+      this.addMaterialForm.salesUnit = row.salesUnit
+    },
+    materialTextClick1 (row) {
+      this.materialVisible = false
+      this.editMaterialForm.material = row.material
+      this.editMaterialForm.itemDescription = row.itemDescription
+      this.editMaterialForm.salesUnit = row.salesUnit
+    },
     submitForm (formName) {
       console.log(this.materialList)
       if (this.materialList.length === 0) {
@@ -1085,7 +1099,18 @@ export default {
               type: 'success'
             })
           } else {
-            this.$message.error('Too much Discount!')
+            // if语句判断期望折扣是否小于0
+            if (this.checkExpectOrdVal1()) {
+              this.materialList.push(JSON.parse(JSON.stringify(this.addMaterialForm)))
+              this.updateNetValue(this.materialList)
+              this.Visible3 = false
+              this.$message({
+                message: 'Add Successfully',
+                type: 'success'
+              })
+            } else {
+              this.$message.error('Too much Discount!')
+            }
           }
         } else {
           return false
@@ -1096,8 +1121,8 @@ export default {
     edit2 () {
       this.$refs.editMaterialFormRef.validate((valid) => {
         if (valid) {
-          // if语句检查expectOrdVal是否大于0
-          if (this.checkExpectOrdVal2(this.materialList)) {
+          // if语句判断折扣类型和折扣数量是否都填写完整
+          if (this.editMaterialForm.cnty === '' | this.editMaterialForm.amount === '') {
             this.updateNetValue(this.materialList)
             this.$message({
               message: 'Edit Successfully',
@@ -1105,7 +1130,17 @@ export default {
             })
             this.Visible4 = false
           } else {
-            this.$message.error('Too much Discount!')
+            // if语句检查expectOrdVal是否大于0
+            if (this.checkExpectOrdVal2(this.materialList)) {
+              this.updateNetValue(this.materialList)
+              this.$message({
+                message: 'Edit Successfully',
+                type: 'success'
+              })
+              this.Visible4 = false
+            } else {
+              this.$message.error('Too much Discount!')
+            }
           }
         } else {
           return false
@@ -1144,9 +1179,15 @@ export default {
     checkExpectOrdVal2 (materialList) {
       ExpectOrdVal = 0
       var price = 20
+      var temp
       materialList.forEach((row) => {
+        if (row.amount === '') {
+          temp = 0
+        } else {
+          temp = row.amount
+        }
         // 后端调取数据库，查出该物料对应的price
-        ExpectOrdVal += row.orderQuantity * price - row.amount
+        ExpectOrdVal += row.orderQuantity * price - temp
       })
       // if语句判断期望折扣是否小于0
       if (ExpectOrdVal > 0) {
@@ -1160,10 +1201,16 @@ export default {
       netValue = 0
       ExpectOrdVal = 0
       var price = 20
+      var temp
       materialList.forEach((row) => {
+        if (row.amount === '') {
+          temp = 0
+        } else {
+          temp = row.amount
+        }
         // 后端调取数据库，查出该物料对应的price
         netValue += row.orderQuantity * price
-        ExpectOrdVal += row.orderQuantity * price - row.amount
+        ExpectOrdVal += row.orderQuantity * price - temp
       })
       this.form.netValue1 = netValue
       this.form.expectOrdVal = ExpectOrdVal
@@ -1184,9 +1231,16 @@ export default {
           ExpectOrdVal = 0
           var temp = 0
           var price = 20
+          var temp1
           this.materialList.forEach((row) => {
+            // 如果折扣数量为空，则用0代替
+            if (row.amount === '') {
+              temp1 = 0
+            } else {
+              temp1 = row.amount
+            }
             // 后端调取数据库，查出该物料对应的price
-            temp += row.orderQuantity * price - row.amount
+            temp += row.orderQuantity * price - temp1
           })
           ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
           this.form.expectOrdVal = ExpectOrdVal

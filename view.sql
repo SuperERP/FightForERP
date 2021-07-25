@@ -1,2 +1,1 @@
-SELECT * from MaterialDic;
-SELECT * from Discount;
+SELECT * from Customer;

@@ -195,7 +195,51 @@
           <!--      添加material表单-->
           <el-form :model="addMaterialForm" :rules="addMaterialFormRules" ref="addMaterialFormRef">
             <el-form-item label="Material" prop="material" :label-width="formLabelWidth1">
-              <el-input v-model="addMaterialForm.material" size="mini" autocomplete="off" ref="addTest"></el-input>
+              <el-input v-model.number="addMaterialForm.material" size="mini" autocomplete="off">
+                <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialVisible = true"></el-button></el-input>
+              <el-dialog
+                  width="55%"
+                  title="Choose material"
+                  :visible.sync="materialVisible"
+                  append-to-body>
+                <el-table
+                    ref="searchMaterialList"
+                    height="250"
+                    :data="searchMaterialList.filter(data => !search || data.material.toLowerCase().includes(search.toLowerCase()))"
+                    highlight-current-row
+                    @current-change="handleCurrentChange"
+                    @row-click="materialTextClick"
+                    style="width: 100%">
+                  <el-table-column
+                      property="material"
+                      label="Material"
+                      width="120">
+                  </el-table-column>
+                  <el-table-column
+                      property="itemDescription"
+                      label="Item Description"
+                      width="200">
+                  </el-table-column>
+                  <el-table-column
+                      property="price"
+                      label="Price(USD)"
+                      width="120">
+                  </el-table-column>
+                  <el-table-column
+                      property="salesUnit"
+                      label="Sales Unit"
+                      width="120">
+                  </el-table-column>
+                  <el-table-column
+                      align="right">
+                    <template slot="header" slot-scope="{}">
+                      <el-input
+                          v-model="search"
+                          size="mini"
+                          placeholder="Search Material"/>
+                    </template></el-table-column>
+                </el-table>
+              </el-dialog>
             </el-form-item>
             <el-form-item label="Order Quantity" prop="orderQuantity" :label-width="formLabelWidth1">
               <el-input v-model.number="addMaterialForm.orderQuantity" size="mini" autocomplete="off"></el-input>
@@ -258,7 +302,51 @@
           <!--      修改material表单-->
           <el-form :model="editMaterialForm" :rules="editMaterialFormRules" ref="editMaterialFormRef">
             <el-form-item label="Material" prop="material" :label-width="formLabelWidth1">
-              <el-input v-model="editMaterialForm.material" size="mini" autocomplete="off"></el-input>
+              <el-input v-model.number="editMaterialForm.material" size="mini" autocomplete="off">
+                <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialVisible = true"></el-button></el-input>
+              <el-dialog
+                  width="55%"
+                  title="Choose material"
+                  :visible.sync="materialVisible"
+                  append-to-body>
+                <el-table
+                    ref="searchMaterialList"
+                    height="250"
+                    :data="searchMaterialList.filter(data => !search || data.material.toLowerCase().includes(search.toLowerCase()))"
+                    highlight-current-row
+                    @current-change="handleCurrentChange"
+                    @row-click="materialTextClick1"
+                    style="width: 100%">
+                  <el-table-column
+                      property="material"
+                      label="Material"
+                      width="120">
+                  </el-table-column>
+                  <el-table-column
+                      property="itemDescription"
+                      label="Item Description"
+                      width="200">
+                  </el-table-column>
+                  <el-table-column
+                      property="price"
+                      label="Price(USD)"
+                      width="120">
+                  </el-table-column>
+                  <el-table-column
+                      property="salesUnit"
+                      label="Sales Unit"
+                      width="120">
+                  </el-table-column>
+                  <el-table-column
+                      align="right">
+                    <template slot="header" slot-scope="{}">
+                      <el-input
+                          v-model="search"
+                          size="mini"
+                          placeholder="Search Material"/>
+                    </template></el-table-column>
+                </el-table>
+              </el-dialog>
             </el-form-item>
             <el-form-item label="Order Quantity" prop="orderQuantity" :label-width="formLabelWidth1">
               <el-input v-model.number="editMaterialForm.orderQuantity" size="mini" autocomplete="off"></el-input>
@@ -396,6 +484,8 @@ export default {
       Visible8: false, // cnty列表
       Visible9: false, // 单项cnty查询列表（其实与总体相同）
       plantVisible: false, // plant列表选择
+      materialVisible: false, // material列表选择
+      search: '',
       // 数据填充
       form: {
         soldToParty: '',
@@ -456,6 +546,21 @@ export default {
         plantNum: 'MI00',
         plantName: 'Miami Plant'
       }],
+      // 查询material对话框出现的表格
+      searchMaterialList: [{
+        material: 'DXTR',
+        itemDescription: 'Deluxe Touring Bike(black)',
+        salesUnit: 'EA',
+        price: '20'
+      },
+      {
+        material: 'PXTR',
+        itemDescription: 'Professional Touring Bike(black)',
+        salesUnit: 'EA',
+        price: '20'
+      }
+      ],
+
       // 规则
       rules: {
         soldToParty: [
@@ -643,6 +748,18 @@ export default {
       this.plantVisible = false
       this.form.plant = row.plantNum
     },
+    materialTextClick (row) {
+      this.materialVisible = false
+      this.addMaterialForm.material = row.material
+      this.addMaterialForm.itemDescription = row.itemDescription
+      this.addMaterialForm.salesUnit = row.salesUnit
+    },
+    materialTextClick1 (row) {
+      this.materialVisible = false
+      this.editMaterialForm.material = row.material
+      this.editMaterialForm.itemDescription = row.itemDescription
+      this.editMaterialForm.salesUnit = row.salesUnit
+    },
     submitForm (formName) {
       console.log(this.materialList)
       if (this.materialList.length === 0) {
@@ -673,8 +790,8 @@ export default {
     add () {
       this.$refs.addMaterialFormRef.validate(valid => {
         if (valid) {
-          // if语句判断期望折扣是否小于0
-          if (this.checkExpectOrdVal1()) {
+          // if语句判断折扣类型和折扣数量是否都填写完整
+          if (this.addMaterialForm.cnty === '' | this.addMaterialForm.amount === '') {
             this.materialList.push(JSON.parse(JSON.stringify(this.addMaterialForm)))
             this.updateNetValue(this.materialList)
             this.Visible3 = false
@@ -683,7 +800,18 @@ export default {
               type: 'success'
             })
           } else {
-            this.$message.error('Too much Discount!')
+            // if语句判断期望折扣是否小于0
+            if (this.checkExpectOrdVal1()) {
+              this.materialList.push(JSON.parse(JSON.stringify(this.addMaterialForm)))
+              this.updateNetValue(this.materialList)
+              this.Visible3 = false
+              this.$message({
+                message: 'Add Successfully',
+                type: 'success'
+              })
+            } else {
+              this.$message.error('Too much Discount!')
+            }
           }
         } else {
           return false
@@ -694,8 +822,8 @@ export default {
     edit2 () {
       this.$refs.editMaterialFormRef.validate(valid => {
         if (valid) {
-          // if语句检查expectOrdVal是否大于0
-          if (this.checkExpectOrdVal2(this.materialList)) {
+          // if语句判断折扣类型和折扣数量是否都填写完整
+          if (this.editMaterialForm.cnty === '' | this.editMaterialForm.amount === '') {
             this.updateNetValue(this.materialList)
             this.$message({
               message: 'Edit Successfully',
@@ -703,7 +831,17 @@ export default {
             })
             this.Visible4 = false
           } else {
-            this.$message.error('Too much Discount!')
+            // if语句检查expectOrdVal是否大于0
+            if (this.checkExpectOrdVal2(this.materialList)) {
+              this.updateNetValue(this.materialList)
+              this.$message({
+                message: 'Edit Successfully',
+                type: 'success'
+              })
+              this.Visible4 = false
+            } else {
+              this.$message.error('Too much Discount!')
+            }
           }
         } else {
           return false
@@ -740,26 +878,34 @@ export default {
     checkExpectOrdVal2 (materialList) {
       ExpectOrdVal = 0
       var price = 20
+      var temp
       materialList.forEach((row) => {
+        if (row.amount === '') {
+          temp = 0
+        } else {
+          temp = row.amount
+        }
         // 后端调取数据库，查出该物料对应的price
-        ExpectOrdVal += row.orderQuantity * price - row.amount
+        ExpectOrdVal += row.orderQuantity * price - temp
       })
       // if语句判断期望折扣是否小于0
-      if (ExpectOrdVal > 0) {
-        return true
-      } else {
-        return false
-      }
+      if (ExpectOrdVal > 0) { return true } else { return false }
     },
     // 更新合计价格信息
     updateNetValue (materialList) {
       netValue = 0
       ExpectOrdVal = 0
       var price = 20
+      var temp
       materialList.forEach((row) => {
+        if (row.amount === '') {
+          temp = 0
+        } else {
+          temp = row.amount
+        }
         // 后端调取数据库，查出该物料对应的price
         netValue += row.orderQuantity * price
-        ExpectOrdVal += row.orderQuantity * price - row.amount
+        ExpectOrdVal += row.orderQuantity * price - temp
       })
       this.form.netValue1 = netValue
       this.form.expectOrdVal = ExpectOrdVal
@@ -773,9 +919,16 @@ export default {
           ExpectOrdVal = 0
           var temp = 0
           var price = 20
+          var temp1
           this.materialList.forEach((row) => {
+            // 如果折扣数量为空，则用0代替
+            if (row.amount === '') {
+              temp1 = 0
+            } else {
+              temp1 = row.amount
+            }
             // 后端调取数据库，查出该物料对应的price
-            temp += row.orderQuantity * price - row.amount
+            temp += row.orderQuantity * price - temp1
           })
           ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
           this.form.expectOrdVal = ExpectOrdVal
