@@ -32,7 +32,7 @@ log_colors = {
 }
 formatter = ColoredFormatter(fmt=fmt, log_colors=log_colors, reset=True, secondary_log_colors={},
                              style='%')
-log_path = '/Users/zhaohantong/FightForERP/erp'
+log_path = ''
 log_name = log_path + '.log'
 logfile = log_name
 fh = logging.FileHandler(logfile, mode='w')

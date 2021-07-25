@@ -14,6 +14,19 @@ class SuperErp:
         self.DeliveryManagerModule = DeliveryManagerModule
         self.OrderManagerModule = OrderManagerModule
 
+    def creatInqury(self, data: dict):
+        '''
+        创建询价单
+        :param data:
+        :return:
+        '''
+
+
+
+        pass
+
+
+
     def createSalesOrder(self, data: dict):
         '''
 

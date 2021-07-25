@@ -25,11 +25,11 @@ formatter = ColoredFormatter(fmt=fmt, log_colors=log_colors, reset=True, seconda
 log_path = '/home/supercb/PycharmProjects/myERP/erp'
 log_name = log_path + '.log'
 logfile = log_name
-fh = logging.FileHandler(logfile, mode='w')
+# fh = logging.FileHandler(logfile, mode='w')
 # fh.setFormatter(formatter)
 
 hd_1 = logging.StreamHandler()
 hd_1.setFormatter(formatter)
 
 ErpLogger.addHandler(hd_1)
-ErpLogger.addHandler(fh)
+# ErpLogger.addHandler(fh)
