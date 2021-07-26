@@ -11,6 +11,9 @@ import CreateBPRelationship from '../views/CreateBPRelationship'
 import ManageSDDocument from '../views/ManageSDDocument'
 import ManageBusinessPartner from '../views/ManageBusinessPartner'
 import DisplayCustomer from '../views/DisplayCustomer'
+import ChangeCustomer from '../views/ChangeCustomer'
+import DisplayContactPerson from '../views/DisplayContactPerson'
+import ChangeContactPerson from '../views/ChangeContactPerson'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
 Vue.use(elTableInfiniteScroll)
 Vue.use(VueRouter)
@@ -70,6 +73,21 @@ const routes = [
     path: '/DisplayCustomer',
     name: '显示客户',
     component: DisplayCustomer
+  },
+  {
+    path: '/ChangeCustomer',
+    name: '修改客户',
+    component: ChangeCustomer
+  },
+  {
+    path: '/DisplayContactPerson',
+    name: '显示联系人',
+    component: DisplayContactPerson
+  },
+  {
+    path: '/ChangeContactPerson',
+    name: '修改联系人',
+    component: ChangeContactPerson
   }
 ]
 

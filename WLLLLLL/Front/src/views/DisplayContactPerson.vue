@@ -1,59 +1,54 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Create Contact Person: Overview
+      <el-header>Display Contact Person: Overview
       </el-header>
 
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
-
+        <!--点击change按钮，跳转到change界面-->
+        <router-link to="/ChangeContactPerson"><el-button type="text" style="margin-left:20px">Change</el-button></router-link>
+        <div>
+          <el-form-item label="Contact Person:" prop="id">
+            <el-input v-model="form.id" :disabled="true">
+            </el-input>
+          </el-form-item></div>
         <el-divider content-position="left">Name</el-divider>
         <el-row :gutter="50" >
           <el-col :span="8">
-        <el-form-item label="Title:" prop="prefixName">
-          <el-select v-model="form.prefixName" placeholder="Please choose title">
-            <el-option label="Mr." value="Mr"></el-option>
-            <el-option label="Ms." value="Ms"></el-option>
-          </el-select>
-        </el-form-item></el-col></el-row>
+            <el-form-item label="Title:" prop="prefixName">
+              <el-select v-model="form.prefixName" placeholder="Please choose title" :disabled="true">
+                <el-option label="Mr." value="Mr"></el-option>
+                <el-option label="Ms." value="Ms"></el-option>
+              </el-select>
+            </el-form-item></el-col></el-row>
         <el-row :gutter="50" >
           <el-col :span="8">
             <el-form-item label="First Name:" prop="first_name">
-              <el-input v-model="form.first_name">
+              <el-input v-model="form.first_name" :disabled="true">
               </el-input>
             </el-form-item></el-col></el-row>
         <el-row :gutter="50" >
           <el-col :span="8">
             <el-form-item label="Last Name:" prop="last_name">
-              <el-input v-model="form.last_name">
+              <el-input v-model="form.last_name" :disabled="true">
               </el-input>
             </el-form-item></el-col></el-row>
         <el-form-item label="Correspondence lang.:" prop="correspondenceLang">
-          <el-input v-model="form.language">
+          <el-input v-model="form.language" :disabled="true">
           </el-input>
         </el-form-item>
 
         <el-divider content-position="left">Search Terms</el-divider>
         <el-form-item label="Search Term:" prop="searchTerm">
-          <el-input v-model.number="form.POcode">
+          <el-input v-model.number="form.POcode" :disabled="true">
           </el-input>
         </el-form-item>
 
         <el-divider content-position="left">Street Address</el-divider>
-        <el-form-item label="Country" prop="country">
-          <el-input v-model="form.country">
+        <el-form-item label="Country" prop="country" style="margin-bottom:100px">
+          <el-input v-model="form.country" :disabled="true">
           </el-input>
         </el-form-item>
-
-        <!--底部按钮-->
-        <el-footer style="margin-top:50px">
-          <el-row :gutter="50" >
-            <el-col :offset="18" span="6">
-              <el-form-item style="margin-top:20px;">
-                <el-button type="primary" @click="submitForm('form')">Submit</el-button>
-                <!--             清空按钮，不回到主界面-->
-                <el-button type="text" style="color:white">Clear</el-button>
-              </el-form-item></el-col></el-row>
-        </el-footer>
       </el-form></el-container>
   </div>
 </template>
@@ -81,12 +76,13 @@
 </style>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   data () {
     return {
       form: {
+        id: '',
         POcode: '',
         prefixName: '',
         first_name: '',
@@ -109,32 +105,6 @@ export default {
     }
   },
   methods: {
-    submitForm (formName) {
-      const _this = this
-      this.$refs[formName].validate((valid) => {
-        if (valid) { // 前后端交互，提交按钮
-          axios.post('link', this.form).then(function (resp) {
-            if (resp.data === 'fault') {
-              _this.$message({
-                message: 'fail!',
-                type: 'fail'
-              })
-            } else {
-              _this.$message({
-                message: 'submit!' + resp.data,
-                type: 'success'
-              })
-            }
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
-    resetForm (formName) {
-      this.$refs.dialogform1.resetFields()
-    }
   }
 }
 </script>
