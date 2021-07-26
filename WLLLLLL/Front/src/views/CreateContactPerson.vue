@@ -9,32 +9,32 @@
         <el-divider content-position="left">Name</el-divider>
         <el-row :gutter="50" >
           <el-col :span="8">
-        <el-form-item label="Title:" prop="title">
-          <el-select v-model="form.title" placeholder="Please choose title">
+        <el-form-item label="Title:" prop="prefixName">
+          <el-select v-model="form.prefixName" placeholder="Please choose title">
             <el-option label="Mr." value="Mr"></el-option>
             <el-option label="Ms." value="Ms"></el-option>
           </el-select>
         </el-form-item></el-col></el-row>
         <el-row :gutter="50" >
           <el-col :span="8">
-            <el-form-item label="First Name:" prop="firstName">
-              <el-input v-model="form.firstName">
+            <el-form-item label="First Name:" prop="first_name">
+              <el-input v-model="form.first_name">
               </el-input>
             </el-form-item></el-col></el-row>
         <el-row :gutter="50" >
           <el-col :span="8">
-            <el-form-item label="Last Name:" prop="lastName">
-              <el-input v-model="form.lastName">
+            <el-form-item label="Last Name:" prop="last_name">
+              <el-input v-model="form.last_name">
               </el-input>
             </el-form-item></el-col></el-row>
         <el-form-item label="Correspondence lang.:" prop="correspondenceLang">
-          <el-input v-model="form.correspondenceLang">
+          <el-input v-model="form.language">
           </el-input>
         </el-form-item>
 
         <el-divider content-position="left">Search Terms</el-divider>
         <el-form-item label="Search Term:" prop="searchTerm">
-          <el-input v-model.number="form.searchTerm">
+          <el-input v-model.number="form.POcode">
           </el-input>
         </el-form-item>
 
@@ -50,8 +50,8 @@
             <el-col :offset="18" span="6">
               <el-form-item style="margin-top:20px;">
                 <el-button type="primary" @click="submitForm('form')">Submit</el-button>
-                <!--             退出按钮，回到主界面-->
-                <el-button type="text" style="color:white">Cancel</el-button>
+                <!--             清空按钮，不回到主界面-->
+                <el-button type="text" style="color:white">Clear</el-button>
               </el-form-item></el-col></el-row>
         </el-footer>
       </el-form></el-container>
@@ -81,26 +81,28 @@
 </style>
 
 <script>
+import axios from 'axios'
+
 export default {
   data () {
     return {
       form: {
-        searchTerm: '',
-        title: '',
-        firstName: '',
-        lastName: '',
-        correspondenceLang: '',
+        POcode: '',
+        prefixName: '',
+        first_name: '',
+        last_name: '',
+        language: '',
         country: ''
       },
       // 规则
       rules: {
-        firstName: [
+        first_name: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        lastName: [
+        last_name: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        title: [
+        prefixName: [
           { required: true, message: 'Please choose title', trigger: 'change' }
         ]
       }
@@ -108,12 +110,16 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      console.log(this.materialList)
+      const _this = this
       this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$message({
-            message: 'submit!',
-            type: 'success'
+        if (valid) { // 前后端交互，提交按钮
+          axios.post('link', this.form).then(function (resp) {
+            if (resp.data === 'success') {
+              _this.$message({
+                message: 'submit!',
+                type: 'success'
+              })
+            }
           })
         } else {
           console.log('error submit!!')

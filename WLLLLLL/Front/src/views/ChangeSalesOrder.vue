@@ -19,20 +19,32 @@
       <!--      sold to party搜索功能-->
       <el-row :gutter="50" >
         <el-col :span="8">
-          <el-form-item label="Sold-To Party:" prop="soldToParty">
-            <el-input style="width:110px;" v-model.number="form.soldToParty">
+          <el-form-item label="Sold-To Party:" prop="customerId">
+            <el-input style="width:110px;" v-model.number="form.customerId">
               <!--带搜索按钮的输入框-->
               <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
             <!-- 第一层查询 -->
             <el-dialog title="Customers(General)" :visible.sync="Visible1" @close="dialogClosed1">
               <!-- 查询表单-->
               <el-form :model="dialogForm1" :rules="dialogForm1rules" ref="dialogForm1">
-                <el-form-item label="Search Term" prop="searchTerm" :label-width="formLabelWidth">
-                  <el-input v-model.number="dialogForm1.searchTerm"  size="mini"  autocomplete="off"></el-input>
+                <el-form-item label="Search Term:" prop="POcode" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.POcode"  size="mini"  autocomplete="off"></el-input>
                 </el-form-item>
                 <p></p>
-                <el-form-item label="City" prop="city" :label-width="formLabelWidth">
+                <el-form-item label="City:" prop="city" :label-width="formLabelWidth">
                   <el-input v-model="dialogForm1.city"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Country:" prop="country" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.country"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Postal Code:" prop="postcode" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.postcode"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Name:" prop="name" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.name"  size="mini" autocomplete="off"></el-input>
                 </el-form-item>
               </el-form>
               <!-- 第二层表格    -->
@@ -526,8 +538,11 @@ export default {
 
       // 客户查询对话框第一层表单
       dialogForm1: {
-        searchTerm: '',
-        city: ''
+        POcode: '',
+        city: '',
+        country: '',
+        postcode: '',
+        name: ''
       },
       dialogForm3: {
         inquiryNum: ''
@@ -631,13 +646,6 @@ export default {
       },
       // 客户查询对话框第一层表单的验证规则对象
       dialogForm1rules: {
-        searchTerm: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
-        ],
-        city: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
-        ]
       },
       formLabelWidth: '120px',
       formLabelWidth1: '160px',

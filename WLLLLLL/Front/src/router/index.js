@@ -8,6 +8,8 @@ import ChangeSalesOrder from '../views/ChangeSalesOrder'
 import CreateCustomer from '../views/CreateCustomer'
 import CreateContactPerson from '../views/CreateContactPerson'
 import CreateBPRelationship from '../views/CreateBPRelationship'
+import ManageSDDocument from '../views/ManageSDDocument'
+import ManageBusinessPartner from '../views/ManageBusinessPartner'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
 import AnalyzeDeliveryLog from '../views/AnalyzeDeliveryLog'
 import CreateOutboundDeliveries from '../views/CreateOutboundDeliveries'
@@ -85,6 +87,16 @@ const routes = [
     path: '/CreateBPRelationship',
     name: '创建BP关系',
     component: CreateBPRelationship
+  },
+  {
+    path: '/ManageSDDocument',
+    name: '管理SD模块',
+    component: ManageSDDocument
+  },
+  {
+    path: '/ManageBusinessPartner',
+    name: '管理商业伙伴',
+    component: ManageBusinessPartner
   }
 ]
 

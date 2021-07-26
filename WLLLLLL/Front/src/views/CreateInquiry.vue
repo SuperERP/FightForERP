@@ -4,23 +4,36 @@
       <el-header>Create Inquiry: Overview
       </el-header>
     <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
-      <!--      sold to party搜索功能-->
+
       <el-row :gutter="50" style="margin-top:20px" >
         <el-col :span="8">
-          <el-form-item label="Sold-To Party:" prop="soldToParty">
-            <el-input style="width:110px;" v-model.number="form.soldToParty">
+<!--      sold to party搜索功能-->
+          <el-form-item label="Sold-To Party:" prop="customerId">
+            <el-input style="width:110px;" v-model.number="form.customerId">
               <!--带搜索按钮的输入框-->
               <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
             <!-- 第一层查询 -->
             <el-dialog title="Customers(General)" :visible.sync="Visible1" @close="dialogClosed1">
               <!-- 查询表单-->
               <el-form :model="dialogForm1" :rules="dialogForm1rules" ref="dialogForm1">
-                <el-form-item label="Search Term" prop="searchTerm" :label-width="formLabelWidth">
-                  <el-input v-model.number="dialogForm1.searchTerm"  size="mini"  autocomplete="off"></el-input>
+                <el-form-item label="Search Term:" prop="POcode" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.POcode"  size="mini"  autocomplete="off"></el-input>
                 </el-form-item>
                 <p></p>
-                <el-form-item label="City" prop="city" :label-width="formLabelWidth">
+                <el-form-item label="City:" prop="city" :label-width="formLabelWidth">
                   <el-input v-model="dialogForm1.city"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Country:" prop="country" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.country"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Postal Code:" prop="postcode" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.postcode"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Name:" prop="name" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.name"  size="mini" autocomplete="off"></el-input>
                 </el-form-item>
               </el-form>
               <!-- 第二层表格    -->
@@ -77,15 +90,16 @@
             </el-dialog>
           </el-form-item>
         </el-col>
+
         <el-col :span="12">
           <el-form-item label="Net Value:">
-            <el-input style="width:110px;" size='mini' v-model="form.netValue1" :disabled="true"></el-input>
-            <el-input style="width:60px;" placeholder="USD" size='mini' v-model="form.netValue2" :disabled="true"></el-input>
+            <el-input style="width:110px;" size='mini' v-model="netValueForm.netValue1" :disabled="true"></el-input>
+            <el-input style="width:60px;" placeholder="USD" size='mini' v-model="netValueForm.netValue2" :disabled="true"></el-input>
           </el-form-item>
         </el-col></el-row>
 <!--      plant搜索框-->
-      <el-form-item label="Plant:" prop="plant">
-        <el-input style="width:110px;" v-model.number="form.plant">
+      <el-form-item label="Plant:" prop="warehouseId">
+        <el-input style="width:110px;" v-model.number="form.warehouseId">
           <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantVisible = true"></el-button>
         </el-input>
         <el-dialog
@@ -117,18 +131,18 @@
 
       <el-row :gutter="50" >
         <el-col :span="8">
-          <el-form-item label="Cust. Reference:" prop="custReference">
-            <el-input style="width:110px;" v-model.number="form.custReference">
+          <el-form-item label="Cust. Reference:" prop="POcode">
+            <el-input style="width:110px;" v-model.number="form.POcode">
             </el-input>
           </el-form-item></el-col>
-        <el-col :span="12"><el-form-item label="Cust. Ref. Date:" prop="custRefDate">
-          <el-date-picker type="date" v-model="form.custRefDate" style="width: 130px;"></el-date-picker>
+        <el-col :span="12"><el-form-item label="Cust. Ref. Date:" prop="PODate">
+          <el-date-picker type="date" v-model="form.PODate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="Valid From:" prop="validFrom">
-          <el-date-picker type="date" v-model="form.validFrom" style="width: 130px;"></el-date-picker>
+        <el-col :span="8"><el-form-item label="Valid From:" prop="effectiveDate">
+          <el-date-picker type="date" v-model="form.effectiveDate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
-        <el-col :span="12"><el-form-item label="Valid To:" prop="validTo">
-          <el-date-picker type="date" v-model="form.validTo" style="width: 130px;"></el-date-picker>
+        <el-col :span="12"><el-form-item label="Valid To:" prop="expirationDate">
+          <el-date-picker type="date" v-model="form.expirationDate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
       </el-row>
 <!--      下半部分-->
@@ -136,7 +150,7 @@
       <el-row :gutter="50" >
         <el-col :offset='8' :span="12">
           <el-form-item label="Expect.Ord.Val:">
-            <el-input style="width:110px;" size='mini' v-model="form.expectOrdVal" :disabled="true"></el-input>
+            <el-input style="width:110px;" size='mini' v-model="netValueForm.expectOrdVal" :disabled="true"></el-input>
             <el-input style="width:60px;" placeholder="USD" size='mini' :disabled="true"></el-input>
           </el-form-item></el-col></el-row>
     <h4 style="margin-left: 30px;margin-bottom:7px">All Items<el-button size="mini" style="margin-left:30px" type="primary" @click="totalAdd">Add Material</el-button></h4>
@@ -317,8 +331,8 @@
         <el-col :offset="18" span="6">
           <el-form-item style="margin-top:20px;">
             <el-button type="primary" @click="submitForm('form')">Submit</el-button>
-<!--             退出按钮，回到主界面-->
-            <el-button type="text" style="color:white">Cancel</el-button>
+<!--             清空按钮，不回到主界面-->
+            <el-button type="text" style="color:white">Clear</el-button>
           </el-form-item></el-col></el-row>
       </el-footer>
     </el-form></el-container>
@@ -344,6 +358,7 @@
 
 <script>
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
+import axios from 'axios'
 let netValue = 0
 let ExpectOrdVal = 0
 export default {
@@ -359,26 +374,28 @@ export default {
       plantVisible: false, // plant列表选择
       materialVisible: false, // material列表选择
       search: '',
-      form: {
-        soldToParty: '',
-        custReference: '',
-        custRefDate: '',
-        validFrom: '',
-        validTo: '',
-        netValue1: '',
-        netValue2: '',
-        expectOrdVal: '',
-        plant: ''
+      form: { // 对接Inquiry
+        customerId: '',
+        POcode: '',
+        PODate: '',
+        effectiveDate: '',
+        expirationDate: '',
+        warehouseId: ''
       },
-      addMaterialForm: {
+      netValueForm: {
+        expectOrdVal: '',
+        netValue1: '',
+        netValue2: ''
+      },
+      addMaterialForm: { // InquiryItem
         material: '',
         orderQuantity: '',
         salesUnit: '',
         itemDescription: '',
         orderProbability: ''
       },
-      editMaterialForm: {
-        item: '',
+      editMaterialForm: { // InquiryItem
+        // item: '',
         material: parseInt(null),
         orderQuantity: '',
         salesUnit: '',
@@ -388,10 +405,13 @@ export default {
       // 数据填充
       // 客户查询对话框第一层表单
       dialogForm1: {
-        searchTerm: '',
-        city: ''
+        POcode: '',
+        city: '',
+        country: '',
+        postcode: '',
+        name: ''
       },
-      // material假数据
+      // material假数据，对接InquiryItem
       materialList: [{
         material: 'DXTR1036',
         orderQuantity: 5,
@@ -426,24 +446,24 @@ export default {
       }],
       // 规则
       rules: {
-        soldToParty: [
+        customerId: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ],
-        custReference: [
+        POcode: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ],
-        custRefDate: [
+        PODate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        validFrom: [
+        effectiveDate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        validTo: [
+        expirationDate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        plant: [
+        warehouseId: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },
@@ -482,13 +502,6 @@ export default {
       },
       // 客户查询对话框第一层表单的验证规则对象
       dialogForm1rules: {
-        searchTerm: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
-        ],
-        city: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
-        ]
       },
       formLabelWidth: '120px',
       formLabelWidth1: '160px',
@@ -564,11 +577,11 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.form.soldToParty = parseInt(row.Customer)
+      this.form.customerId = parseInt(row.Customer)
     },
     plantTextClick (row) {
       this.plantVisible = false
-      this.form.plant = row.plantNum
+      this.form.warehouseId = row.plantNum
     },
     materialTextClick (row) {
       this.materialVisible = false
@@ -584,14 +597,19 @@ export default {
     },
     submitForm (formName) {
       console.log(this.materialList)
+      const _this = this
       if (this.materialList.length === 0) {
         this.$message.error('At least one material is required!')
       } else {
         this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.$message({
-              message: 'submit!',
-              type: 'success'
+          if (valid) { // 前后端交互，提交按钮
+            axios.post('link', this.form, this.materialList).then(function (resp) {
+              if (resp.data === 'success') {
+                _this.$message({
+                  message: 'submit!',
+                  type: 'success'
+                })
+              }
             })
           } else {
             console.log('error submit!!')
@@ -661,8 +679,8 @@ export default {
         netValue += row.orderQuantity * price
         ExpectOrdVal += row.orderQuantity * price * (row.orderProbability / 100)
       })
-      this.form.netValue1 = netValue
-      this.form.expectOrdVal = ExpectOrdVal
+      this.netValueForm.netValue1 = netValue
+      this.netValueForm.expectOrdVal = ExpectOrdVal
     }
   }
 }

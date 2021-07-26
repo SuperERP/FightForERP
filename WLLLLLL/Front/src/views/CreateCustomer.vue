@@ -14,8 +14,8 @@
               </el-input>
             </el-form-item></el-col>
           <el-col :span="12">
-            <el-form-item label="Search Term:" prop="searchTerm">
-              <el-input v-model.number="form.searchTerm">
+            <el-form-item label="Search Term:" prop="POcode">
+              <el-input v-model.number="form.POcode">
               </el-input>
             </el-form-item></el-col></el-row>
 
@@ -26,8 +26,8 @@
         </el-form-item>
         <el-row :gutter="50" >
           <el-col :span="8">
-            <el-form-item label="Postal Code:" prop="postalCode">
-              <el-input v-model.number="form.postalCode">
+            <el-form-item label="Postal Code:" prop="postcode">
+              <el-input v-model.number="form.postcode">
               </el-input>
             </el-form-item></el-col>
           <el-col :span="12"><el-form-item label="City:" prop="city">
@@ -53,12 +53,12 @@
         <el-row :gutter="50" >
           <el-col :span="8">
             <el-form-item label="Sales Org:" prop="salesOrg">
-              <el-input v-model="form.salesOrg">
+              <el-input v-model="form.sales_channel_number">
               </el-input>
             </el-form-item></el-col>
           <el-col :span="12">
             <el-form-item label="Distribution Channel:" prop="distributionChannel">
-              <el-input v-model="form.distributionChannel">
+              <el-input v-model="form.distribution_channel">
               </el-input>
             </el-form-item></el-col></el-row>
 
@@ -68,8 +68,8 @@
             <el-col :offset="18" span="6">
               <el-form-item style="margin-top:20px;">
                 <el-button type="primary" @click="submitForm('form')">Submit</el-button>
-                <!--             退出按钮，回到主界面-->
-                <el-button type="text" style="color:white">Cancel</el-button>
+                <!--             清空按钮，不回到主界面-->
+                <el-button type="text" style="color:white">Clear</el-button>
               </el-form-item></el-col></el-row>
         </el-footer>
       </el-form></el-container>
@@ -102,27 +102,29 @@ body{
 </style>
 
 <script>
+import axios from 'axios'
+
 export default {
   data () {
     return {
       form: {
         name: '',
-        searchTerm: '',
+        POcode: '',
         street: '',
-        postalCode: '',
+        postcode: '',
         city: '',
         country: '',
         region: '',
         language: '',
-        salesOrg: '',
-        distributionChannel: ''
+        sales_channel_number: '',
+        distribution_channel: ''
       },
       // 规则
       rules: {
         name: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        postalCode: [
+        postcode: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ],
@@ -140,12 +142,16 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      console.log(this.materialList)
+      const _this = this
       this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$message({
-            message: 'submit!',
-            type: 'success'
+        if (valid) { // 前后端交互，提交按钮
+          axios.post('link', this.form).then(function (resp) {
+            if (resp.data === 'success') {
+              _this.$message({
+                message: 'submit!',
+                type: 'success'
+              })
+            }
           })
         } else {
           console.log('error submit!!')

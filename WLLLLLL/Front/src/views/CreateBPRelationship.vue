@@ -6,12 +6,12 @@
 
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
         <div>
-        <el-form-item style="margin-top:20px" label="Search Term:" prop="searchTerm">
-          <el-input v-model.number="form.searchTerm">
+        <el-form-item style="margin-top:20px" label="Search Term:" prop="POcode">
+          <el-input v-model.number="form.POcode">
           </el-input>
         </el-form-item></div>
-        <el-form-item label="Relationship Category:" prop="relationshipCategory">
-          <el-input size='mini' v-model="form.relationshipCategory">
+        <el-form-item label="Relationship Category:" prop="relationType">
+          <el-input size='mini' v-model="form.relationType">
             <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible8 = true"></el-button></el-input>
           <!--          relationship category列表-->
           <el-dialog
@@ -43,20 +43,32 @@
         <el-divider content-position="left" >Default</el-divider>
         <div>
 <!--        business partner1输入框-->
-        <el-form-item label="Business Customer:" prop="businessCustomer">
-          <el-input v-model.number="form.businessCustomer">
+        <el-form-item label="Business Customer:" prop="customerId">
+          <el-input v-model.number="form.customerId">
             <!--带搜索按钮的输入框-->
             <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
           <!-- 第一层查询 -->
           <el-dialog title="Business Customer" :visible.sync="Visible1" @close="dialogClosed1">
             <!-- 查询表单-->
             <el-form :model="dialogForm1" :rules="dialogForm1rules" ref="dialogForm1">
-              <el-form-item label="Name 1:" prop="name" :label-width="formLabelWidth">
-                <el-input v-model.number="dialogForm1.name"  size="mini"  autocomplete="off"></el-input>
+              <el-form-item label="Search Term:" prop="POcode" :label-width="formLabelWidth">
+                <el-input v-model="dialogForm1.POcode"  size="mini"  autocomplete="off"></el-input>
               </el-form-item>
               <p></p>
-              <el-form-item label="Search Term:" prop="searchTerm" :label-width="formLabelWidth">
-                <el-input v-model.number="dialogForm1.searchTerm"  size="mini"  autocomplete="off"></el-input>
+              <el-form-item label="City:" prop="city" :label-width="formLabelWidth">
+                <el-input v-model="dialogForm1.city"  size="mini" autocomplete="off"></el-input>
+              </el-form-item>
+              <p></p>
+              <el-form-item label="Country:" prop="country" :label-width="formLabelWidth">
+                <el-input v-model="dialogForm1.country"  size="mini" autocomplete="off"></el-input>
+              </el-form-item>
+              <p></p>
+              <el-form-item label="Postal Code:" prop="postcode" :label-width="formLabelWidth">
+                <el-input v-model="dialogForm1.postcode"  size="mini" autocomplete="off"></el-input>
+              </el-form-item>
+              <p></p>
+              <el-form-item label="Name:" prop="name" :label-width="formLabelWidth">
+                <el-input v-model="dialogForm1.name"  size="mini" autocomplete="off"></el-input>
               </el-form-item>
             </el-form>
             <!-- 第二层表格    -->
@@ -99,8 +111,8 @@
         </el-form-item></div>
         <div>
         <!--        business partner2输入框-->
-        <el-form-item label="Contact Person:" prop="contactPerson">
-          <el-input  v-model.number="form.contactPerson">
+        <el-form-item label="Contact Person:" prop="contactId">
+          <el-input  v-model.number="form.contactId">
             <!--带搜索按钮的输入框-->
             <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible3 = true"></el-button></el-input>
           <!-- 第一层查询 -->
@@ -176,8 +188,8 @@
             <el-col :offset="18" span="6">
               <el-form-item style="margin-top:20px;">
                 <el-button type="primary" @click="submitForm('form')">Execute</el-button>
-                <!--             退出按钮，回到主界面-->
-                <el-button type="text" style="color:white">Cancel</el-button>
+                <!--             清空按钮，不回到主界面-->
+                <el-button type="text" style="color:white">Clear</el-button>
               </el-form-item></el-col></el-row>
         </el-footer>
       </el-form></el-container>
@@ -206,6 +218,8 @@
 </style>
 
 <script>
+import axios from 'axios'
+
 export default {
   data () {
     return {
@@ -215,23 +229,23 @@ export default {
       Visible4: false, // bp2第二层表格
       Visible8: false, // relationship category对话框
       form: {
-        searchTerm: '',
-        relationshipCategory: '',
+        POcode: '',
+        relationType: '',
         validFrom: '',
         validTo: '',
-        businessCustomer: '',
-        contactPerson: ''
+        customerId: '',
+        contactId: ''
       },
       // 规则
       rules: {
-        relationshipCategory: [
+        relationType: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        businessCustomer: [
+        customerId: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ],
-        contactPerson: [
+        contactId: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ],
@@ -241,14 +255,17 @@ export default {
         validTo: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        searchTerm: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
+        POcode: [
+          // { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ]
       },
       // 客户查询对话框第一层表单
       dialogForm1: {
-        searchTerm: '',
+        POcode: '',
+        city: '',
+        country: '',
+        postcode: '',
         name: ''
       },
       dialogForm2: {
@@ -257,10 +274,6 @@ export default {
         firstName: ''
       },
       dialogForm1rules: {
-        searchTerm: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
-        ]
       },
       dialogForm2rules: {
         searchTerm: [
@@ -318,24 +331,28 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.form.businessCustomer = parseInt(row.partner)
+      this.form.customerId = parseInt(row.partner)
     },
     textclick1 (row) {
       this.Visible3 = false
       this.Visible4 = false
-      this.form.contactPerson = parseInt(row.partner)
+      this.form.contactId = parseInt(row.partner)
     },
     textclick2 (row) {
       this.Visible8 = false
-      this.form.relationshipCategory = row.relCat
+      this.form.relationType = row.relCat
     },
     submitForm (formName) {
-      console.log(this.materialList)
+      const _this = this
       this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$message({
-            message: 'Relationship was applied!',
-            type: 'success'
+        if (valid) { // 前后端交互，提交按钮
+          axios.post('link', this.form).then(function (resp) {
+            if (resp.data === 'success') {
+              _this.$message({
+                message: 'submit!',
+                type: 'success'
+              })
+            }
           })
         } else {
           console.log('error execute!!')

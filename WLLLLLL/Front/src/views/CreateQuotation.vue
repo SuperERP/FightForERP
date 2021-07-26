@@ -79,20 +79,32 @@
       <!--      sold to party搜索功能-->
       <el-row :gutter="50" style="margin-top:10px">
         <el-col :span="8">
-          <el-form-item label="Sold-To Party:" prop="soldToParty">
-            <el-input style="width:110px;" v-model.number="form.soldToParty">
+          <el-form-item label="Sold-To Party:" prop="customerId">
+            <el-input style="width:110px;" v-model.number="form.customerId">
               <!--带搜索按钮的输入框-->
               <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
             <!-- 第一层查询 -->
             <el-dialog title="Customers(General)" :visible.sync="Visible1" @close="dialogClosed1">
               <!-- 查询表单-->
               <el-form :model="dialogForm1" :rules="dialogForm1rules" ref="dialogForm1">
-                <el-form-item label="Search Term" prop="searchTerm" :label-width="formLabelWidth">
-                  <el-input v-model.number="dialogForm1.searchTerm"  size="mini"  autocomplete="off"></el-input>
+                <el-form-item label="Search Term:" prop="POcode" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.POcode"  size="mini"  autocomplete="off"></el-input>
                 </el-form-item>
                 <p></p>
-                <el-form-item label="City" prop="city" :label-width="formLabelWidth">
+                <el-form-item label="City:" prop="city" :label-width="formLabelWidth">
                   <el-input v-model="dialogForm1.city"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Country:" prop="country" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.country"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Postal Code:" prop="postcode" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.postcode"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Name:" prop="name" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.name"  size="mini" autocomplete="off"></el-input>
                 </el-form-item>
               </el-form>
               <!-- 第二层表格    -->
@@ -151,13 +163,13 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="Net Value:">
-            <el-input style="width:110px;" size='mini' v-model="form.netValue1" :disabled="true"></el-input>
-            <el-input style="width:60px;" placeholder="USD" size='mini' v-model="form.netValue2" :disabled="true"></el-input>
+            <el-input style="width:110px;" size='mini' v-model="netValueForm.netValue1" :disabled="true"></el-input>
+            <el-input style="width:60px;" placeholder="USD" size='mini' v-model="netValueForm.netValue2" :disabled="true"></el-input>
           </el-form-item>
         </el-col></el-row>
       <!--      plant搜索框-->
       <el-form-item label="Plant:" prop="plant">
-        <el-input style="width:110px;" v-model.number="form.plant">
+        <el-input style="width:110px;" v-model.number="form.warehouseId">
           <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantVisible = true"></el-button>
         </el-input>
         <el-dialog
@@ -190,17 +202,17 @@
       <el-row :gutter="50" >
         <el-col :span="8">
           <el-form-item label="Cust. Reference:" prop="custReference">
-            <el-input style="width:110px;" v-model.number="form.custReference">
+            <el-input style="width:110px;" v-model.number="form.POcode">
             </el-input>
           </el-form-item></el-col>
         <el-col :span="12"><el-form-item label="Cust. Ref. Date:" prop="custRefDate">
-          <el-date-picker type="date" v-model="form.custRefDate" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" v-model="form.PODate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
         <el-col :span="8"><el-form-item label="Valid From:" prop="validFrom">
-          <el-date-picker type="date" v-model="form.validFrom" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" v-model="form.effectiveDate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
         <el-col :span="12"><el-form-item label="Valid To:" prop="validTo">
-          <el-date-picker type="date" v-model="form.validTo" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" v-model="form.expirationDate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
       </el-row>
 <!--      下半部分-->
@@ -208,7 +220,7 @@
       <el-row :gutter="50" >
         <el-col :offset='8' :span="12">
           <el-form-item label="Expect.Ord.Val:">
-            <el-input style="width:110px;" size='mini' v-model="form.expectOrdVal" :disabled="true"></el-input>
+            <el-input style="width:110px;" size='mini' v-model="netValueForm.expectOrdVal" :disabled="true"></el-input>
             <el-input style="width:60px;" placeholder="USD" size='mini' :disabled="true"></el-input>
           </el-form-item></el-col></el-row>
 <!--总体折扣-->
@@ -556,16 +568,22 @@ export default {
       search: '',
       // 数据填充
       form: {
-        soldToParty: '',
-        custReference: '',
-        custRefDate: '',
-        validFrom: '',
-        validTo: '',
-        netValue1: '',
-        netValue2: '',
-        expectOrdVal: '',
+        customerId: '',
+        warehouseId: '',
+        POcode: '',
+        PODate: '',
+        effectiveDate: '',
+        expirationDate: '',
+        // netValue1: '',
+        // netValue2: '',
+        // expectOrdVal: '',
         totalCnty: '',
         totalCntyPercent: ''
+      },
+      netValueForm: {
+        expectOrdVal: '',
+        netValue1: '',
+        netValue2: ''
       },
       addMaterialForm: {
         material: '',
@@ -593,8 +611,11 @@ export default {
 
       // 客户查询对话框第一层表单
       dialogForm1: {
-        searchTerm: '',
-        city: ''
+        POcode: '',
+        city: '',
+        country: '',
+        postcode: '',
+        name: ''
       },
       dialogForm3: {
         inquiryNum: ''
@@ -637,24 +658,24 @@ export default {
       ],
       // 规则
       rules: {
-        soldToParty: [
+        customerId: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ],
-        custReference: [
+        POcode: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ],
-        custRefDate: [
+        PODate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        validFrom: [
+        effectiveDate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        validTo: [
+        expirationDate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        plant: [
+        warehouseId: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },
@@ -705,13 +726,6 @@ export default {
       },
       // 客户查询对话框第一层表单的验证规则对象
       dialogForm1rules: {
-        searchTerm: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
-        ],
-        city: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
-        ]
       },
       formLabelWidth: '120px',
       formLabelWidth1: '160px',
@@ -767,8 +781,8 @@ export default {
       }],
       inquiryTableData: [{
         document: '10000132',
-        soldToParty: '25027',
-        plant: 'MI00',
+        customerId: '25027',
+        warehouseId: 'MI00',
         purchaseOrderNum: '036',
         custRefDat: '10.07.21'
       }],
@@ -812,7 +826,7 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.form.soldToParty = parseInt(row.Customer)
+      this.form.customerId = parseInt(row.Customer)
     },
     textclick1 (row) {
       this.Visible6 = false
@@ -833,7 +847,7 @@ export default {
     },
     plantTextClick (row) {
       this.plantVisible = false
-      this.form.plant = row.plantNum
+      this.form.warehouseId = row.plantNum
     },
     materialTextClick (row) {
       this.materialVisible = false
@@ -993,8 +1007,8 @@ export default {
         netValue += row.orderQuantity * price
         ExpectOrdVal += row.orderQuantity * price - temp
       })
-      this.form.netValue1 = netValue
-      this.form.expectOrdVal = ExpectOrdVal
+      this.netValueForm.netValue1 = netValue
+      this.netValueForm.expectOrdVal = ExpectOrdVal
     },
     // 激活整体折扣
     cntyActivate () {
@@ -1017,7 +1031,7 @@ export default {
             temp += row.orderQuantity * price - temp1
           })
           ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
-          this.form.expectOrdVal = ExpectOrdVal
+          this.netValueForm.expectOrdVal = ExpectOrdVal
         }
       }
     },
