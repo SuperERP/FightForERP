@@ -15,13 +15,13 @@ export default {
   },
   methods: {
     postLoginInfor () {
-      this.axios.post('http://127.0.0.1:5000/fuck'
-        , {
-          name: 'dfa'
-        }).then(response => {
-        console.log(response)
-      }).catch(error => {
-        console.log(error)
+      this.axios({
+        method: 'post',
+        url: 'http://127.0.0.1:5000/fuck',
+        data: {
+          name: '张辉',
+          sex: '男'
+        }
       })
     }
   }
