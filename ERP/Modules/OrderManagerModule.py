@@ -30,21 +30,9 @@ class OrderManagerModule(AbstractModule):
 
         '''
         # 生成销售订单的编号
-        testdata = {
-            'customerId': 'dfsaf',
-            'warehouse': '2011-05-06',
-            'POcode': '050',
-            'PODate': '2011-05-06',
-            'effectiveDate': '2011-05-06',
-            'expirationDate': '2011-05-06',
-            'requestedDeliveryDate': '2011-05-06',
-            'discountId': 'zk101',
-            'totalDiscountNum': '',
-            'materialList': ['sb101', 'sb102', 'sb103', 'sb104']
-        }
 
         data['id'] = 'SO' + self.getTimeId()
 
         newSalesOrder = SalesOrder(**data)
-
+        self.insertData(newSalesOrder)
         return data['id']

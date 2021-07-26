@@ -3,15 +3,19 @@ from .OrmData.DeliveryData import *
 
 
 class DeliveryManagerModule(AbstractModule):
-    def __init__(self, session, idrecord, logging):
+    def __init__(self, session, logging):
         '''
         :param session:
         :param idrecord:
         :param logging:
         '''
-        super().__init__(session, idrecord, logging)
-        self.session = session
-        self.logging = logging
+        super().__init__(session, logging)
+
+    def searchallDelivery(self):
+        res = []
+        for item in self.session.query(DeliveryOrder).all():
+            res.append(self.to_dict(item))
+        return res
 
     def insertDeliveryOrder(self, data):
         '''
@@ -19,6 +23,8 @@ class DeliveryManagerModule(AbstractModule):
         :param data:
         :return:
         '''
+
+        data['id'] = 'OD' + self.getTimeId()
         newData = DeliveryOrder(**data)
         self.insertData(newData)
 

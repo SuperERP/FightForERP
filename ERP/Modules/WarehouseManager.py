@@ -10,8 +10,6 @@ class WareHouseDataManager(AbstractModule):
         '''
 
         super().__init__(session, logging)
-        self.session = session
-        self.logging = logging
 
     def insertInventory(self, data: dict):
         '''

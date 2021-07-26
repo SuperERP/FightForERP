@@ -9,10 +9,43 @@ import CreateCustomer from '../views/CreateCustomer'
 import CreateContactPerson from '../views/CreateContactPerson'
 import CreateBPRelationship from '../views/CreateBPRelationship'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
+import AnalyzeDeliveryLog from '../views/AnalyzeDeliveryLog'
+import CreateOutboundDeliveries from '../views/CreateOutboundDeliveries'
+import OutboundDeliveries from '../views/OutboundDeliveries'
+
+import Test from '../components/Test'
+import PickingOutboundDelivery1 from '../views/PickingOutboundDelivery1'
+
 Vue.use(elTableInfiniteScroll)
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/Test',
+    name: 'Test',
+    component: Test
+  },
+  {
+    path: '/AnalyzeDeliveryLog',
+    name: 'AnalyzeDeliveryLog',
+    component: AnalyzeDeliveryLog
+
+  },
+  {
+    path: '/CreateOutboundDeliveries',
+    name: 'CreateOutboundDeliveries',
+    component: CreateOutboundDeliveries
+  },
+  {
+    path: '/OutboundDeliveries',
+    name: 'OutboundDeliveries',
+    component: OutboundDeliveries
+  },
+  {
+    path: '/PickingOutboundDelivery1',
+    name: 'PickingOutboundDelivery1',
+    component: PickingOutboundDelivery1
+  },
   {
     path: '/CreateInquiry',
     name: '创建询价单',

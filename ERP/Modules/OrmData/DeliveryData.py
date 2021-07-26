@@ -4,18 +4,19 @@ from .BaseUtil import *
 class DeliveryOrder(Base):
     __tablename__ = 'DeliveryOrder'
 
-    id = Column(String(20), primary_key=True)
+    id = Column(String(30), primary_key=True)
     plannedDeliveryTime = Column(Date())
     actualDeliveryTime = Column(Date())
     salesOrderId = Column(String(10), ForeignKey('SalesOrder.id'))
-    warehouse = Column(String(10), ForeignKey('Warehouse.id'))
+    warehouseId = Column(String(10), ForeignKey('Warehouse.id'))
     deliveryPhase = Column(Enum('1', '2', '3'))
 
     def __init__(self, **data):
+        self.id=data['id']
         self.plannedDeliveryTime = data['plannedDeliveryTime']
         self.actualDeliveryTime = data['actualDeliveryTime']
         self.salesOrderId = data['salesOrderId']
-        self.warehouse = data['warehouse']
+        self.warehouseId = data['warehouseId']
         self.deliveryPhase = data['deliveryPhase']
 
     def __repr__(self):
@@ -25,7 +26,7 @@ class DeliveryOrder(Base):
                    self.plannedDeliveryTime,
                    self.actualDeliveryTime,
                    self.salesOrderId,
-                   self.warehouse,
+                   self.warehouseId,
                    self.deliveryPhase
                )
 
@@ -36,7 +37,7 @@ class DeliveryItem(Base):
     '''
     __tablename__ = 'DeliveryOrderItem'
 
-    deliveryOrderId = Column(String(10), ForeignKey('DeliveryOrder.id'))
+    deliveryOrderId = Column(String(30), ForeignKey('DeliveryOrder.id'))
     materialId = Column(String(10), ForeignKey('MaterialDic.id'))
     description = Column(Text())
     amount = Column(Integer())

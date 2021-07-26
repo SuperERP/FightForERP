@@ -45,7 +45,7 @@ class Customer(Base):
         self.paycode = data['paycode']
         self.distribution_channel = data['distribution_channel']
         self.distribution_area = data['distribution_area']
-        self.sales_channel_number = data['sales_channel_number']
+        # self.sales_channel_number = data['sales_channel_number']
         self.POcode = data['POcode']
 
     def __repr__(self):
@@ -83,7 +83,12 @@ class ContactPerson(Base):
         self.POcode = data['POcode']
 
     def __repr__(self):
-        return '我还没写'
+        return '<ContactPerson(id=%r,name=%r, prefixName=%r,first_name=%r,second_name=%r,language=%r,country=%r,area=%r,POcode=%r' \
+               % \
+               (
+                   self.id, self.name, self.prefixName, self.first_name, self.second_name, self.language, self.country,
+                   self.area, self.POcode
+               )
 
 
 class CustomerAndContactPersonRelationship(Base):
@@ -105,4 +110,4 @@ class CustomerAndContactPersonRelationship(Base):
         self.POcode = data['Pocode']
 
     def __repr__(self):
-        return '我还没写'
+        return '<CustomerAndContactPerson(customerId=%r,)>'

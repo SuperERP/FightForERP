@@ -59,7 +59,7 @@ class Quotation(Base):
 class QuotationItem(Base):
     __tablename__ = 'Quotationitem'
 
-    quotationId = Column(String(20), ForeignKey('Quotation.id'))
+    quotationId = Column(String(30), ForeignKey('Quotation.id'))
     materialId = Column(String(10), ForeignKey('MaterialDic.id'))
     description = Column(Text())
     amount = Column(Integer())
@@ -86,7 +86,7 @@ class SalesOrder(Base):
     销售订单
     '''
     __tablename__ = 'SalesOrder'
-    id = Column(String(20), primary_key=True)
+    id = Column(String(30), primary_key=True)
 
     customerId = Column(String(20), ForeignKey('Customer.id'))
     warehouse = Column(String(10), ForeignKey('Warehouse.id'))
@@ -118,7 +118,7 @@ class SalesOrder(Base):
 
 class SalesOrderItem(Base):
     __tablename__ = 'SalesOrderItem'
-    saleOrderId = Column(String(20), ForeignKey('SalesOrder.id'))
+    saleOrderId = Column(String(30), ForeignKey('SalesOrder.id'))
     materialId = Column(String(10), ForeignKey('MaterialDic.id'))
     description = Column(Text())
     amount = Column(Integer())

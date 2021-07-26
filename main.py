@@ -7,6 +7,6 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello World!'
 
-@app.route('/')
+
 if __name__ == '__main__':
     app.run()      # 看源码发现，最终调用了werkzeug的run_simple()

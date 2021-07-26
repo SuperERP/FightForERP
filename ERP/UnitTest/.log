@@ -1,1 +1,69 @@
-success insert data <Customer(id='0001000000',name='zht', street='sp',postcode='111',country='CN',language='CH',accountantId='1853245',paycode='1853245',distribution_channel='00',distribution_area='CN00',sales_channel_number='0',POcode='123')>
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: Customer.id
+[SQL: INSERT INTO "Customer" (id, name, street, postcode, country, language, "accountantId", paycode, distribution_channel, distribution_area, sales_channel_number, "POcode") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('0001000000', 'zht', 'sp', '111', 'CN', 'CH', '185324', '1853245', '00', 'CN00', None, '123')]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: MaterialDic.id
+[SQL: INSERT INTO "MaterialDic" (id, name, price) VALUES (?, ?, ?)]
+[parameters: ('sb101', 'mat1', 123.0)]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: MaterialDic.id
+[SQL: INSERT INTO "MaterialDic" (id, name, price) VALUES (?, ?, ?)]
+[parameters: ('sb102', 'mat2', 123.0)]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: MaterialDic.id
+[SQL: INSERT INTO "MaterialDic" (id, name, price) VALUES (?, ?, ?)]
+[parameters: ('sb103', 'mat3', 123.0)]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: MaterialDic.id
+[SQL: INSERT INTO "MaterialDic" (id, name, price) VALUES (?, ?, ?)]
+[parameters: ('sb104', 'mat4', 123.0)]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: Discount.id
+[SQL: INSERT INTO "Discount" (id, name, "discountCalcu") VALUES (?, ?, ?)]
+[parameters: ('zk101', 'zk1', 'A')]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: Discount.id
+[SQL: INSERT INTO "Discount" (id, name, "discountCalcu") VALUES (?, ?, ?)]
+[parameters: ('zk102', 'zk2', 'A')]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: Discount.id
+[SQL: INSERT INTO "Discount" (id, name, "discountCalcu") VALUES (?, ?, ?)]
+[parameters: ('zk103', 'zk3', 'B')]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: Discount.id
+[SQL: INSERT INTO "Discount" (id, name, "discountCalcu") VALUES (?, ?, ?)]
+[parameters: ('zk104', 'zk4', 'B')]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: Warehouse.id
+[SQL: INSERT INTO "Warehouse" (id, name) VALUES (?, ?)]
+[parameters: ('lz101', 'mat1')]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: Warehouse.id
+[SQL: INSERT INTO "Warehouse" (id, name) VALUES (?, ?)]
+[parameters: ('lz102', 'mat2')]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: Warehouse.id
+[SQL: INSERT INTO "Warehouse" (id, name) VALUES (?, ?)]
+[parameters: ('lz103', 'mat2')]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: Warehouse.id
+[SQL: INSERT INTO "Warehouse" (id, name) VALUES (?, ?)]
+[parameters: ('lz104', 'mat2')]
+(Background on this error at: http://sqlalche.me/e/14/gkpj)
+success insert data <>
+success insert data <DeliveryOrder(id='OD20210726120153735260',plannedDeliveryTime=datetime.date(2010, 12, 31),actualDeliveryTime=None,salesOrderId='SO20211052460726',warehouse='lz101',deliveryPhase='1')>
+success insert data <DeliveryOrder(id='OD20210726120153741245',plannedDeliveryTime=datetime.date(2010, 12, 31),actualDeliveryTime=None,salesOrderId='SO20211052460726',warehouse='lz101',deliveryPhase='1')>
+success insert data <DeliveryOrder(id='OD20210726120153744247',plannedDeliveryTime=datetime.date(2010, 12, 31),actualDeliveryTime=None,salesOrderId='SO20211052460726',warehouse='lz101',deliveryPhase='1')>

@@ -4,13 +4,16 @@ class AbstractModule:
         self.logging = logging
         pass
 
+    def to_dict(self,data):
+        return {c.name: getattr(data, c.name, None) for c in data.__table__.columns}
+
     def getTimeId(self):
         '''
         获取时间戳标记id
         :return:
         '''
-        import time
-        return time.strftime("%Y%H%M%S%m%d", time.localtime())
+        import datetime
+        return datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')
 
     def str_to_date(self, dateStr):
         '''
