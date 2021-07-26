@@ -515,7 +515,7 @@
   </div>
 </template>
 
-<style>
+<style scoped="scoped">
 .el-header {
   text-align: center;
 }
