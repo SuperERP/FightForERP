@@ -19,7 +19,7 @@ class OrderManagerModule(AbstractModule):
         :param data:
         :return:
         '''
-        newData = Discount(**data)
+        newData = DiscountDic(**data)
         self.insertData(newData)
 
     def createSalesOrder(self, data):

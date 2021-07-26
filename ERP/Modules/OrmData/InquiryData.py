@@ -30,27 +30,23 @@ class InquiryItem(Base):
     __tablename__ = 'InquiryItem'
     # 询价单编号
     inquiryId = Column(String(20), ForeignKey('Inquiry.id'))
-    # 报价单编号
-    materialId = Column(String(10), ForeignKey('MaterialDic.id'))
-
+    material = Column(String(10), ForeignKey('MaterialDic.id'))
     descpription = Column(Text())
     count = Column(Integer())
-    unit = Column(String(10))
-    probability = Column(Float())
+    salesUnit = Column(String(10))
+    orderProbility = Column(Float())
     __table_args__ = (
         # 联合主键约束
-        PrimaryKeyConstraint('inquiryId', 'materialId'),
+        PrimaryKeyConstraint('inquiryId', 'material'),
     )
 
     def __init__(self, **kwargs):
         self.inquiryId = kwargs['inquiryId']
-        self.materialId = kwargs['materialId']
+        self.material = kwargs['material']
         self.descpription = kwargs['descpription']
         self.count = kwargs['count']
-        self.unit = kwargs['unit']
-        self.probability = kwargs['probability']
+        self.salesUnit = kwargs['salesUnit']
+        self.orderProbility = kwargs['orderProbility']
 
     def __repr__(self):
-        return '<InquiryItem(inquiryId=%r,materialId=%r,descpription=%r,count=%r,unit=%r,probability=%r)>' % (
-            self.inquiryId, self.materialId, self.descpription, self.count, self.unit, self.probability
-        )
+        pass

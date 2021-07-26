@@ -37,6 +37,7 @@ class CustomerManagerModule(AbstractModule):
         :param data:
         :return:
         '''
+        Base.metadata.create_all()
         data['id'] = 'CP' + self.getTimeId()
         new_data = ContactPerson(**data)
         self.insertData(new_data)
@@ -52,3 +53,4 @@ class CustomerManagerModule(AbstractModule):
         new_data = Customer(**data)
         if self.insertData(new_data):
             self.customerRecord += 1
+        return data['id']

@@ -11,18 +11,22 @@ from flask import jsonify
 from flask import Flask, request
 from flask_cors import CORS
 
-newCustomer = CustomerManagerModule(session, ErpLogger)
+newContactPerson = CustomerManagerModule(session, ErpLogger)
 
 # 实例化产生一个Flask对象
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
 # flask的路由是基于装饰器的
-@app.route('/createCustomer', methods=['post'])
-def createCustomer():
+@app.route('/createContactPerson', methods=['post'])
+def createContactPerson():
     a = request.get_json()
-    id = newCustomer.insertCustomer(a)
-    return(id)
+    # print(a)
+    try:
+        newContactPerson.insertContactPerson(a)
+    except Exception as e:
+        return("false")
+    return("success")
 
 if __name__ == '__main__':
     app.run()

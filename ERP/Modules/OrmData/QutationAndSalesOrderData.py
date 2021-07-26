@@ -1,11 +1,11 @@
 from .BaseUtil import *
 
 
-class Discount(Base):
+class DiscountDic(Base):
     '''
     折扣词条
     '''
-    __tablename__ = 'Discount'
+    __tablename__ = 'DiscountDic'
 
     id = Column(String(10), primary_key=True)
     name = Column(Text())
@@ -19,7 +19,7 @@ class Discount(Base):
         self.discountCalcu = kwargs['discountCalcu']
 
     def __repr__(self):
-        return '<Discount(id=%r,name=%r,discountCalcu=%r)>' % (self.id, self.name, self.discountCalcu)
+        return '<DiscountDic(id=%r,name=%r,discountCalcu=%r)>' % (self.id, self.name, self.discountCalcu)
 
 
 class Quotation(Base):
@@ -89,7 +89,7 @@ class SalesOrder(Base):
     id = Column(String(30), primary_key=True)
 
     customerId = Column(String(20), ForeignKey('Customer.id'))
-    warehouse = Column(String(10), ForeignKey('Warehouse.id'))
+    warehouseId = Column(String(10), ForeignKey('Warehouse.id'))
     POcode = Column(String(10))
     PODate = Column(Date())
 
@@ -97,8 +97,8 @@ class SalesOrder(Base):
 
     expirationDate = Column(Date())
     requestedDeliveryDate = Column(Date())
-    discountId = Column(String(10), ForeignKey('Discount.id'))
-    totalDiscountNum = Column(Integer())
+    cnty = Column(String(10), ForeignKey('DiscountDic.id'))
+    totalCntyPercent = Column(Integer())
 
     def __init__(self, **data):
         self.id = data['id']
@@ -109,8 +109,8 @@ class SalesOrder(Base):
         self.effectiveDate = data['effectiveDate']
         self.expirationDate = data['expirationDate']
         self.requestedDeliveryDate = data['requestedDeliveryDate']
-        self.discountId = data['discountId']
-        self.totalDiscountNum = data['totalDiscountNum']
+        self.cnty = data['cnty']
+        self.totalCntyPercent = data['totalCntyPercent']
 
     def __repr__(self):
         return '<>'
@@ -119,15 +119,15 @@ class SalesOrder(Base):
 class SalesOrderItem(Base):
     __tablename__ = 'SalesOrderItem'
     saleOrderId = Column(String(30), ForeignKey('SalesOrder.id'))
-    materialId = Column(String(10), ForeignKey('MaterialDic.id'))
-    description = Column(Text())
+    material = Column(String(10), ForeignKey('MaterialDic.id'))
+    itemDescription = Column(Text())
     amount = Column(Integer())
-    discountId = Column(String(10), ForeignKey('Discount.id'))
+    discountId = Column(String(10), ForeignKey('DiscountDic.id'))
     totalDiscountNum = Column(Integer())
 
     __table_args__ = (
         # 联合主键约束
-        PrimaryKeyConstraint('saleOrderId', 'materialId'),
+        PrimaryKeyConstraint('saleOrderId', 'material'),
     )
 
     def __init__(self, **kwargs):

@@ -1,0 +1,22 @@
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: Customer.id [SQL: 'INSERT INTO "Customer" (id, name, street, postcode, country, language, city, region, distribution_channel, sales_channel_number, "POcode") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'] [parameters: ('0001000000', 'zht', '', 123, 'CH', 'CN', 'CC', '', '', None, '')] (Background on this error at: http://sqlalche.me/e/gkpj)
+请重新检查数据插入
+(sqlite3.IntegrityError) UNIQUE constraint failed: Customer.id [SQL: 'INSERT INTO "Customer" (id, name, street, postcode, country, language, city, region, distribution_channel, sales_channel_number, "POcode") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'] [parameters: ('0001000000', 'zht', '', 123, 'CH', 'CN', 'CC', '', '', None, '')] (Background on this error at: http://sqlalche.me/e/gkpj)
+success insert data <Customer(id='0001000000',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000001',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000002',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000003',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000004',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000005',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000006',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000007',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000008',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000009',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000010',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000011',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000012',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000013',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000014',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000015',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000016',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
+success insert data <Customer(id='0001000017',name='zht', street='',postcode='123',country='CH',language='CN',paycode='CC',distribution_channel='',city='CC',sregion='',POcode='')>
