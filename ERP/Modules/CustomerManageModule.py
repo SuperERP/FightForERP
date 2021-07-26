@@ -14,12 +14,20 @@ class CustomerManagerModule(AbstractModule):
         self.logging = logging
         self.customerRecord = customerRecord
 
-    def searchCustomer(self):
+    def searchCustomer(self,searchTerm=None,city=None):
         '''
         :return:
         '''
         # result = session.query(User.username).filter(User.username == 'bob').all()  # [('bob',)]
-        pass
+        if(searchTerm!=None and city!=None):
+            pass
+
+        res=[]
+
+        for idata in self.session.query(Customer).all():
+            res.append(self.to_dict(idata))
+
+        return res
 
     def insertCustomerAndContactPersonRelationship(self, data: dict):
         '''

@@ -9,10 +9,10 @@ class DeliveryOrder(Base):
     actualDeliveryTime = Column(Date())
     salesOrderId = Column(String(10), ForeignKey('SalesOrder.id'))
     warehouseId = Column(String(10), ForeignKey('Warehouse.id'))
-    deliveryPhase = Column(Enum('1', '2', '3'))
+    deliveryPhase = Column(Integer())
 
     def __init__(self, **data):
-        self.id=data['id']
+        self.id = data['id']
         self.plannedDeliveryTime = data['plannedDeliveryTime']
         self.actualDeliveryTime = data['actualDeliveryTime']
         self.salesOrderId = data['salesOrderId']

@@ -35,9 +35,9 @@ class Quotation(Base):
     ## 请求交货日期
     requestedDeliveryDate = Column(Date())
     ## 折扣数量
-    discountId = Column(String(10), ForeignKey('Discount.id'))
+    cnty = Column(String(10), ForeignKey('DiscountDic.id'))
     ## 总体折扣数量
-    totalDiscountNum = Column(Integer())
+    totalCntyPercent = Column(Integer())
 
     def __init__(self, **kwargs):
         self.id = kwargs['id']
@@ -51,34 +51,34 @@ class Quotation(Base):
         ## 请求交货日期
         self.requestedDeliveryDate = Column(Date())
         ## 折扣数量
-        self.discountId = Column(String(10), ForeignKey('Discount.id'))
+        self.cnty = Column(String(10), ForeignKey('DiscountDic.id'))
         ## 总体折扣数量
-        self.totalDiscountNum = Column(Integer())
+        self.totalCntyPercent = Column(Integer())
 
 
 class QuotationItem(Base):
     __tablename__ = 'Quotationitem'
 
     quotationId = Column(String(30), ForeignKey('Quotation.id'))
-    materialId = Column(String(10), ForeignKey('MaterialDic.id'))
-    description = Column(Text())
-    amount = Column(Integer())
-    unit = Column(String(10))
-    discountId = Column(String(10), ForeignKey('Discount.id'))
-    discountAmount = Column(Integer())
+    material = Column(String(10), ForeignKey('MaterialDic.id'))
+    itemDescription = Column(Text())
+    orderQuantity = Column(Integer())
+    salesUnit = Column(String(10))
+    cnty = Column(String(10), ForeignKey('DiscountDic.id'))
+    amount = Column(Integer()) #折扣数量命名
     __table_args__ = (
         # 联合主键约束
-        PrimaryKeyConstraint('quotationId', 'materialId'),
+        PrimaryKeyConstraint('quotationId', 'material'),
     )
 
     def __init__(self, **kwargs):
         self.quotationId = kwargs['quotationId']
-        self.materialId = kwargs['materialId']
-        self.description = kwargs['description']
+        self.material = kwargs['material']
+        self.itemDescription = kwargs['itemDescription']
+        self.orderQuantity = kwargs['orderQuantity']
+        self.salesUnit = kwargs['salesUnit']
+        self.cnty = kwargs['cnty']
         self.amount = kwargs['amount']
-        self.unit = kwargs['unit']
-        self.discountId = kwargs['discountId']
-        self.discountAmount = kwargs['discountAmount']
 
 
 class SalesOrder(Base):
@@ -121,9 +121,10 @@ class SalesOrderItem(Base):
     saleOrderId = Column(String(30), ForeignKey('SalesOrder.id'))
     material = Column(String(10), ForeignKey('MaterialDic.id'))
     itemDescription = Column(Text())
+    orderQuantity = Column(Integer())
+    salesUnit = Column(String(10))
+    cnty = Column(String(10), ForeignKey('DiscountDic.id'))
     amount = Column(Integer())
-    discountId = Column(String(10), ForeignKey('DiscountDic.id'))
-    totalDiscountNum = Column(Integer())
 
     __table_args__ = (
         # 联合主键约束
@@ -131,4 +132,10 @@ class SalesOrderItem(Base):
     )
 
     def __init__(self, **kwargs):
-        pass
+        self.saleOrderId = kwargs['saleOrderId']
+        self.material = kwargs['material']
+        self.itemDescription = kwargs['itemDescription']
+        self.orderQuantity = kwargs['orderQuantity']
+        self.salesUnit = kwargs['salesUnit']
+        self.cnty = kwargs['cnty']
+        self.amount = kwargs['amount']

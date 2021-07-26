@@ -60,7 +60,7 @@ class Customer(Base):
 
 class ContactPerson(Base):
     __tablename__ = 'ContactPerson'
-    id = Column(String(20), primary_key=True, nullable=false)
+    id = Column(String(30), primary_key=True, nullable=false)
     prefixName = Column(String(10), nullable=false)
     first_name = Column(String(10), nullable=false)
     last_name = Column(String(10), nullable=false)
@@ -90,6 +90,7 @@ class ContactPerson(Base):
 class CustomerAndContactPersonRelationship(Base):
     __tablename__ = 'CustomerAndContactPerson'
 
+    id = Column(String(30), primary_key=True) 
     customerId = Column(String(20), ForeignKey('Customer.id'))
     contactId = Column(String(20), ForeignKey('ContactPerson.id'))
     relationType = Column(String(10), ForeignKey('RelationshipDic.relationType'))
@@ -97,11 +98,12 @@ class CustomerAndContactPersonRelationship(Base):
     validFrom = Column(Date())
     POcode = Column(String(10))
 
-    __table_args__ = (
-        PrimaryKeyConstraint('customerId', 'contactId', 'relationType'),
-    )
+    # __table_args__ = (
+    #     PrimaryKeyConstraint('customerId', 'contactId', 'relationType'),
+    # )
 
     def __init__(self, **data):
+        self.id = data['id']
         self.customerId = data['customerId']
         self.contactId = data['contactId']
         self.relationType = data['relationType']

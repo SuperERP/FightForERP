@@ -1,6 +1,7 @@
 from .AbstractModule import AbstractModule
 from .OrmData.QutationAndSalesOrderData import *
 from .OrmData.InquiryData import *
+from ERP.Modules.OrmData.WareHouse import Warehouse
 
 
 class OrderManagerModule(AbstractModule):
@@ -11,7 +12,28 @@ class OrderManagerModule(AbstractModule):
         :param logging:
         '''
         super().__init__(session, logging)
-        self.logging = logging
+        
+    def searchOrders(self, customerId=None, warehouseId=None, saleorderId=None):
+
+        def getSaleOrders(data):
+            print(data)
+
+            id = data['warehouseId']
+            self.logging.info(id)
+            data['warehousename'] = self.session.query(
+                Warehouse).filter(Warehouse.id == id).all()[0].name
+            return data
+
+        ret=[]
+        if saleorderId is not None:
+            for idata in self.session.query(SalesOrder).filter(SalesOrder.id == saleorderId).all():
+                ret.append(getSaleOrders(self.to_dict(idata)))
+        else:
+            for idata in self.session.query(SalesOrder).all():
+                ret.append(getSaleOrders(self.to_dict(idata)))
+
+
+        return ret
 
     def insertDiscount(self, data: dict):
         '''
