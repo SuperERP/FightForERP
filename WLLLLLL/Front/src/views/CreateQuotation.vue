@@ -289,7 +289,7 @@
                 <el-table
                     ref="searchMaterialList"
                     height="250"
-                    :data="searchMaterialList.filter(data => !search || data.material.toLowerCase().includes(search.toLowerCase()))"
+                    :data="searchMaterialList.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
                     highlight-current-row
                     @current-change="handleCurrentChange"
                     @row-click="materialTextClick"
@@ -397,7 +397,7 @@
               <el-table
                   ref="searchMaterialList"
                   height="250"
-                  :data="searchMaterialList.filter(data => !search || data.material.toLowerCase().includes(search.toLowerCase()))"
+                  :data="searchMaterialList.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
                   highlight-current-row
                   @current-change="handleCurrentChange"
                   @row-click="materialTextClick1"
