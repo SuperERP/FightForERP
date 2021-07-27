@@ -109,7 +109,7 @@ class CustomerAndContactPersonRelationship(Base):
         self.relationType = data['relationType']
         self.validFrom = data['validFrom']
         self.validTo = data['validTo']
-        self.POcode = data['Pocode']
+        self.POcode = data['POcode']
 
     def __repr__(self):
         return '<CustomerAndContactPerson(customerId=%r,)>'

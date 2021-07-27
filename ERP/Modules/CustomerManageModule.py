@@ -13,6 +13,12 @@ class CustomerManagerModule(AbstractModule):
         self.session = session
         self.logging = logging
         self.customerRecord = customerRecord
+    
+    def searchallRelationshipDic(self):
+        res = []
+        for item in self.session.query(RelationshipDic).all():
+            res.append(self.to_dict(item))
+        return res
 
     def searchCustomer(self,searchTerm=None,city=None):
         '''
@@ -35,9 +41,11 @@ class CustomerManagerModule(AbstractModule):
         :param data:
         :return:
         '''
-
+        Base.metadata.create_all()
+        data['id'] = 'BP' + self.getTimeId()
         new_data = CustomerAndContactPersonRelationship(**data)
         self.insertData(new_data)
+        return(data['id'])
 
     def insertContactPerson(self, data: dict):
         '''
