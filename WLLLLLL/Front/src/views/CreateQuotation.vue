@@ -15,9 +15,12 @@
                     <!--带搜索按钮的输入框-->
                     <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible6 = true"></el-button></el-input>
                   <!-- 第一层查询 -->
-                  <el-dialog title="Sales document according to customer PO number" :visible.sync="Visible6" @close="dialogClosed1" append-to-body>
+                  <el-dialog title="Search Inquiry" :visible.sync="Visible6" @close="dialogClosed1" append-to-body>
                     <!-- 查询表单-->
                     <el-form :model="inquirySearchForm" :rules="inquirySearchFormRules" ref="inquirySearchForm">
+                      <el-form-item label="Purchase Order No.:" prop="purchaseOrderNum" :label-width="formLabelWidth1">
+                        <el-input v-model.number="inquirySearchForm.purchaseOrderNum"  size="mini"  autocomplete="off"></el-input>
+                      </el-form-item>
                       <el-form-item label="Purchase Order No.:" prop="purchaseOrderNum" :label-width="formLabelWidth1">
                         <el-input v-model.number="inquirySearchForm.purchaseOrderNum"  size="mini"  autocomplete="off"></el-input>
                       </el-form-item>
@@ -832,8 +835,8 @@ export default {
     },
     materialTextClick1 (row) {
       this.materialVisible = false
-      this.editMaterialForm.material = row.material
-      this.editMaterialForm.itemDescription = row.itemDescription
+      this.editMaterialForm.material = row.id
+      this.editMaterialForm.itemDescription = row.name
       this.editMaterialForm.salesUnit = row.salesUnit
     },
     submitForm (formName) {
@@ -971,6 +974,10 @@ export default {
           temp = row.amount
         }
         // 后端调取数据库，查出该物料对应的price
+        axios.post('link', row.material).then(function (resp) {
+          price = resp.data
+        })
+        // 计算
         ExpectOrdVal += row.orderQuantity * price - temp
       })
       // if语句判断期望折扣是否小于0
