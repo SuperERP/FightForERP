@@ -14,27 +14,42 @@ class CustomerManagerModule(AbstractModule):
         self.logging = logging
         self.customerRecord = customerRecord
     
-    def searchallRelationshipDic(self):
+    def searchallRelationshipDic(self): # 查找所有关系字典
         res = []
         for item in self.session.query(RelationshipDic).all():
             res.append(self.to_dict(item))
         return res
 
-    def searchCustomer(self,searchTerm=None,city=None):
+    def searchCustomer(self,POcode=None,city=None,country=None,postcode=None,name=None):
         '''
         :return:
         '''
-        # result = session.query(User.username).filter(User.username == 'bob').all()  # [('bob',)]
-        if(searchTerm!=None and city!=None):
-            pass
 
         res=[]
 
-        for idata in self.session.query(Customer).all():
+        for idata in self.session.query(Customer).filter(or_(Customer.POcode==POcode,POcode==''))\
+            .filter(or_(Customer.city==city,city==''))\
+                .filter(or_(Customer.country==country,country==''))\
+                    .filter(or_(Customer.postcode==postcode,postcode==''))\
+                        .filter(or_(Customer.name==name,name=='')).all():
             res.append(self.to_dict(idata))
 
         return res
 
+    def searchContactPerson(self,POcode=None,last_name=None,first_name=None):
+        '''
+        :return:
+        '''
+
+        res=[]
+
+        for idata in self.session.query(ContactPerson).filter(or_(ContactPerson.POcode==POcode,POcode==''))\
+            .filter(or_(ContactPerson.last_name==last_name,last_name==''))\
+                .filter(or_(ContactPerson.first_name==first_name,first_name=='')).all():
+            res.append(self.to_dict(idata))
+
+        return res
+        
     def insertCustomerAndContactPersonRelationship(self, data: dict):
         '''
         向数据库中插入新的客户与联系人关系

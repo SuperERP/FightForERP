@@ -275,10 +275,6 @@ export default {
       dialogForm1rules: {
       },
       dialogForm2rules: {
-        POcode: [
-          // { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
-        ]
       },
       formLabelWidth: '160px',
       formLabelWidth1: '160px',
@@ -320,8 +316,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible2 = true
-          axios.get('link', _this.dialogForm1).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
-            _this.BP1TableData = resp.data.content // 注意此时假数据仍存在，后续调试请视效果去除，假数据存在于BP1TableData
+          axios.post('http://127.0.0.1:5000/searchBP1', _this.dialogForm1).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+            _this.BP1TableData = resp.data // 注意此时假数据仍存在，后续调试请视效果去除，假数据存在于BP1TableData
           })
         } else {
           return false
@@ -333,8 +329,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible4 = true
-          axios.get('link', _this.dialogForm2).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
-            _this.BP2TableData = resp.data.content // 注意此时假数据仍存在，后续调试请视效果去除，假数据存在于BP1TableData
+          axios.post('http://127.0.0.1:5000/searchBP2', _this.dialogForm2).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+            _this.BP2TableData = resp.data // 注意此时假数据仍存在，后续调试请视效果去除，假数据存在于BP1TableData
           })
         } else {
           return false
