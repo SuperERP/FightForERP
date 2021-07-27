@@ -168,6 +168,8 @@
           </el-form-item>
         </el-col></el-row>
       <!--      plant搜索框-->
+      <el-row :gutter="50">
+        <el-col :span="8">
       <el-form-item label="Plant:" prop="plant">
         <el-input style="width:110px;" v-model.number="form.plant">
           <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantVisible = true"></el-button>
@@ -198,6 +200,10 @@
           </el-table>
         </el-dialog>
       </el-form-item>
+        </el-col>
+        <el-col :span="12"><el-form-item label="Req. Deliv. Date:" prop="requestedDeliveryDate">
+          <el-date-picker type="date" v-model="form.requestedDeliveryDate" style="width: 130px;"></el-date-picker></el-form-item>
+        </el-col></el-row>
 
       <el-row :gutter="50" >
         <el-col :span="8">
@@ -576,7 +582,8 @@ export default {
         netValue2: '',
         expectOrdVal: '',
         totalCnty: '',
-        totalCntyPercent: ''
+        totalCntyPercent: '',
+        requestedDeliveryDate: ''
       },
       addMaterialForm: {
         material: '',
@@ -669,6 +676,9 @@ export default {
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         plant: [
+          { required: true, message: 'Please enter...', trigger: 'blur' }
+        ],
+        requestedDeliveryDate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },

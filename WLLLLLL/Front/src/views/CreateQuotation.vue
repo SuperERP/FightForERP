@@ -168,7 +168,9 @@
           </el-form-item>
         </el-col></el-row>
       <!--      plant搜索框-->
-      <el-form-item label="Plant:" prop="plant">
+      <el-row :gutter="50">
+        <el-col :span="8">
+      <el-form-item label="Plant:" prop="warehouseId">
         <el-input style="width:110px;" v-model.number="form.warehouseId">
           <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantVisible = true"></el-button>
         </el-input>
@@ -198,20 +200,24 @@
           </el-table>
         </el-dialog>
       </el-form-item>
+        </el-col>
+        <el-col :span="12"><el-form-item label="Req. Deliv. Date:" prop="requestedDeliveryDate">
+          <el-date-picker type="date" v-model="form.requestedDeliveryDate" style="width: 130px;"></el-date-picker></el-form-item>
+        </el-col></el-row>
 
       <el-row :gutter="50" >
         <el-col :span="8">
-          <el-form-item label="Cust. Reference:" prop="custReference">
+          <el-form-item label="Cust. Reference:" prop="POcode">
             <el-input style="width:110px;" v-model.number="form.POcode">
             </el-input>
           </el-form-item></el-col>
-        <el-col :span="12"><el-form-item label="Cust. Ref. Date:" prop="custRefDate">
+        <el-col :span="12"><el-form-item label="Cust. Ref. Date:" prop="PODate">
           <el-date-picker type="date" v-model="form.PODate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
-        <el-col :span="8"><el-form-item label="Valid From:" prop="validFrom">
+        <el-col :span="8"><el-form-item label="Valid From:" prop="effectiveDate">
           <el-date-picker type="date" v-model="form.effectiveDate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
-        <el-col :span="12"><el-form-item label="Valid To:" prop="validTo">
+        <el-col :span="12"><el-form-item label="Valid To:" prop="expirationDate">
           <el-date-picker type="date" v-model="form.expirationDate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
       </el-row>
@@ -578,7 +584,8 @@ export default {
         // netValue2: '',
         // expectOrdVal: '',
         totalCnty: '',
-        totalCntyPercent: ''
+        totalCntyPercent: '',
+        requestedDeliveryDate: ''
       },
       netValueForm: {
         expectOrdVal: '',
@@ -676,6 +683,9 @@ export default {
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         warehouseId: [
+          { required: true, message: 'Please enter...', trigger: 'blur' }
+        ],
+        requestedDeliveryDate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },
