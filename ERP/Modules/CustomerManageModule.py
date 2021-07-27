@@ -14,14 +14,18 @@ class CustomerManagerModule(AbstractModule):
         self.logging = logging
         self.customerRecord = customerRecord
     
-    def searchallRelationshipDic(self): # 查找所有关系字典
+    def searchallRelationshipDic(self): 
+        '''
+        查找所有关系字典
+        '''
         res = []
         for item in self.session.query(RelationshipDic).all():
             res.append(self.to_dict(item))
         return res
 
-    def searchCustomer(self,POcode=None,city=None,country=None,postcode=None,name=None):
+    def searchCustomer(self,POcode='',city='',country='',postcode='',name=''):
         '''
+        按条件查找客户，空条件表示所有
         :return:
         '''
 
@@ -36,8 +40,9 @@ class CustomerManagerModule(AbstractModule):
 
         return res
 
-    def searchContactPerson(self,POcode=None,last_name=None,first_name=None):
+    def searchContactPerson(self,POcode='',last_name='',first_name=''):
         '''
+        按条件查找联系人，空条件表示所有
         :return:
         '''
 
@@ -49,7 +54,7 @@ class CustomerManagerModule(AbstractModule):
             res.append(self.to_dict(idata))
 
         return res
-        
+
     def insertCustomerAndContactPersonRelationship(self, data: dict):
         '''
         向数据库中插入新的客户与联系人关系
@@ -64,7 +69,7 @@ class CustomerManagerModule(AbstractModule):
 
     def insertContactPerson(self, data: dict):
         '''
-
+        插入联系人信息
         :param data:
         :return:
         '''
