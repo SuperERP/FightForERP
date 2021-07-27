@@ -414,21 +414,7 @@ export default {
         name: ''
       },
       // material假数据，对接InquiryItem
-      materialList: [{
-        material: 'DXTR1036',
-        orderQuantity: 5,
-        salesUnit: 'EA',
-        itemDescription: 'DXTRREAF',
-        orderProbability: 20
-      },
-      {
-        material: 'PXTR1036',
-        orderQuantity: 2,
-        salesUnit: 'EA',
-        itemDescription: 'pxtr12345',
-        orderProbability: 20
-      }
-      ],
+      materialList: [],
       plantList: [{ // 对应warehouse表
         id: 'MI00',
         name: 'Miami Plant'
