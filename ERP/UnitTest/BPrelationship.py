@@ -28,10 +28,9 @@ def createBPrelationship():
 
 @app.route('/showType', methods=['get'])
 def showType():
-    print("testttt")
-    res = []
     res = newBPrelationshiup.searchallRelationshipDic()
-    return(res)
+    print(jsonify(res))
+    return(jsonify(res))
 
 if __name__ == '__main__':
     app.run()

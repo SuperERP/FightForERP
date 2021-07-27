@@ -306,7 +306,7 @@ export default {
       this.Visible8 = true
       const _this = this
       axios.get('http://127.0.0.1:5000/showType').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
-        _this.relationshipCategoryList = resp.data.content
+        _this.relationshipCategoryList = resp.data
       })
     },
     // created () { // 在页面创建时，读入关系列表，注意此时假数据仍存在，后续调试请视效果去除，假数据存在于relationshipCategoryList
