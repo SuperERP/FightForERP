@@ -49,6 +49,7 @@ class CustomerManagerModule(AbstractModule):
         data['id'] = 'CP' + self.getTimeId()
         new_data = ContactPerson(**data)
         self.insertData(new_data)
+        return(data['id'])
 
     def insertCustomer(self, data: dict):
         '''

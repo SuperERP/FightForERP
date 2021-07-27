@@ -23,10 +23,10 @@ def createContactPerson():
     a = request.get_json()
     # print(a)
     try:
-        newContactPerson.insertContactPerson(a)
+        id = newContactPerson.insertContactPerson(a)
     except Exception as e:
         return("false")
-    return("success")
+    return(id)
 
 if __name__ == '__main__':
     app.run()

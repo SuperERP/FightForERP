@@ -28,12 +28,12 @@
                 @row-click="textclick2"
                 style="width: 100%">
               <el-table-column
-                  property="relCat"
+                  property="relationType"
                   label="RelCat"
                   width="120">
               </el-table-column>
               <el-table-column
-                  property="description"
+                  property="definition"
                   label="Description"
                   width="300">
               </el-table-column>
@@ -86,7 +86,7 @@
                   @row-click="textclick"
                   style="width: 100%">
                 <el-table-column
-                    property="searchTerm"
+                    property="POcode"
                     label="Search Term"
                     width="120">
                 </el-table-column>
@@ -96,8 +96,8 @@
                     width="120">
                 </el-table-column>
                 <el-table-column
-                    property="partner"
-                    label="Partner"
+                    property="id"
+                    label="CustomerID"
                     width="120">
                 </el-table-column>
               </el-table>
@@ -119,16 +119,16 @@
           <el-dialog title="Business Partner 2" :visible.sync="Visible3" @close="dialogClosed2">
             <!-- 查询表单-->
             <el-form :model="dialogForm2" :rules="dialogForm2rules" ref="dialogForm2">
-              <el-form-item label="Last Name:" prop="lastName" :label-width="formLabelWidth">
-                <el-input v-model.number="dialogForm2.lastName"  size="mini"  autocomplete="off"></el-input>
+              <el-form-item label="Last Name:" prop="last_name" :label-width="formLabelWidth">
+                <el-input v-model.number="dialogForm2.last_name"  size="mini"  autocomplete="off"></el-input>
               </el-form-item>
               <p></p>
-              <el-form-item label="First Name:" prop="firstName" :label-width="formLabelWidth">
-                <el-input v-model.number="dialogForm2.firstName"  size="mini"  autocomplete="off"></el-input>
+              <el-form-item label="First Name:" prop="first_name" :label-width="formLabelWidth">
+                <el-input v-model.number="dialogForm2.first_name"  size="mini"  autocomplete="off"></el-input>
               </el-form-item>
               <p></p>
-              <el-form-item label="Search Term" prop="searchTerm" :label-width="formLabelWidth">
-                <el-input v-model.number="dialogForm2.searchTerm"  size="mini"  autocomplete="off"></el-input>
+              <el-form-item label="Search Term" prop="POcode" :label-width="formLabelWidth">
+                <el-input v-model.number="dialogForm2.POcode"  size="mini"  autocomplete="off"></el-input>
               </el-form-item>
             </el-form>
             <!-- 第二层表格    -->
@@ -146,23 +146,23 @@
                   @row-click="textclick1"
                   style="width: 100%">
                 <el-table-column
-                    property="searchTerm"
+                    property="POcode"
                     label="Search Term"
                     width="120">
                 </el-table-column>
                 <el-table-column
-                    property="lastName"
+                    property="last_name"
                     label="Last Name"
                     width="120">
                 </el-table-column>
                 <el-table-column
-                    property="firstName"
+                    property="first_name"
                     label="First Name"
                     width="120">
                 </el-table-column>
                 <el-table-column
-                    property="partner"
-                    label="Partner"
+                    property="id"
+                    label="CP ID"
                     width="120">
                 </el-table-column>
               </el-table>
@@ -228,7 +228,7 @@ export default {
       Visible3: false, // bp1第一层查询
       Visible4: false, // bp2第二层表格
       Visible8: false, // relationship category对话框
-      form: {
+      form: { // 对应表CustomerAndContactPerson
         POcode: '',
         relationType: '',
         validFrom: '',
@@ -261,61 +261,75 @@ export default {
         ]
       },
       // 客户查询对话框第一层表单
-      dialogForm1: {
+      dialogForm1: { // 对应表Customer
         POcode: '',
         city: '',
         country: '',
         postcode: '',
         name: ''
       },
-      dialogForm2: {
-        searchTerm: '',
-        lastName: '',
-        firstName: ''
+      dialogForm2: { // 对应表ContactPerson
+        POcode: '',
+        last_name: '',
+        first_name: ''
       },
       dialogForm1rules: {
       },
       dialogForm2rules: {
-        searchTerm: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
+        POcode: [
+          // { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ]
       },
       formLabelWidth: '160px',
       formLabelWidth1: '160px',
-      BP1TableData: [{
-        searchTerm: '036',
+      BP1TableData: [{ // 对应表Customer
+        POcode: '036',
         name: 'The Bike Zone',
-        partner: '20534'
+        id: '20534'
       }],
       BP2TableData: [{
-        searchTerm: '036',
-        lastName: 'SMITH',
-        firstName: 'SUSAN',
-        partner: '48013'
+        POcode: '036',
+        last_name: 'SMITH',
+        first_name: 'SUSAN',
+        id: '48013'
       }],
-      relationshipCategoryList: [{
-        relCat: 'BUR001',
-        description: 'Has Contact Person'
+      relationshipCategoryList: [{ // 对应表RelationDic
+        relationType: 'BUR001',
+        definition: 'Has Contact Person'
       }],
       currentRow: null,
       show: true
     }
   },
   methods: {
+    created () { // 在页面创建时，读入关系列表，注意此时假数据仍存在，后续调试请视效果去除，假数据存在于relationshipCategoryList
+      const _this = this
+      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+        _this.relationshipCategoryList = resp.data.content
+      })
+    },
     BP1Find (formName) {
+      const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible2 = true
+          axios.get('link', _this.dialogForm1).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+            _this.BP1TableData = resp.data.content // 注意此时假数据仍存在，后续调试请视效果去除，假数据存在于BP1TableData
+          })
         } else {
           return false
         }
       })
     },
     BP2Find (formName) {
+      const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible4 = true
+          axios.get('link', _this.dialogForm2).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+            _this.BP2TableData = resp.data.content // 注意此时假数据仍存在，后续调试请视效果去除，假数据存在于BP1TableData
+          })
         } else {
           return false
         }
@@ -340,16 +354,21 @@ export default {
     },
     textclick2 (row) {
       this.Visible8 = false
-      this.form.relationType = row.relCat
+      this.form.relationType = row.relationType
     },
-    submitForm (formName) {
+    submitForm (formName) { // 后端支持，execute提交所有内容
       const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) { // 前后端交互，提交按钮
           axios.post('link', this.form).then(function (resp) {
-            if (resp.data === 'success') {
+            if (resp.data === 'fault') {
               _this.$message({
-                message: 'submit!',
+                message: 'fail!',
+                type: 'fail'
+              })
+            } else {
+              _this.$message({
+                message: 'submit!' + resp.data,
                 type: 'success'
               })
             }
