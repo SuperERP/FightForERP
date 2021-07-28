@@ -7,3 +7,8 @@ INSERT INTO RelationshipDic VALUES ('zhtest','Test0');
 SELECT * FROM RelationshipDic;
 SELECT * FROM CustomerAndContactPerson;
 DROP TABLE CustomerAndContactPerson;
+SELECT * FROM Inquiry;
+DROP TABLE InquiryItem;
+SELECT * FROM InquiryItem;
+INSERT INTO InquiryItem VALUES ('IN20210728150059682420','sb102','mat2',1,'EA',100);
+SELECT * FROM MaterialDic;

@@ -38,7 +38,7 @@ class InquiryItem(Base):
     itemDescription = Column(Text())
     orderQuantity = Column(Integer())
     salesUnit = Column(String(10))
-    orderProbility = Column(Float())
+    orderProbability = Column(Float())
     __table_args__ = (
         # 联合主键约束
         PrimaryKeyConstraint('inquiryId', 'material'),
@@ -50,7 +50,7 @@ class InquiryItem(Base):
         self.itemDescription = kwargs['itemDescription']
         self.orderQuantity = kwargs['orderQuantity']
         self.salesUnit = kwargs['salesUnit']
-        self.orderProbility = kwargs['orderProbility']
+        self.orderProbability = kwargs['orderProbability']
 
     def __repr__(self):
         pass

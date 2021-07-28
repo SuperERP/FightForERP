@@ -13,6 +13,27 @@ class OrderManagerModule(AbstractModule):
         '''
         super().__init__(session, logging)
         
+    def insertInquiry(self, data: dict):
+        '''
+        向数据库中插入询价单
+        :param data:
+        :return:
+        '''
+        Base.metadata.create_all()
+        data['id'] = 'IN' + self.getTimeId()
+        newData = Inquiry(**data)
+        self.insertData(newData)
+        return(data['id'])
+
+    def insertInquiryItem(self, data: dict):
+        '''
+        向数据库中插入询价单物料项
+        :param data:
+        :return:
+        '''
+        newData = InquiryItem(**data)
+        self.insertData(newData)
+
     def searchOrders(self, customerId=None, warehouseId=None, saleorderId=None):
 
         def getSaleOrders(data):

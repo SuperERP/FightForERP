@@ -74,18 +74,26 @@ def showMaterialDic():
     res = newWarehouseManager.searchallMaterialDic()
     return(jsonify(res))
 
-@app.route('/searchPrice', methods=['post']) # 查询对应物料的价格
-def searchPrice():
-    id = request.get_json()
-    res = newWarehouseManager.searchPrice(id['material'])
-    print("查询结果是",res[0])
-    return(jsonify(res[0]))
+# @app.route('/searchPrice', methods=['post']) # 查询对应物料的价格
+# def searchPrice():
+#     id = request.get_json()
+#     res = newWarehouseManager.searchPrice(id['material'])
+#     print("查询结果是",res[0])
+#     return(jsonify(res[0]))
 
 @app.route('/createInquiry', methods=['post']) # 创建询价单及询价单物料项
 def createInquiry():
-    a = request.get_json()
+    a = request.get_json()[0]
+    b = request.get_json()[1]
+    a['PODate'] = datetime.strptime(a['PODate'],'%Y-%m-%d')
+    a['effectiveDate'] = datetime.strptime(a['effectiveDate'],'%Y-%m-%d')
+    a['expirationDate'] = datetime.strptime(a['expirationDate'],'%Y-%m-%d')
     try:
-        id = newContactPerson.insertContactPerson(a)
+        id = newOrderManager.insertInquiry(a)
+        for item in b:
+            item['inquiryId'] = id # 把询价单编号加进询价单物料项的词条
+            del item['price']
+            newOrderManager.insertInquiryItem(item)
     except Exception as e:
         return("false")
     return(id)
