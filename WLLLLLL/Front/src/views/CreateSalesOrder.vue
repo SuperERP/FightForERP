@@ -122,32 +122,32 @@
                     @row-click="textclick"
                     style="width: 100%">
                   <el-table-column
-                      property="SearchTerm"
+                      property="POcode"
                       label="Search Term"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="Country"
+                      property="country"
                       label="Country"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="PostalCode"
+                      property="postcode"
                       label="PostalCode"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="City"
+                      property="city"
                       label="City"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="Name"
+                      property="name"
                       label="Name"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="Customer"
+                      property="id"
                       label="Customer"
                       width="120">
                   </el-table-column>
@@ -163,15 +163,15 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="Net Value:">
-            <el-input style="width:110px;" size='mini' v-model="form.netValue1" :disabled="true"></el-input>
-            <el-input style="width:60px;" placeholder="USD" size='mini' v-model="form.netValue2" :disabled="true"></el-input>
+            <el-input style="width:110px;" size='mini' v-model="netValueForm.netValue1" :disabled="true"></el-input>
+            <el-input style="width:60px;" placeholder="USD" size='mini' v-model="netValueForm.netValue2" :disabled="true"></el-input>
           </el-form-item>
         </el-col></el-row>
       <!--      plant搜索框-->
       <el-row :gutter="50">
         <el-col :span="8">
       <el-form-item label="Plant:" prop="plant">
-        <el-input style="width:110px;" v-model.number="form.plant">
+        <el-input style="width:110px;" v-model.number="form.warehouseId">
           <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantVisible = true"></el-button>
         </el-input>
         <el-dialog
@@ -188,12 +188,12 @@
               @row-click="plantTextClick"
               style="width: 100%">
             <el-table-column
-                property="plantNum"
+                property="id"
                 label="Plant Number"
                 width="120">
             </el-table-column>
             <el-table-column
-                property="plantName"
+                property="name"
                 label="Plant Name"
                 width="120">
             </el-table-column>
@@ -208,17 +208,17 @@
       <el-row :gutter="50" >
         <el-col :span="8">
           <el-form-item label="Cust. Reference:" prop="custReference">
-            <el-input style="width:110px;" v-model.number="form.custReference">
+            <el-input style="width:110px;" v-model.number="form.POcode">
             </el-input>
           </el-form-item></el-col>
         <el-col :span="12"><el-form-item label="Cust. Ref. Date:" prop="custRefDate">
-          <el-date-picker type="date" v-model="form.custRefDate" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" v-model="form.POdate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
         <el-col :span="8"><el-form-item label="Valid From:" prop="validFrom">
-          <el-date-picker type="date" v-model="form.validFrom" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" v-model="form.effectiveDate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
         <el-col :span="12"><el-form-item label="Valid To:" prop="validTo">
-          <el-date-picker type="date" v-model="form.validTo" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" v-model="form.expirationDate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
       </el-row>
 <!--      下半部分-->
@@ -226,7 +226,7 @@
       <el-row :gutter="50" >
         <el-col :offset='8' :span="12">
           <el-form-item label="Expect.Ord.Val:">
-            <el-input style="width:110px;" size='mini' v-model="form.expectOrdVal" :disabled="true"></el-input>
+            <el-input style="width:110px;" size='mini' v-model="netValueForm.expectOrdVal" :disabled="true"></el-input>
             <el-input style="width:60px;" placeholder="USD" size='mini' :disabled="true"></el-input>
           </el-form-item></el-col></el-row>
       <!--总体折扣-->
@@ -250,7 +250,7 @@
                   @row-click="textclick2"
                   style="width: 100%">
                 <el-table-column
-                    property="conditionNum"
+                    property="id"
                     label="Condition No."
                     width="120">
                 </el-table-column>
@@ -260,7 +260,7 @@
                     width="120">
                 </el-table-column>
                 <el-table-column
-                    property="method"
+                    property="discountCalcu"
                     label="Method"
                     width="120">
                 </el-table-column>
@@ -294,12 +294,12 @@
                   @row-click="materialTextClick"
                   style="width: 100%">
                 <el-table-column
-                    property="material"
+                    property="id"
                     label="Material"
                     width="120">
                 </el-table-column>
                 <el-table-column
-                    property="itemDescription"
+                    property="name"
                     label="Item Description"
                     width="200">
                 </el-table-column>
@@ -352,7 +352,7 @@
                   @row-click="textclick3"
                   style="width: 100%">
                 <el-table-column
-                    property="conditionNum"
+                    property="id"
                     label="Condition No."
                     width="120">
                 </el-table-column>
@@ -362,7 +362,7 @@
                     width="120">
                 </el-table-column>
                 <el-table-column
-                    property="method"
+                    property="discountCalcu"
                     label="Method"
                     width="120">
                 </el-table-column>
@@ -401,12 +401,12 @@
                   @row-click="materialTextClick1"
                   style="width: 100%">
                 <el-table-column
-                    property="material"
+                    property="id"
                     label="Material"
                     width="120">
                 </el-table-column>
                 <el-table-column
-                    property="itemDescription"
+                    property="name"
                     label="Item Description"
                     width="200">
                 </el-table-column>
@@ -459,7 +459,7 @@
                   @row-click="textclick4"
                   style="width: 100%">
                 <el-table-column
-                    property="conditionNum"
+                    property="id"
                     label="Condition No."
                     width="120">
                 </el-table-column>
@@ -469,7 +469,7 @@
                     width="120">
                 </el-table-column>
                 <el-table-column
-                    property="method"
+                    property="discountCalcu"
                     label="Method"
                     width="120">
                 </el-table-column>
@@ -551,6 +551,7 @@
 
 <script>
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
+import axios from 'axios'
 let netValue = 0
 let ExpectOrdVal = 0
 export default {
@@ -573,17 +574,23 @@ export default {
       search: '',
       // 数据填充
       form: {
-        soldToParty: '',
-        custReference: '',
-        custRefDate: '',
-        validFrom: '',
-        validTo: '',
-        netValue1: '',
-        netValue2: '',
-        expectOrdVal: '',
+        customerId: '',
+        warehouseId: '',
+        POcode: '',
+        PODate: '',
+        effectiveDate: '',
+        expirationDate: '',
+        // netValue1: '',
+        // netValue2: '',
+        // expectOrdVal: '',
         totalCnty: '',
         totalCntyPercent: '',
         requestedDeliveryDate: ''
+      },
+      netValueForm: {
+        expectOrdVal: '',
+        netValue1: '',
+        netValue2: ''
       },
       addMaterialForm: {
         material: '',
@@ -610,7 +617,7 @@ export default {
       },
 
       // 客户查询对话框第一层表单
-      dialogForm1: {
+      dialogForm1: { // 查询条件，对应Customer表
         POcode: '',
         city: '',
         country: '',
@@ -620,7 +627,7 @@ export default {
       dialogForm3: {
         inquiryNum: ''
       },
-      // material假数据
+      // material假数据，对接InquiryItem
       materialList: [{
         material: 'DXTR1036',
         orderQuantity: 5,
@@ -639,43 +646,36 @@ export default {
       }
       ],
       plantList: [{
-        plantNum: 'MI00',
-        plantName: 'Miami Plant'
+        id: 'MI00',
+        name: 'Miami Plant'
       }],
       // 查询material对话框出现的表格
       searchMaterialList: [{
-        material: 'DXTR',
-        itemDescription: 'Deluxe Touring Bike(black)',
+        id: 'DXTR',
+        name: 'Deluxe Touring Bike(black)',
         salesUnit: 'EA',
         price: '20'
-      },
-      {
-        material: 'PXTR',
-        itemDescription: 'Professional Touring Bike(black)',
-        salesUnit: 'EA',
-        price: '20'
-      }
-      ],
+      }],
       // 规则
       rules: {
-        soldToParty: [
+        customerId: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ],
-        custReference: [
+        POcode: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ],
-        custRefDate: [
+        PODate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        validFrom: [
+        effectiveDate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        validTo: [
+        expirationDate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        plant: [
+        warehouseId: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         requestedDeliveryDate: [
@@ -732,43 +732,15 @@ export default {
       },
       formLabelWidth: '120px',
       formLabelWidth1: '160px',
-      soldToPartyTableData: [{
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20534'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20535'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20535'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20536'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20536'
+      soldToPartyTableData: [{ // 对应Customer表
+        POcode: '036',
+        country: 'US',
+        postcode: '32804',
+        city: 'Orlando',
+        name: 'The Bike Zone',
+        id: '20534'
       }],
-      quotTableData: [{
+      quotTableData: [{ // ??
         document: '10000132',
         soldToParty: '25027',
         plant: 'MI00',
@@ -776,30 +748,43 @@ export default {
         custRefDat: '10.07.21'
       }],
       cntyList: [{
-        conditionNum: '1',
+        id: '1',
         name: 'K004',
-        method: 'reduce price'
-      },
-      {
-        conditionNum: '2',
-        name: 'R004',
-        method: 'discount'
+        discountCalcu: 'reduce price'
       }],
       currentRow: null,
       show: true
     }
   },
   methods: {
-    soldToPartyFind (formName) {
+    plantSearchClick () { // 对应warehouse表的全表查询
+      this.plantVisible = true
+      const _this = this
+      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+        _this.plantList = resp.data
+      })
+    },
+    materialSearchClick () { // 对应MaterialDic表的全表查询，需要在每一处插入sales unit: 'EA'
+      this.materialVisible = true
+      const _this = this
+      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+        _this.searchMaterialList = resp.data
+      })
+    },
+    soldToPartyFind (formName) { // 按输入内容，检索Customer表
+      const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible2 = true
+          axios.post('link', _this.dialogForm1).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+            _this.soldToPartyTableData = resp.data // 注意此处需求与BP不同。此时假数据仍存在，后续调试请视效果去除，假数据存在于soldToPartyTableData
+          })
         } else {
           return false
         }
       })
     },
-    quotSearchFind (formName) {
+    quotSearchFind (formName) { // ??
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible7 = true
@@ -816,7 +801,7 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.form.soldToParty = parseInt(row.Customer)
+      this.form.customerId = parseInt(row.id)
     },
     textclick1 (row) {
       this.Visible6 = false
@@ -837,30 +822,40 @@ export default {
     },
     plantTextClick (row) {
       this.plantVisible = false
-      this.form.plant = row.plantNum
+      this.form.warehouseId = row.id
     },
     materialTextClick (row) {
       this.materialVisible = false
-      this.addMaterialForm.material = row.material
-      this.addMaterialForm.itemDescription = row.itemDescription
+      this.addMaterialForm.material = row.id
+      this.addMaterialForm.itemDescription = row.name
       this.addMaterialForm.salesUnit = row.salesUnit
     },
     materialTextClick1 (row) {
       this.materialVisible = false
-      this.editMaterialForm.material = row.material
-      this.editMaterialForm.itemDescription = row.itemDescription
+      this.editMaterialForm.material = row.id
+      this.editMaterialForm.itemDescription = row.name
       this.editMaterialForm.salesUnit = row.salesUnit
     },
     submitForm (formName) {
       console.log(this.materialList)
+      const _this = this
       if (this.materialList.length === 0) {
         this.$message.error('At least one material is required!')
       } else {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$message({
-              message: 'submit!',
-              type: 'success'
+            axios.post('link', this.form, this.materialList).then(function (resp) {
+              if (resp.data === 'fault') {
+                _this.$message({
+                  message: 'fail!',
+                  type: 'fail'
+                })
+              } else {
+                _this.$message({
+                  message: 'submit! id:' + resp.data,
+                  type: 'success'
+                })
+              }
             })
           } else {
             console.log('error submit!!')
@@ -973,6 +968,10 @@ export default {
           temp = row.amount
         }
         // 后端调取数据库，查出该物料对应的price
+        axios.post('link', row.material).then(function (resp) {
+          price = resp.data
+        })
+        // 计算
         ExpectOrdVal += row.orderQuantity * price - temp
       })
       // if语句判断期望折扣是否小于0
@@ -991,11 +990,15 @@ export default {
           temp = row.amount
         }
         // 后端调取数据库，查出该物料对应的price
+        axios.post('link', row.material).then(function (resp) {
+          price = resp.data
+        })
+        // 计算
         netValue += row.orderQuantity * price
         ExpectOrdVal += row.orderQuantity * price - temp
       })
-      this.form.netValue1 = netValue
-      this.form.expectOrdVal = ExpectOrdVal
+      this.netValueForm.netValue1 = netValue
+      this.netValueForm.expectOrdVal = ExpectOrdVal
     },
     // 激活整体折扣
     cntyActivate () {
@@ -1015,10 +1018,14 @@ export default {
               temp1 = row.amount
             }
             // 后端调取数据库，查出该物料对应的price
+            axios.post('link', row.material).then(function (resp) {
+              price = resp.data
+            })
+            // 计算
             temp += row.orderQuantity * price - temp1
           })
           ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
-          this.form.expectOrdVal = ExpectOrdVal
+          this.netValueForm.expectOrdVal = ExpectOrdVal
         }
       }
     },

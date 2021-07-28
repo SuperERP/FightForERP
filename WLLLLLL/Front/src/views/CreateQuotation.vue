@@ -15,11 +15,131 @@
                     <!--带搜索按钮的输入框-->
                     <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible6 = true"></el-button></el-input>
                   <!-- 第一层查询 -->
-                  <el-dialog title="Sales document according to customer PO number" :visible.sync="Visible6" @close="dialogClosed1" append-to-body>
+                  <el-dialog title="Search Inquiry" :visible.sync="Visible6" @close="dialogClosed1" append-to-body>
                     <!-- 查询表单-->
                     <el-form :model="inquirySearchForm" :rules="inquirySearchFormRules" ref="inquirySearchForm">
-                      <el-form-item label="Purchase Order No.:" prop="purchaseOrderNum" :label-width="formLabelWidth1">
-                        <el-input v-model.number="inquirySearchForm.purchaseOrderNum"  size="mini"  autocomplete="off"></el-input>
+                      <el-form-item label="Sold-To Party:" prop="customerId" :label-width="formLabelWidth1">
+                        <el-input style="width:110px;" v-model.number="inquirySearchForm.customerId">
+                          <!--带搜索按钮的输入框-->
+                          <el-button type="text" icon="el-icon-search" slot="suffix"  @click="VisibleForInquiryButton1"></el-button></el-input>
+                        <!-- 第一层查询 -->
+                        <el-dialog title="Customers(General)" :visible.sync="Visible1ForInquiry" @close="dialogClosed1" append-to-body>
+                          <!-- 查询表单-->
+                          <el-form :model="dialogForm1ForInquiry" ref="dialogForm1ForInquiry">
+                            <el-form-item label="Search Term:" prop="POcode" :label-width="formLabelWidth">
+                              <el-input v-model="dialogForm1ForInquiry.POcode"  size="mini"  autocomplete="off"></el-input>
+                            </el-form-item>
+                            <p></p>
+                            <el-form-item label="City:" prop="city" :label-width="formLabelWidth">
+                              <el-input v-model="dialogForm1ForInquiry.city"  size="mini" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <p></p>
+                            <el-form-item label="Country:" prop="country" :label-width="formLabelWidth">
+                              <el-input v-model="dialogForm1ForInquiry.country"  size="mini" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <p></p>
+                            <el-form-item label="Postal Code:" prop="postcode" :label-width="formLabelWidth">
+                              <el-input v-model="dialogForm1ForInquiry.postcode"  size="mini" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <p></p>
+                            <el-form-item label="Name:" prop="name" :label-width="formLabelWidth">
+                              <el-input v-model="dialogForm1ForInquiry.name"  size="mini" autocomplete="off"></el-input>
+                            </el-form-item>
+                          </el-form>
+                          <!-- 第二层表格    -->
+                          <el-dialog
+                              width="55%"
+                              title="Choose your customer"
+                              :visible.sync="Visible2ForInquiry"
+                              append-to-body>
+                            <el-table
+                                ref="Table1"
+                                height="250"
+                                :data="soldToPartyTableDataForInquiry"
+                                highlight-current-row
+                                @current-change="handleCurrentChange"
+                                @row-click="textclickForInquiry"
+                                style="width: 100%">
+                              <el-table-column
+                                  property="POcode"
+                                  label="Search Term"
+                                  width="120">
+                              </el-table-column>
+                              <el-table-column
+                                  property="country"
+                                  label="Country"
+                                  width="120">
+                              </el-table-column>
+                              <el-table-column
+                                  property="postcode"
+                                  label="PostalCode"
+                                  width="120">
+                              </el-table-column>
+                              <el-table-column
+                                  property="city"
+                                  label="City"
+                                  width="120">
+                              </el-table-column>
+                              <el-table-column
+                                  property="name"
+                                  label="Name"
+                                  width="120">
+                              </el-table-column>
+                              <el-table-column
+                                  property="id"
+                                  label="Customer"
+                                  width="120">
+                              </el-table-column>
+                            </el-table>
+                          </el-dialog>
+                          <!--第一层find&cancel按钮-->
+                          <div slot="footer" class="dialog-footer">
+                            <el-button @click="Visible1ForInquiry = false">cancel</el-button>
+                            <el-button type="primary" @click="soldToPartyFindForInquiry('dialogForm1ForInquiry')">find</el-button>
+                          </div>
+                        </el-dialog>
+                      </el-form-item>
+                      <el-form-item label="Plant:" prop="warehouseId" :label-width="formLabelWidth1">
+                        <el-input style="width:110px;" v-model.number="inquirySearchForm.warehouseId">
+                          <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantSearchClickForInquiry"></el-button>
+                        </el-input>
+                        <el-dialog
+                            width="55%"
+                            title="Choose plant"
+                            :visible.sync="plantVisibleForInquiry"
+                            append-to-body>
+                          <el-table
+                              ref="plantListForInquiry"
+                              height="250"
+                              :data="plantListForInquiry"
+                              highlight-current-row
+                              @current-change="handleCurrentChange"
+                              @row-click="plantTextClickForInquiry"
+                              style="width: 100%">
+                            <el-table-column
+                                property="id"
+                                label="Plant Number"
+                                width="120">
+                            </el-table-column>
+                            <el-table-column
+                                property="name"
+                                label="Plant Name"
+                                width="120">
+                            </el-table-column>
+                          </el-table>
+                        </el-dialog>
+                      </el-form-item>
+                      <el-form-item label="Cust.Reference:" prop="POcode" :label-width="formLabelWidth1" >
+                        <el-input v-model.number="inquirySearchForm.POcode"  size="mini"  autocomplete="off" style="width: 160px;"></el-input>
+                      </el-form-item>
+                      <el-form-item label="Cust.Ref.Date:" prop="PODate" :label-width="formLabelWidth1">
+                        <el-date-picker type="date" v-model="inquirySearchForm.PODate" style="width: 200px;"></el-date-picker>
+                      </el-form-item>
+                      <el-form-item label="Valid From:" prop="effectiveDate" :label-width="formLabelWidth1">
+                        <el-date-picker type="date" v-model="inquirySearchForm.effectiveDate" style="width: 200px;"></el-date-picker>
+                      </el-form-item>
+                      <el-form-item label="Valid To:" prop="expirationDate" :label-width="formLabelWidth1">
+                        <el-date-picker type="date" v-model="inquirySearchForm.expirationDate" style="width: 200px;"></el-date-picker>
                       </el-form-item>
                     </el-form>
                   <!-- 第二层表格    -->
@@ -37,28 +157,28 @@
                           @row-click="textclick1"
                           style="width: 100%">
                         <el-table-column
-                            property="document"
-                            label="Document"
+                            property="id"
+                            label="InquiryID"
                             width="120">
                         </el-table-column>
                         <el-table-column
-                          property="soldToParty"
+                          property="customerId"
                           label="Sold-to Party"
                           width="120">
                       </el-table-column>
                         <el-table-column
-                          property="plant"
+                          property="warehouseId"
                           label="Plant"
                           width="120">
                       </el-table-column>
                         <el-table-column
-                            property="purchaseOrderNum"
-                            label="Purchase Order No."
+                            property="POcode"
+                            label="Cust.Reference"
                             width="160">
                         </el-table-column>
                         <el-table-column
-                            property="custRefDat"
-                            label="CustRefDat"
+                            property="PODate"
+                            label="Cust.Ref.Date"
                             width="120">
                         </el-table-column>
                       </el-table>
@@ -172,7 +292,7 @@
         <el-col :span="8">
       <el-form-item label="Plant:" prop="warehouseId">
         <el-input style="width:110px;" v-model.number="form.warehouseId">
-          <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantVisible = true"></el-button>
+          <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantSearchClick"></el-button>
         </el-input>
         <el-dialog
             width="55%"
@@ -574,6 +694,44 @@ export default {
       materialVisible: false, // material列表选择
       search: '',
       // 数据填充
+      // ForInquiry
+      Visible1ForInquiry: false, // soldToParty第一层查询
+      Visible2ForInquiry: false, // soldToParty第二层表格
+      plantVisibleForInquiry: false,
+      formForInquiry: {
+        customerId: '',
+        warehouseId: '',
+        POcode: '',
+        PODate: '',
+        effectiveDate: '',
+        expirationDate: '',
+        // netValue1: '',
+        // netValue2: '',
+        // expectOrdVal: '',
+        totalCnty: '',
+        totalCntyPercent: '',
+        requestedDeliveryDate: ''
+      },
+      dialogForm1ForInquiry: { // 查询条件，对应Customer表
+        POcode: '',
+        city: '',
+        country: '',
+        postcode: '',
+        name: ''
+      },
+      soldToPartyTableDataForInquiry: [{ // 对应Customer表
+        POcode: '036',
+        country: 'US',
+        postcode: '32804',
+        city: 'Orlando',
+        name: 'The Bike Zone',
+        id: '20534'
+      }],
+      plantListForInquiry: [{
+        id: 'MI00',
+        name: 'Miami Plant'
+      }],
+      // ForInquiry
       form: {
         customerId: '',
         warehouseId: '',
@@ -613,8 +771,13 @@ export default {
       createWithReferenceForm: {
         inquiryNum: ''
       },
-      inquirySearchForm: {
-        purchaseOrderNum: ''
+      inquirySearchForm: { // 对应表Inquiry
+        customerId: '',
+        warehouseId: '',
+        POcode: '',
+        PODate: '',
+        effectiveDate: '',
+        expirationDate: ''
       },
 
       // 客户查询对话框第一层表单
@@ -742,11 +905,11 @@ export default {
         id: '20534'
       }],
       inquiryTableData: [{ // ??
-        document: '10000132',
+        id: '10000132',
         customerId: '25027',
         warehouseId: 'MI00',
-        purchaseOrderNum: '036',
-        custRefDat: '10.07.21'
+        POcode: '036',
+        PODate: '10.07.21'
       }],
       cntyList: [{
         id: '1',
@@ -763,6 +926,13 @@ export default {
       const _this = this
       axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.plantList = resp.data
+      })
+    },
+    plantSearchClickForInquiry () {
+      this.plantVisibleForInquiry = true
+      const _this = this
+      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+        _this.plantListForInquiry = resp.data
       })
     },
     materialSearchClick () { // 对应MaterialDic表的全表查询，需要在每一处插入sales unit: 'EA'
@@ -785,6 +955,26 @@ export default {
         }
       })
     },
+    soldToPartyFindForInquiry (formName) { // 按输入内容，检索Customer表(ForInquiry)
+      const _this = this
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // this.Visible6 = false
+          // this.Visible5 = false
+          this.Visible2ForInquiry = true
+          axios.post('link', _this.dialogForm1ForInquiry).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+            _this.soldToPartyTableDataForInquiry = resp.data // 注意此处需求与BP不同。此时假数据仍存在，后续调试请视效果去除，假数据存在于soldToPartyTableData
+          })
+        } else {
+          return false
+        }
+      })
+    },
+    VisibleForInquiryButton1 () { // use append to body
+      // this.Visible6 = false
+      // this.Visible5 = false
+      this.Visible1ForInquiry = true
+    },
     inquirySearchFind (formName) { // ??
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -803,10 +993,15 @@ export default {
       this.Visible2 = false
       this.form.customerId = parseInt(row.id)
     },
-    textclick1 (row) {
+    textclickForInquiry (row) { // ForInquiry
+      this.Visible1ForInquiry = false
+      this.Visible2ForInquiry = false
+      this.inquirySearchForm.customerId = parseInt(row.id)
+    },
+    textclick1 (row) { // 表单处理
       this.Visible6 = false
       this.Visible7 = false
-      this.createWithReferenceForm.inquiryNum = parseInt(row.document)
+      this.createWithReferenceForm.inquiryNum = parseInt(row.id)
     },
     textclick2 (row) {
       this.Visible8 = false
@@ -824,6 +1019,10 @@ export default {
       this.plantVisible = false
       this.form.warehouseId = row.id
     },
+    plantTextClickForInquiry (row) { // ForInquiry
+      this.plantVisibleForInquiry = false
+      this.inquirySearchForm.warehouseId = row.id
+    },
     materialTextClick (row) {
       this.materialVisible = false
       this.addMaterialForm.material = row.id
@@ -832,8 +1031,8 @@ export default {
     },
     materialTextClick1 (row) {
       this.materialVisible = false
-      this.editMaterialForm.material = row.material
-      this.editMaterialForm.itemDescription = row.itemDescription
+      this.editMaterialForm.material = row.id
+      this.editMaterialForm.itemDescription = row.name
       this.editMaterialForm.salesUnit = row.salesUnit
     },
     submitForm (formName) {
@@ -971,6 +1170,10 @@ export default {
           temp = row.amount
         }
         // 后端调取数据库，查出该物料对应的price
+        axios.post('link', row.material).then(function (resp) {
+          price = resp.data
+        })
+        // 计算
         ExpectOrdVal += row.orderQuantity * price - temp
       })
       // if语句判断期望折扣是否小于0
@@ -1030,7 +1233,11 @@ export default {
     },
     // 将询价单信息复制到报价单
     copy () {
-
+      const _this = this
+      axios.post('link', this.inquirySearchForm).then(function (resp) {
+        _this.form = resp.data
+        _this.materialList = resp.data
+      })
     }
   }
 }

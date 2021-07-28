@@ -14,6 +14,8 @@ from flask_cors import CORS
 newCustomer = CustomerManagerModule(session, ErpLogger)
 newContactPerson = CustomerManagerModule(session, ErpLogger)
 newBPrelationship = CustomerManagerModule(session, ErpLogger)
+newWarehouseManager = WareHouseDataManager(session,ErpLogger)
+newOrderManager = OrderManagerModule(session,ErpLogger)
 
 # 实例化产生一个Flask对象
 app = Flask(__name__)
@@ -61,6 +63,32 @@ def searchBP2():
     searchTerm = request.get_json()
     res = newBPrelationship.searchContactPerson(POcode=searchTerm['POcode'],last_name=searchTerm['last_name'],first_name=searchTerm['first_name'])
     return(jsonify(res))
+
+@app.route('/showWarehouse', methods=['get']) #查询所有仓库信息
+def showWarehouse():
+    res = newWarehouseManager.searchallWarehouse()
+    return(jsonify(res))
+
+@app.route('/showMaterialDic', methods=['get']) #查询所有物料词条
+def showMaterialDic():
+    res = newWarehouseManager.searchallMaterialDic()
+    return(jsonify(res))
+
+@app.route('/searchPrice', methods=['post']) # 查询对应物料的价格
+def searchPrice():
+    id = request.get_json()
+    res = newWarehouseManager.searchPrice(id['material'])
+    print("查询结果是",res[0])
+    return(jsonify(res[0]))
+
+@app.route('/createInquiry', methods=['post']) # 创建询价单及询价单物料项
+def createInquiry():
+    a = request.get_json()
+    try:
+        id = newContactPerson.insertContactPerson(a)
+    except Exception as e:
+        return("false")
+    return(id)
 
 if __name__ == '__main__':
     app.run()
