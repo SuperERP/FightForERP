@@ -94,7 +94,7 @@
         <el-col :span="12">
           <el-form-item label="Net Value:">
             <el-input style="width:110px;" size='mini' v-model="netValueForm.netValue1" :disabled="true"></el-input>
-            <el-input style="width:60px;" placeholder="USD" size='mini' v-model="netValueForm.netValue2" :disabled="true"></el-input>
+            <el-input style="width:60px;" placeholder="USD" size='mini' v-model="netValueForm.netValueLabel" :disabled="true"></el-input>
           </el-form-item>
         </el-col></el-row>
 <!--      plant搜索框-->
@@ -385,21 +385,22 @@ export default {
         warehouseId: ''
       },
       netValueForm: {
-        expectOrdVal: '',
-        netValue1: '',
-        netValue2: ''
+        price: 0,
+        expectOrdVal: 0,
+        netValue1: 0,
+        netValueLabel: 'USD'
       },
       addMaterialForm: { // InquiryItem
         material: '',
-        orderQuantity: '',
+        orderQuantity: parseInt(null),
         salesUnit: '',
         itemDescription: '',
-        orderProbability: ''
+        orderProbability: parseInt(null)
       },
       editMaterialForm: { // InquiryItem
         // item: '',
-        material: parseInt(null),
-        orderQuantity: '',
+        material: '',
+        orderQuantity: parseInt(null),
         salesUnit: '',
         itemDescription: '',
         orderProbability: parseInt(null)
@@ -631,20 +632,24 @@ export default {
     },
     deleteRow (index, rows) {
       rows.splice(index, 1)
+      this.updateNetValue(this.materialList)
     },
     // 更新合计价格信息
     updateNetValue (materialList) {
+      const _this = this
       netValue = 0
       ExpectOrdVal = 0
-      var price = 20
+      this.netValueForm.netValue1 = 0
+      this.netValueForm.expectOrdVal = 0
+      this.netValueForm.price = 20
       materialList.forEach((row) => {
         // 后端调取数据库，查出该物料对应的price
         axios.post('link', row.material).then(function (resp) {
-          price = resp.data
+          _this.netValueForm.price = resp.data
         })
         // 计算
-        netValue += row.orderQuantity * price
-        ExpectOrdVal += row.orderQuantity * price * (row.orderProbability / 100)
+        netValue = netValue + row.orderQuantity * this.netValueForm.price
+        ExpectOrdVal = ExpectOrdVal + row.orderQuantity * this.netValueForm.price * (row.orderProbability / 100)
       })
       this.netValueForm.netValue1 = netValue
       this.netValueForm.expectOrdVal = ExpectOrdVal
