@@ -352,8 +352,8 @@
 <!--总体折扣-->
           <el-row :gutter="50">
         <el-col  :span="8">
-          <el-form-item label="Total Cnty:" prop="totalCnty">
-            <el-input style="width:110px;" size='mini' v-model="form.totalCnty">
+          <el-form-item label="Total Cnty:" prop="cnty">
+            <el-input style="width:110px;" size='mini' v-model="form.cnty">
             <el-button type="text" icon="el-icon-search" slot="suffix"  @click="cntySearchClick"></el-button></el-input>
 <!--          cnty列表-->
             <el-dialog
@@ -716,7 +716,7 @@ export default {
         // netValue1: '',
         // netValue2: '',
         // expectOrdVal: '',
-        totalCnty: '',
+        cnty: '',
         totalCntyPercent: '',
         requestedDeliveryDate: ''
       },
@@ -750,7 +750,7 @@ export default {
         // netValue1: '',
         // netValue2: '',
         // expectOrdVal: '',
-        totalCnty: '',
+        cnty: '',
         totalCntyPercent: '',
         requestedDeliveryDate: ''
       },
@@ -1013,7 +1013,7 @@ export default {
     },
     textclick2 (row) {
       this.Visible8 = false
-      this.form.totalCnty = row.name
+      this.form.cnty = row.name
     },
     textclick3 (row) {
       this.Visible9 = false
@@ -1211,7 +1211,7 @@ export default {
       if (this.materialList.length === 0) {
         this.$message.error('At least one material is required!')
       } else {
-        if (this.form.totalCnty === '' | this.form.totalCntyPercent === '') { this.$message.error('Please Enter Total Cnty and Total Cnty Percent!') } else {
+        if (this.form.cnty === '' | this.form.totalCntyPercent === '') { this.$message.error('Please Enter Total Cnty and Total Cnty Percent!') } else {
           ExpectOrdVal = 0
           var temp = 0
           var temp1
