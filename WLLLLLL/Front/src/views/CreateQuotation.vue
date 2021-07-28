@@ -19,7 +19,7 @@
                     <!-- 查询表单-->
                     <el-form :model="inquirySearchForm" :rules="inquirySearchFormRules" ref="inquirySearchForm">
                       <el-form-item label="Sold-To Party:" prop="customerId" :label-width="formLabelWidth1">
-                        <el-input style="width:110px;" v-model.number="inquirySearchForm.customerId">
+                        <el-input style="width: 160px;" v-model.number="inquirySearchForm.customerId" size="mini">
                           <!--带搜索按钮的输入框-->
                           <el-button type="text" icon="el-icon-search" slot="suffix"  @click="VisibleForInquiryButton1"></el-button></el-input>
                         <!-- 第一层查询 -->
@@ -100,7 +100,7 @@
                         </el-dialog>
                       </el-form-item>
                       <el-form-item label="Plant:" prop="warehouseId" :label-width="formLabelWidth1">
-                        <el-input style="width:110px;" v-model.number="inquirySearchForm.warehouseId">
+                        <el-input style="width: 160px;" v-model.number="inquirySearchForm.warehouseId" size="mini">
                           <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantSearchClickForInquiry"></el-button>
                         </el-input>
                         <el-dialog
@@ -133,13 +133,13 @@
                         <el-input v-model.number="inquirySearchForm.POcode"  size="mini"  autocomplete="off" style="width: 160px;"></el-input>
                       </el-form-item>
                       <el-form-item label="Cust.Ref.Date:" prop="PODate" :label-width="formLabelWidth1">
-                        <el-date-picker type="date" v-model="inquirySearchForm.PODate" style="width: 200px;"></el-date-picker>
+                        <el-date-picker type="date" v-model="inquirySearchForm.PODate" style="width: 200px;" size="mini"></el-date-picker>
                       </el-form-item>
                       <el-form-item label="Valid From:" prop="effectiveDate" :label-width="formLabelWidth1">
-                        <el-date-picker type="date" v-model="inquirySearchForm.effectiveDate" style="width: 200px;"></el-date-picker>
+                        <el-date-picker type="date" v-model="inquirySearchForm.effectiveDate" style="width: 200px;" size="mini"></el-date-picker>
                       </el-form-item>
                       <el-form-item label="Valid To:" prop="expirationDate" :label-width="formLabelWidth1">
-                        <el-date-picker type="date" v-model="inquirySearchForm.expirationDate" style="width: 200px;"></el-date-picker>
+                        <el-date-picker type="date" v-model="inquirySearchForm.expirationDate" style="width: 200px;" size="mini"></el-date-picker>
                       </el-form-item>
                     </el-form>
                   <!-- 第二层表格    -->
@@ -354,7 +354,7 @@
         <el-col  :span="8">
           <el-form-item label="Total Cnty:" prop="totalCnty">
             <el-input style="width:110px;" size='mini' v-model="form.totalCnty">
-            <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible8 = true"></el-button></el-input>
+            <el-button type="text" icon="el-icon-search" slot="suffix"  @click="cntySearchClick"></el-button></el-input>
 <!--          cnty列表-->
             <el-dialog
                 width="55%"
@@ -382,7 +382,7 @@
                 <el-table-column
                     property="discountCalcu"
                     label="Method"
-                    width="120">
+                    width="300">
                 </el-table-column>
               </el-table>
             </el-dialog>
@@ -449,6 +449,9 @@
           <el-form-item label="Order Quantity" prop="orderQuantity" :label-width="formLabelWidth1">
             <el-input v-model.number="addMaterialForm.orderQuantity" size="mini" autocomplete="off"></el-input>
           </el-form-item>
+          <el-form-item label="Price" prop="price" :label-width="formLabelWidth1">
+            <el-input v-model.number="addMaterialForm.price" size="mini" autocomplete="off"></el-input>
+          </el-form-item>
           <el-form-item label="Sales Unit" prop="salesUnit" :label-width="formLabelWidth1">
             <el-input v-model="addMaterialForm.salesUnit" size="mini" autocomplete="off"></el-input>
           </el-form-item>
@@ -486,7 +489,7 @@
                 <el-table-column
                     property="discountCalcu"
                     label="Method"
-                    width="120">
+                    width="300">
                 </el-table-column>
               </el-table>
             </el-dialog>
@@ -556,6 +559,9 @@
           <el-form-item label="Order Quantity" prop="orderQuantity" :label-width="formLabelWidth1">
             <el-input v-model.number="editMaterialForm.orderQuantity" size="mini" autocomplete="off"></el-input>
           </el-form-item>
+          <el-form-item label="Price" prop="price" :label-width="formLabelWidth1">
+            <el-input v-model.number="editMaterialForm.price" size="mini" autocomplete="off"></el-input>
+          </el-form-item>
           <el-form-item label="Sales Unit" prop="salesUnit" :label-width="formLabelWidth1">
             <el-input v-model="editMaterialForm.salesUnit" size="mini" autocomplete="off"></el-input>
           </el-form-item>
@@ -593,7 +599,7 @@
                 <el-table-column
                     property="discountCalcu"
                     label="Method"
-                    width="120">
+                    width="300">
                 </el-table-column>
               </el-table>
             </el-dialog>
@@ -616,6 +622,8 @@
         <el-table-column label="Material" prop="material">
         </el-table-column>
         <el-table-column label="Order Quantity" prop="orderQuantity">
+        </el-table-column>
+        <el-table-column label="Price" prop="price">
         </el-table-column>
         <el-table-column label="Sales Unit" prop="salesUnit">
         </el-table-column>
@@ -752,22 +760,26 @@ export default {
         netValue1: 0,
         netValueLabel: 'USD'
       },
+      priceForCal: {
+        price: 0
+      },
       addMaterialForm: {
         material: '',
-        orderQuantity: parseInt(null),
+        orderQuantity: '',
+        price: '',
         salesUnit: '',
         itemDescription: '',
         cnty: '',
-        amount: parseInt(null)
+        amount: ''
       },
       editMaterialForm: {
-        item: '',
-        material: parseInt(null),
+        material: '',
         orderQuantity: '',
+        price: '',
         salesUnit: '',
         itemDescription: '',
         cnty: '',
-        amount: parseInt(null)
+        amount: ''
       },
       createWithReferenceForm: {
         id: ''
@@ -899,31 +911,42 @@ export default {
       cntyList: [{
         id: '1',
         name: 'K004',
-        discountCalcu: 'reduce price'
+        discountCalcu: 'Reduce price'
+      }, {
+        id: '2',
+        name: 'RA00',
+        discountCalcu: '%Discount from Net'
       }],
       currentRow: null,
       show: true
     }
   },
   methods: {
+    cntySearchClick () { // 对应DiscountDic表的全表查询
+      this.Visible8 = true
+      const _this = this
+      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+        _this.cntyList = resp.data
+      })
+    },
     plantSearchClick () { // 对应warehouse表的全表查询
       this.plantVisible = true
       const _this = this
-      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+      axios.get('http://127.0.0.1:5000/showWarehouse').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.plantList = resp.data
       })
     },
     plantSearchClickForInquiry () {
       this.plantVisibleForInquiry = true
       const _this = this
-      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+      axios.get('http://127.0.0.1:5000/showWarehouse').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.plantListForInquiry = resp.data
       })
     },
     materialSearchClick () { // 对应MaterialDic表的全表查询，需要在每一处插入sales unit: 'EA'
       this.materialVisible = true
       const _this = this
-      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+      axios.get('http://127.0.0.1:5000/showMaterialDic').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.searchMaterialList = resp.data
       })
     },
@@ -932,7 +955,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible2 = true
-          axios.post('link', _this.dialogForm1).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+          axios.post('http://127.0.0.1:5000/searchBP1', _this.dialogForm1).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
             _this.soldToPartyTableData = resp.data // 注意此处需求与BP不同。此时假数据仍存在，后续调试请视效果去除，假数据存在于soldToPartyTableData
           })
         } else {
@@ -947,7 +970,7 @@ export default {
           // this.Visible6 = false
           // this.Visible5 = false
           this.Visible2ForInquiry = true
-          axios.post('link', _this.dialogForm1ForInquiry).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+          axios.post('http://127.0.0.1:5000/searchBP1', _this.dialogForm1ForInquiry).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
             _this.soldToPartyTableDataForInquiry = resp.data // 注意此处需求与BP不同。此时假数据仍存在，后续调试请视效果去除，假数据存在于soldToPartyTableData
           })
         } else {
@@ -1013,21 +1036,24 @@ export default {
       this.addMaterialForm.material = row.id
       this.addMaterialForm.itemDescription = row.name
       this.addMaterialForm.salesUnit = row.salesUnit
+      this.addMaterialForm.price = row.price
     },
     materialTextClick1 (row) {
       this.materialVisible = false
       this.editMaterialForm.material = row.id
       this.editMaterialForm.itemDescription = row.name
       this.editMaterialForm.salesUnit = row.salesUnit
+      this.editMaterialForm.price = row.price
     },
     submitForm (formName) {
+      console.log(this.materialList)
       const _this = this
       if (this.materialList.length === 0) {
         this.$message.error('At least one material is required!')
       } else {
         this.$refs[formName].validate((valid) => {
-          if (valid) {
-            axios.post('link', this.form, this.materialList).then(function (resp) {
+          if (valid) { // 前后端交互，提交按钮
+            axios.post('link', [this.form, this.materialList]).then(function (resp) {
               if (resp.data === 'fault') {
                 _this.$message({
                   message: 'fail!',
@@ -1136,8 +1162,7 @@ export default {
     // 检查ExpectOrdVal是否大于0
     checkExpectOrdVal1 () {
       var temp
-      var price = 20
-      temp = parseInt(this.addMaterialForm.orderQuantity) * price - parseInt(this.addMaterialForm.amount)
+      temp = parseInt(this.addMaterialForm.orderQuantity) * this.addMaterialForm.price - parseInt(this.addMaterialForm.amount)
       // if语句判断期望折扣是否小于0
       if (temp > 0) {
         return true
@@ -1147,7 +1172,6 @@ export default {
     },
     checkExpectOrdVal2 (materialList) {
       ExpectOrdVal = 0
-      var price = 20
       var temp
       materialList.forEach((row) => {
         if (row.amount === '') {
@@ -1155,32 +1179,29 @@ export default {
         } else {
           temp = row.amount
         }
-        // 后端调取数据库，查出该物料对应的price
-        axios.post('link', row.material).then(function (resp) {
-          price = resp.data
-        })
         // 计算
-        ExpectOrdVal += row.orderQuantity * price - temp
+        ExpectOrdVal += row.orderQuantity * row.price - temp
       })
       // if语句判断期望折扣是否小于0
       if (ExpectOrdVal > 0) { return true } else { return false }
     },
     // 更新合计价格信息
     updateNetValue (materialList) {
-      const _this = this
       netValue = 0
       ExpectOrdVal = 0
-      this.netValueForm.netValue1 = 0
-      this.netValueForm.expectOrdVal = 0
-      this.netValueForm.price = 20
       materialList.forEach((row) => {
-        // 后端调取数据库，查出该物料对应的price
-        axios.post('link', row.material).then(function (resp) {
-          _this.netValueForm.price = resp.data
-        })
-        // 计算
-        netValue = netValue + row.orderQuantity * this.netValueForm.price
-        ExpectOrdVal = ExpectOrdVal + row.orderQuantity * this.netValueForm.price * (row.orderProbability / 100)
+        netValue = netValue + row.orderQuantity * row.price
+        // 根据选择折扣方法的不同，施加不同折扣
+        switch (row.cnty) {
+          case 'K004' : { // 降价
+            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price - row.amount
+            break
+          }
+          case 'RA00' : { // 打折
+            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price * (1 - row.amount / 100)
+            break
+          }
+        }
       })
       this.netValueForm.netValue1 = netValue
       this.netValueForm.expectOrdVal = ExpectOrdVal
@@ -1193,7 +1214,6 @@ export default {
         if (this.form.totalCnty === '' | this.form.totalCntyPercent === '') { this.$message.error('Please Enter Total Cnty and Total Cnty Percent!') } else {
           ExpectOrdVal = 0
           var temp = 0
-          var price = 20
           var temp1
           this.materialList.forEach((row) => {
             // 如果折扣数量为空，则用0代替
@@ -1202,14 +1222,20 @@ export default {
             } else {
               temp1 = row.amount
             }
-            // 后端调取数据库，查出该物料对应的price
-            axios.post('link', row.material).then(function (resp) {
-              price = resp.data
-            })
             // 计算
-            temp += row.orderQuantity * price - temp1
+            temp += row.orderQuantity * row.price - temp1
           })
-          ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
+          // 根据选择折扣方法的不同，施加不同折扣
+          switch (this.form.cnty) {
+            case 'K004' : { // 降价
+              ExpectOrdVal = temp - this.form.totalCntyPercent
+              break
+            }
+            case 'RA00' : { // 打折
+              ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
+              break
+            }
+          }
           this.netValueForm.expectOrdVal = ExpectOrdVal
         }
       }
