@@ -186,12 +186,12 @@
                     <!--第一层find&cancel按钮-->
                     <div slot="footer" class="dialog-footer">
                       <el-button @click="Visible6 = false">cancel</el-button>
-                      <el-button type="primary" @click="inquirySearchFind('inquirySearchForm')">find</el-button>
+                      <el-button type="primary" @click="inquirySearchClick">find</el-button>
                     </div>
                   </el-dialog>
                 </el-form-item>
               </el-form>
-              <!--find&cancel按钮-->
+              <!--copy&cancel按钮-->
               <div slot="footer" class="dialog-footer">
                 <el-button @click="Visible5 = false">cancel</el-button>
                 <el-button type="primary" @click="copy" >copy</el-button>
@@ -922,14 +922,21 @@ export default {
     }
   },
   methods: {
-    cntySearchClick () { // 对应DiscountDic表的全表查询（对应总体折扣）
+    inquirySearchClick () { // 对应Inquiry表的全表查询（对应总体折扣）
+      this.Visible7 = true
+      const _this = this
+      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+        _this.inquiryTableData = resp.data
+      })
+    },
+    cntySearchClick () { // 对应DiscountDic表的全表查询（总体折扣）
       this.Visible8 = true
       const _this = this
       axios.get('http://127.0.0.1:5000/showDiscountDic').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.cntyList = resp.data
       })
     },
-    cntySearchClick1 () { // 对应DiscountDic表的全表查询(对应单项折扣)
+    cntySearchClick1 () { // 对应DiscountDic表的全表查询(单项折扣)
       this.Visible9 = true
       const _this = this
       axios.get('http://127.0.0.1:5000/showDiscountDic').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
@@ -989,15 +996,6 @@ export default {
       // this.Visible6 = false
       // this.Visible5 = false
       this.Visible1ForInquiry = true
-    },
-    inquirySearchFind (formName) { // ??
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.Visible7 = true
-        } else {
-          return false
-        }
-      })
     },
     // 监听客户查询对话框（第一层表单）的关闭事件
     dialogClosed1 () {
