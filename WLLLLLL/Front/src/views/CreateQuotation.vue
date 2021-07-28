@@ -461,7 +461,7 @@
 <!--          单项折扣-->
           <el-form-item label="Cnty" prop="cnty" :label-width="formLabelWidth1">
             <el-input v-model.number="addMaterialForm.cnty" size="mini" autocomplete="off">
-              <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible9 = true"></el-button></el-input>
+              <el-button type="text" icon="el-icon-search" slot="suffix"  @click="cntySearchClick1"></el-button></el-input>
             <!--          cnty列表-->
             <el-dialog
                 width="55%"
@@ -571,7 +571,7 @@
           <!--          单项折扣-->
           <el-form-item label="Cnty" prop="cnty" :label-width="formLabelWidth1">
             <el-input v-model.number="editMaterialForm.cnty" size="mini" autocomplete="off">
-              <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible9 = true"></el-button></el-input>
+              <el-button type="text" icon="el-icon-search" slot="suffix"  @click="cntySearchClick1"></el-button></el-input>
             <!--          cnty列表-->
             <el-dialog
                 width="55%"
@@ -922,8 +922,15 @@ export default {
     }
   },
   methods: {
-    cntySearchClick () { // 对应DiscountDic表的全表查询
+    cntySearchClick () { // 对应DiscountDic表的全表查询（对应总体折扣）
       this.Visible8 = true
+      const _this = this
+      axios.get('http://127.0.0.1:5000/showDiscountDic').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+        _this.cntyList = resp.data
+      })
+    },
+    cntySearchClick1 () { // 对应DiscountDic表的全表查询(对应单项折扣)
+      this.Visible9 = true
       const _this = this
       axios.get('http://127.0.0.1:5000/showDiscountDic').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.cntyList = resp.data
