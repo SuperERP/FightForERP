@@ -186,7 +186,7 @@
                     <!--第一层find&cancel按钮-->
                     <div slot="footer" class="dialog-footer">
                       <el-button @click="Visible6 = false">cancel</el-button>
-                      <el-button type="primary" @click="inquirySearchClick">find</el-button>
+                      <el-button type="primary" @click="inquirySearchFind('inquirySearchForm')">find</el-button>
                     </div>
                   </el-dialog>
                 </el-form-item>
@@ -923,7 +923,7 @@ export default {
   },
   methods: {
     inquirySearchClick () { // 对应Inquiry表的全表查询（对应总体折扣）
-      this.Visible7 = true
+      this.Visible8 = true
       const _this = this
       axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.inquiryTableData = resp.data
@@ -996,6 +996,19 @@ export default {
       // this.Visible6 = false
       // this.Visible5 = false
       this.Visible1ForInquiry = true
+    },
+    inquirySearchFind (formName) { // 按输入内容，检索Inquiry表(ForInquiry)
+      const _this = this
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.Visible7 = true
+          axios.post('link', _this.inquirySearchForm).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+            _this.inquiryTableData = resp.data // 此时假数据仍存在，后续调试请视效果去除，假数据存在于inquiryTableData
+          })
+        } else {
+          return false
+        }
+      })
     },
     // 监听客户查询对话框（第一层表单）的关闭事件
     dialogClosed1 () {
