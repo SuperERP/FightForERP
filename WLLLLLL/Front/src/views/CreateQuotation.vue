@@ -1218,9 +1218,9 @@ export default {
     copy () { // createWithReferenceForm中仅有id，对应Inquiry表中的id
       this.Visible5 = false
       const _this = this
-      axios.post('link', this.createWithReferenceForm).then(function (resp) {
-        _this.form = resp.data
-        _this.materialList = resp.data
+      axios.post('link', this.createWithReferenceForm).then(function (resp) { // copy,注意需传两个值
+        _this.form = resp.data[0]
+        _this.materialList = resp.data[1]
       })
     }
   }
