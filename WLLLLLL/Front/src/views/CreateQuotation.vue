@@ -133,13 +133,13 @@
                         <el-input v-model.number="inquirySearchForm.POcode"  size="mini"  autocomplete="off" style="width: 160px;"></el-input>
                       </el-form-item>
                       <el-form-item label="Cust.Ref.Date:" prop="PODate" :label-width="formLabelWidth1">
-                        <el-date-picker type="date" v-model="inquirySearchForm.PODate" style="width: 200px;" size="mini"></el-date-picker>
+                        <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="inquirySearchForm.PODate" style="width: 200px;" size="mini"></el-date-picker>
                       </el-form-item>
                       <el-form-item label="Valid From:" prop="effectiveDate" :label-width="formLabelWidth1">
-                        <el-date-picker type="date" v-model="inquirySearchForm.effectiveDate" style="width: 200px;" size="mini"></el-date-picker>
+                        <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="inquirySearchForm.effectiveDate" style="width: 200px;" size="mini"></el-date-picker>
                       </el-form-item>
                       <el-form-item label="Valid To:" prop="expirationDate" :label-width="formLabelWidth1">
-                        <el-date-picker type="date" v-model="inquirySearchForm.expirationDate" style="width: 200px;" size="mini"></el-date-picker>
+                        <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="inquirySearchForm.expirationDate" style="width: 200px;" size="mini"></el-date-picker>
                       </el-form-item>
                     </el-form>
                   <!-- 第二层表格    -->
@@ -322,7 +322,7 @@
       </el-form-item>
         </el-col>
         <el-col :span="12"><el-form-item label="Req. Deliv. Date:" prop="requestedDeliveryDate">
-          <el-date-picker type="date" v-model="form.requestedDeliveryDate" style="width: 130px;"></el-date-picker></el-form-item>
+          <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="form.requestedDeliveryDate" style="width: 130px;"></el-date-picker></el-form-item>
         </el-col></el-row>
 
       <el-row :gutter="50" >
@@ -332,13 +332,13 @@
             </el-input>
           </el-form-item></el-col>
         <el-col :span="12"><el-form-item label="Cust. Ref. Date:" prop="PODate">
-          <el-date-picker type="date" v-model="form.PODate" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="form.PODate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
         <el-col :span="8"><el-form-item label="Valid From:" prop="effectiveDate">
-          <el-date-picker type="date" v-model="form.effectiveDate" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="form.effectiveDate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
         <el-col :span="12"><el-form-item label="Valid To:" prop="expirationDate">
-          <el-date-picker type="date" v-model="form.expirationDate" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="form.expirationDate" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
       </el-row>
 <!--      下半部分-->
