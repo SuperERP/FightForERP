@@ -925,7 +925,7 @@ export default {
     cntySearchClick () { // 对应DiscountDic表的全表查询
       this.Visible8 = true
       const _this = this
-      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+      axios.get('http://127.0.0.1:5000/showDiscountDic').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.cntyList = resp.data
       })
     },

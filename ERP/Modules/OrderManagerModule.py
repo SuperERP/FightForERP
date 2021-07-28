@@ -34,6 +34,27 @@ class OrderManagerModule(AbstractModule):
         newData = InquiryItem(**data)
         self.insertData(newData)
 
+    def insertQuotation(self, data: dict):
+        '''
+        向数据库中插入报价单
+        :param data:
+        :return:
+        '''
+        Base.metadata.create_all()
+        data['id'] = 'QU' + self.getTimeId()
+        newData = Quotation(**data)
+        self.insertData(newData)
+        return(data['id'])
+
+    def insertQuotationItem(self, data: dict):
+        '''
+        向数据库中插入报价单物料项
+        :param data:
+        :return:
+        '''
+        newData = QuotationItem(**data)
+        self.insertData(newData)
+
     def searchOrders(self, customerId=None, warehouseId=None, saleorderId=None):
 
         def getSaleOrders(data):
@@ -64,6 +85,15 @@ class OrderManagerModule(AbstractModule):
         '''
         newData = DiscountDic(**data)
         self.insertData(newData)
+
+    def searchallDiscountDic(self): 
+        '''
+        查找所有折扣字典
+        '''
+        res = []
+        for item in self.session.query(DiscountDic).all():
+            res.append(self.to_dict(item))
+        return res
 
     def createSalesOrder(self, data):
         '''

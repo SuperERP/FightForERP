@@ -98,5 +98,28 @@ def createInquiry():
         return("false")
     return(id)
 
+@app.route('/showDiscountDic', methods=['get']) #查询所有物料词条
+def showDiscountDic():
+    res = newOrderManager.searchallDiscountDic()
+    return(jsonify(res))
+
+@app.route('/createQuotation', methods=['post']) # 创建询价单及询价单物料项
+def createQuotation():
+    a = request.get_json()[0]
+    b = request.get_json()[1]
+    a['PODate'] = datetime.strptime(a['PODate'],'%Y-%m-%d')
+    a['effectiveDate'] = datetime.strptime(a['effectiveDate'],'%Y-%m-%d')
+    a['expirationDate'] = datetime.strptime(a['expirationDate'],'%Y-%m-%d')
+    a['requestedDeliveryDate'] = datetime.strptime(a['requestedDeliveryDate'],'%Y-%m-%d')
+    try:
+        id = newOrderManager.insertQuotation(a)
+        for item in b:
+            item['quotationId'] = id # 把报价单编号加进报价单物料项的词条
+            del item['price']
+            newOrderManager.insertQuotationItem(item)
+    except Exception as e:
+        return("false")
+    return(id)
+
 if __name__ == '__main__':
     app.run()
