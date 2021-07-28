@@ -11,7 +11,7 @@
               <el-form :model="createWithReferenceForm" :rules="createWithReferenceFormRules" ref="createWithReferenceFormRef">
 <!--                inquiry输入框-->
                 <el-form-item label="Inquiry:" prop="inquiryNum" :label-width="formLabelWidth">
-                  <el-input style="width:110px;" v-model.number="createWithReferenceForm.inquiryNum"  size="mini"  autocomplete="off">
+                  <el-input style="width:110px;" v-model.number="createWithReferenceForm.id"  size="mini"  autocomplete="off">
                     <!--带搜索按钮的输入框-->
                     <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible6 = true"></el-button></el-input>
                   <!-- 第一层查询 -->
@@ -154,7 +154,7 @@
                           :data="inquiryTableData"
                           highlight-current-row
                           @current-change="handleCurrentChange"
-                          @row-click="textclick1"
+                          @row-click="textclickGetInquiryId"
                           style="width: 100%">
                         <el-table-column
                             property="id"
@@ -284,7 +284,7 @@
         <el-col :span="12">
           <el-form-item label="Net Value:">
             <el-input style="width:110px;" size='mini' v-model="netValueForm.netValue1" :disabled="true"></el-input>
-            <el-input style="width:60px;" placeholder="USD" size='mini' v-model="netValueForm.netValue2" :disabled="true"></el-input>
+            <el-input style="width:60px;" placeholder="USD" size='mini' v-model="netValueForm.netValueLabel" :disabled="true"></el-input>
           </el-form-item>
         </el-col></el-row>
       <!--      plant搜索框-->
@@ -747,17 +747,18 @@ export default {
         requestedDeliveryDate: ''
       },
       netValueForm: {
-        expectOrdVal: '',
-        netValue1: '',
-        netValue2: ''
+        price: 0,
+        expectOrdVal: 0,
+        netValue1: 0,
+        netValueLabel: 'USD'
       },
       addMaterialForm: {
         material: '',
-        orderQuantity: '',
+        orderQuantity: parseInt(null),
         salesUnit: '',
         itemDescription: '',
         cnty: '',
-        amount: ''
+        amount: parseInt(null)
       },
       editMaterialForm: {
         item: '',
@@ -766,12 +767,12 @@ export default {
         salesUnit: '',
         itemDescription: '',
         cnty: '',
-        amount: ''
+        amount: parseInt(null)
       },
       createWithReferenceForm: {
-        inquiryNum: ''
+        id: ''
       },
-      inquirySearchForm: { // 对应表Inquiry
+      inquirySearchForm: { // 对应表Inquiry,Search Inquiry查询表单对应数据集
         customerId: '',
         warehouseId: '',
         POcode: '',
@@ -792,23 +793,7 @@ export default {
         inquiryNum: ''
       },
       // material假数据，对接InquiryItem
-      materialList: [{
-        material: 'DXTR1036',
-        orderQuantity: 5,
-        salesUnit: 'EA',
-        itemDescription: 'DXTRREAF',
-        cnty: 'K004',
-        amount: 50
-      },
-      {
-        material: 'PXTR1036',
-        orderQuantity: 5,
-        salesUnit: 'EA',
-        itemDescription: 'DXTRREAF',
-        cnty: 'K004',
-        amount: 30
-      }
-      ],
+      materialList: [],
       plantList: [{
         id: 'MI00',
         name: 'Miami Plant'
@@ -904,7 +889,7 @@ export default {
         name: 'The Bike Zone',
         id: '20534'
       }],
-      inquiryTableData: [{ // ??
+      inquiryTableData: [{ // 对应Inquiry，Search Inquiry的结果数据集
         id: '10000132',
         customerId: '25027',
         warehouseId: 'MI00',
@@ -998,10 +983,10 @@ export default {
       this.Visible2ForInquiry = false
       this.inquirySearchForm.customerId = parseInt(row.id)
     },
-    textclick1 (row) { // 表单处理
+    textclickGetInquiryId (row) { // 表单处理
       this.Visible6 = false
       this.Visible7 = false
-      this.createWithReferenceForm.inquiryNum = parseInt(row.id)
+      this.createWithReferenceForm.id = parseInt(row.id)
     },
     textclick2 (row) {
       this.Visible8 = false
@@ -1146,6 +1131,7 @@ export default {
     },
     deleteRow (index, rows) {
       rows.splice(index, 1)
+      this.updateNetValue(this.materialList)
     },
     // 检查ExpectOrdVal是否大于0
     checkExpectOrdVal1 () {
@@ -1181,23 +1167,20 @@ export default {
     },
     // 更新合计价格信息
     updateNetValue (materialList) {
+      const _this = this
       netValue = 0
       ExpectOrdVal = 0
-      var price = 20
-      var temp
+      this.netValueForm.netValue1 = 0
+      this.netValueForm.expectOrdVal = 0
+      this.netValueForm.price = 20
       materialList.forEach((row) => {
-        if (row.amount === '') {
-          temp = 0
-        } else {
-          temp = row.amount
-        }
         // 后端调取数据库，查出该物料对应的price
         axios.post('link', row.material).then(function (resp) {
-          price = resp.data
+          _this.netValueForm.price = resp.data
         })
         // 计算
-        netValue += row.orderQuantity * price
-        ExpectOrdVal += row.orderQuantity * price - temp
+        netValue = netValue + row.orderQuantity * this.netValueForm.price
+        ExpectOrdVal = ExpectOrdVal + row.orderQuantity * this.netValueForm.price * (row.orderProbability / 100)
       })
       this.netValueForm.netValue1 = netValue
       this.netValueForm.expectOrdVal = ExpectOrdVal
@@ -1232,9 +1215,10 @@ export default {
       }
     },
     // 将询价单信息复制到报价单
-    copy () {
+    copy () { // createWithReferenceForm中仅有id，对应Inquiry表中的id
+      this.Visible5 = false
       const _this = this
-      axios.post('link', this.inquirySearchForm).then(function (resp) {
+      axios.post('link', this.createWithReferenceForm).then(function (resp) {
         _this.form = resp.data
         _this.materialList = resp.data
       })

@@ -136,13 +136,13 @@
             </el-input>
           </el-form-item></el-col>
         <el-col :span="12"><el-form-item label="Cust. Ref. Date:" prop="PODate">
-          <el-date-picker type="date" v-model="form.PODate" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" v-model="form.PODate" value-format="yyyy-MM-dd" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
         <el-col :span="8"><el-form-item label="Valid From:" prop="effectiveDate">
-          <el-date-picker type="date" v-model="form.effectiveDate" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" v-model="form.effectiveDate" value-format="yyyy-MM-dd" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
         <el-col :span="12"><el-form-item label="Valid To:" prop="expirationDate">
-          <el-date-picker type="date" v-model="form.expirationDate" style="width: 130px;"></el-date-picker>
+          <el-date-picker type="date" v-model="form.expirationDate" value-format="yyyy-MM-dd" style="width: 130px;"></el-date-picker>
         </el-form-item></el-col>
       </el-row>
 <!--      下半部分-->
@@ -207,6 +207,9 @@
         </el-form-item>
         <el-form-item label="Order Quantity" prop="orderQuantity" :label-width="formLabelWidth1">
           <el-input v-model.number="addMaterialForm.orderQuantity" size="mini" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="Price" prop="price" :label-width="formLabelWidth1">
+          <el-input v-model.number="addMaterialForm.price" size="mini" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Sales Unit" prop="salesUnit" :label-width="formLabelWidth1">
           <el-input v-model="addMaterialForm.salesUnit" size="mini" autocomplete="off"></el-input>
@@ -279,6 +282,9 @@
         <el-form-item label="Order Quantity" prop="orderQuantity" :label-width="formLabelWidth1">
           <el-input v-model.number="editMaterialForm.orderQuantity" size="mini" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="Price" prop="price" :label-width="formLabelWidth1">
+          <el-input v-model="editMaterialForm.price" size="mini" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item label="Sales Unit" prop="salesUnit" :label-width="formLabelWidth1">
           <el-input v-model="editMaterialForm.salesUnit" size="mini" autocomplete="off"></el-input>
         </el-form-item>
@@ -304,8 +310,8 @@
       </el-table-column>
       <el-table-column label="Order Quantity" prop="orderQuantity">
       </el-table-column>
-<!--      <el-table-column label="Price" prop="salesUnit">-->
-<!--      </el-table-column>-->
+      <el-table-column label="Price" prop="price">
+      </el-table-column>
       <el-table-column label="Sales Unit" prop="salesUnit">
       </el-table-column>
       <el-table-column label="Item Description" prop="itemDescription"></el-table-column>
@@ -385,25 +391,29 @@ export default {
         warehouseId: ''
       },
       netValueForm: {
-        price: 0,
         expectOrdVal: 0,
         netValue1: 0,
         netValueLabel: 'USD'
       },
+      priceForCal: {
+        price: 0
+      },
       addMaterialForm: { // InquiryItem
         material: '',
-        orderQuantity: parseInt(null),
+        orderQuantity: '',
+        price: '',
         salesUnit: '',
         itemDescription: '',
-        orderProbability: parseInt(null)
+        orderProbability: ''
       },
       editMaterialForm: { // InquiryItem
         // item: '',
         material: '',
-        orderQuantity: parseInt(null),
+        orderQuantity: '',
+        price: '',
         salesUnit: '',
         itemDescription: '',
-        orderProbability: parseInt(null)
+        orderProbability: ''
       },
       // 数据填充
       // 客户查询对话框第一层表单
@@ -504,14 +514,14 @@ export default {
     plantSearchClick () { // 对应warehouse表的全表查询
       this.plantVisible = true
       const _this = this
-      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+      axios.get('http://127.0.0.1:5000/showWarehouse').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.plantList = resp.data
       })
     },
     materialSearchClick () { // 对应MaterialDic表的全表查询，需要在每一处插入sales unit: 'EA'
       this.materialVisible = true
       const _this = this
-      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+      axios.get('http://127.0.0.1:5000/showMaterialDic').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.searchMaterialList = resp.data
       })
     },
@@ -520,7 +530,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible2 = true
-          axios.post('link', _this.dialogForm1).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+          axios.post('http://127.0.0.1:5000/searchBP1', _this.dialogForm1).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
             _this.soldToPartyTableData = resp.data // 注意此处需求与BP不同。此时假数据仍存在，后续调试请视效果去除，假数据存在于soldToPartyTableData
           })
         } else {
@@ -542,17 +552,19 @@ export default {
       this.plantVisible = false
       this.form.warehouseId = row.id
     },
-    materialTextClick (row) {
+    materialTextClick (row) { // materialClick对应Choose Material的rowClick
       this.materialVisible = false
       this.addMaterialForm.material = row.id
       this.addMaterialForm.itemDescription = row.name
       this.addMaterialForm.salesUnit = row.salesUnit
+      this.addMaterialForm.price = row.price
     },
-    materialTextClick1 (row) {
+    materialTextClick1 (row) { // materialClick对应Choose Material的rowClick
       this.materialVisible = false
-      this.editMaterialForm.material = row.material
-      this.editMaterialForm.itemDescription = row.itemDescription
+      this.editMaterialForm.material = row.id
+      this.editMaterialForm.itemDescription = row.name
       this.editMaterialForm.salesUnit = row.salesUnit
+      this.editMaterialForm.price = row.price
     },
     submitForm (formName) {
       console.log(this.materialList)
@@ -562,7 +574,7 @@ export default {
       } else {
         this.$refs[formName].validate((valid) => {
           if (valid) { // 前后端交互，提交按钮
-            axios.post('link', this.form, this.materialList).then(function (resp) {
+            axios.post('http://127.0.0.1:5000/createInquiry', [this.form, this.materialList]).then(function (resp) {
               if (resp.data === 'fault') {
                 _this.$message({
                   message: 'fail!',
@@ -636,20 +648,11 @@ export default {
     },
     // 更新合计价格信息
     updateNetValue (materialList) {
-      const _this = this
       netValue = 0
       ExpectOrdVal = 0
-      this.netValueForm.netValue1 = 0
-      this.netValueForm.expectOrdVal = 0
-      this.netValueForm.price = 20
       materialList.forEach((row) => {
-        // 后端调取数据库，查出该物料对应的price
-        axios.post('link', row.material).then(function (resp) {
-          _this.netValueForm.price = resp.data
-        })
-        // 计算
-        netValue = netValue + row.orderQuantity * this.netValueForm.price
-        ExpectOrdVal = ExpectOrdVal + row.orderQuantity * this.netValueForm.price * (row.orderProbability / 100)
+        netValue = netValue + row.price * row.orderQuantity
+        ExpectOrdVal = ExpectOrdVal + row.price * row.orderQuantity * row.orderProbability / 100
       })
       this.netValueForm.netValue1 = netValue
       this.netValueForm.expectOrdVal = ExpectOrdVal
