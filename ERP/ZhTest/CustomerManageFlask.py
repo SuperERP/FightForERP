@@ -103,7 +103,7 @@ def showDiscountDic():
     res = newOrderManager.searchallDiscountDic()
     return(jsonify(res))
 
-@app.route('/createQuotation', methods=['post']) # 创建询价单及询价单物料项
+@app.route('/createQuotation', methods=['post']) # 创建报价单及报价单物料项
 def createQuotation():
     a = request.get_json()[0]
     b = request.get_json()[1]

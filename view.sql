@@ -12,3 +12,4 @@ DROP TABLE InquiryItem;
 SELECT * FROM InquiryItem;
 INSERT INTO InquiryItem VALUES ('IN20210728150059682420','sb102','mat2',1,'EA',100);
 SELECT * FROM MaterialDic;
+INSERT INTO DiscountDic VALUES ('2','K004','A');

@@ -400,7 +400,7 @@
           <!--          searchMaterial列表-->
           <el-form-item label="Material" prop="material" :label-width="formLabelWidth1">
               <el-input v-model.number="addMaterialForm.material" size="mini" autocomplete="off">
-                <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialVisible = true"></el-button></el-input>
+                <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialSearchClick"></el-button></el-input>
               <el-dialog
                   width="55%"
                   title="Choose material"
@@ -511,7 +511,7 @@
         <el-form :model="editMaterialForm" :rules="editMaterialFormRules" ref="editMaterialFormRef">
           <el-form-item label="Material" prop="material" :label-width="formLabelWidth1">
             <el-input v-model.number="editMaterialForm.material" size="mini" autocomplete="off">
-              <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialVisible = true"></el-button></el-input>
+              <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialSearchClick"></el-button></el-input>
             <el-dialog
                 width="55%"
                 title="Choose material"
@@ -1053,7 +1053,7 @@ export default {
       } else {
         this.$refs[formName].validate((valid) => {
           if (valid) { // 前后端交互，提交按钮
-            axios.post('link', [this.form, this.materialList]).then(function (resp) {
+            axios.post('http://127.0.0.1:5000/createQuotation', [this.form, this.materialList]).then(function (resp) {
               if (resp.data === 'fault') {
                 _this.$message({
                   message: 'fail!',
