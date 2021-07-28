@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <template>
   <div>
     <el-container style="overflow-x:hidden">
@@ -661,7 +660,6 @@ export default {
   }
 }
 </script>
-=======
 <template>
   <div>
     <el-container style="overflow-x:hidden">
@@ -1324,4 +1322,3 @@ export default {
   }
 }
 </script>
->>>>>>> e29941e9ff14976463bb983593275f8f34acfdcc
