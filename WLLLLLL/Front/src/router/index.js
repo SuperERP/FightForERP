@@ -14,6 +14,10 @@ import DisplayCustomer from '../views/DisplayCustomer'
 import ChangeCustomer from '../views/ChangeCustomer'
 import DisplayContactPerson from '../views/DisplayContactPerson'
 import ChangeContactPerson from '../views/ChangeContactPerson'
+import DisplayBPRelationship from '../views/DisplayBPRelationship'
+import ChangeBPRelationship from '../views/ChangeBPRelationship'
+import test1 from '../views/test1'
+import test from '../views/test'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
 Vue.use(elTableInfiniteScroll)
 Vue.use(VueRouter)
@@ -51,7 +55,7 @@ const routes = [
   },
   {
     path: '/CreateContactPerson',
-    name: '创建客户联系人',
+    name: '创建联系人',
     component: CreateContactPerson
   },
   {
@@ -88,6 +92,26 @@ const routes = [
     path: '/ChangeContactPerson',
     name: '修改联系人',
     component: ChangeContactPerson
+  },
+  {
+    path: '/DisplayBPRelationship',
+    name: '显示BP关系',
+    component: DisplayBPRelationship
+  },
+  {
+    path: '/ChangeBPRelationship',
+    name: '修改BP关系',
+    component: ChangeBPRelationship
+  },
+  {
+    path: '/test',
+    name: '测试',
+    component: test
+  },
+  {
+    path: '/test1',
+    name: '测试1',
+    component: test1
   }
 ]
 
