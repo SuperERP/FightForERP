@@ -227,7 +227,7 @@
                   <el-table-column
                       property="id"
                       label="ID"
-                      width="50">
+                      width="150">
                   </el-table-column>
                   <el-table-column
                       property="customerId"

@@ -248,8 +248,7 @@ export default {
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         customerId: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         contactId: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
@@ -367,6 +366,8 @@ export default {
     submitForm (formName) { // 后端支持，execute提交所有内容
       const _this = this
       this.$refs[formName].validate((valid) => {
+        this.form.validFrom = this.dateTransfer(this.form.validFrom)
+        this.form.validTo = this.dateTransfer(this.form.validTo)
         if (valid) { // 前后端交互，提交按钮
           axios.post('link', this.form).then(function (resp) { // 修改CustomerAndContactPerson表内容
             if (resp.data === 'fault') {
@@ -389,6 +390,20 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+    },
+    // 日期格式转化
+    dateTransfer (temp) {
+      var temp1 = new Date(temp)
+      var year = temp1.getFullYear()
+      var month = temp1.getMonth() + 1
+      var day = temp1.getDate()
+      if (month.toString().length === 1) {
+        month = '0' + month
+      }
+      if (day.toString().length === 1) {
+        day = '0' + day
+      }
+      return year + '-' + month + '-' + day
     }
   },
   // 页面加载

@@ -15,32 +15,32 @@
           </el-form-item></div>
         <div>
           <el-form-item label="Search Term:" prop="POcode">
-            <el-input v-model.number="form.POcode">
-            </el-input>
+            <el-input v-model.number="form.POcode" :disabled="true">
+            </el-input >
           </el-form-item></div>
         <el-form-item label="Relationship Category:" prop="relationType">
-          <el-input size='mini' v-model="form.relationType">
+          <el-input size='mini' v-model="form.relationType" :disabled="true">
             </el-input>
         </el-form-item>
         <el-divider content-position="left" >Default</el-divider>
         <div>
           <!--        business partner1输入框-->
           <el-form-item label="Business Customer:" prop="customerId">
-            <el-input v-model.number="form.customerId">
+            <el-input v-model.number="form.customerId" :disabled="true">
               <!--带搜索按钮的输入框-->
               <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
           </el-form-item></div>
         <div>
           <!--        business partner2输入框-->
           <el-form-item label="Contact Person:" prop="contactId">
-            <el-input  v-model.number="form.contactId"></el-input>
+            <el-input  v-model.number="form.contactId" :disabled="true"></el-input>
           </el-form-item></div>
         <div>
           <el-form-item label="Valid From:" prop="validFrom">
-            <el-date-picker type="date" v-model="form.validFrom" value-format="yyyy-MM-dd"></el-date-picker>
+            <el-date-picker type="date" v-model="form.validFrom" value-format="yyyy-MM-dd" :disabled="true"></el-date-picker>
           </el-form-item></div>
         <el-form-item label="Valid To:" prop="validTo">
-          <el-date-picker type="date" v-model="form.validTo" value-format="yyyy-MM-dd"></el-date-picker>
+          <el-date-picker type="date" v-model="form.validTo" value-format="yyyy-MM-dd" :disabled="true"></el-date-picker>
         </el-form-item>
       </el-form></el-container>
   </div>
