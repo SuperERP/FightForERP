@@ -999,7 +999,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible7 = true
-          axios.post('link', _this.quotSearchForm).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+          axios.post('http://127.0.0.1:5000/searchQuotation', _this.quotSearchForm).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
             _this.quotTableData = resp.data // 此时假数据仍存在，后续调试请视效果去除，假数据存在于inquiryTableData
           })
         } else {
@@ -1072,7 +1072,7 @@ export default {
         this.form.requestedDeliveryDate = this.dateTransfer(this.form.requestedDeliveryDate)
         this.$refs[formName].validate((valid) => {
           if (valid) { // 前后端交互，提交按钮
-            axios.post('http://127.0.0.1:5000/createQuotation', [this.form, this.materialList]).then(function (resp) {
+            axios.post('http://127.0.0.1:5000/createSalesOrder', [this.form, this.materialList]).then(function (resp) {
               if (resp.data === 'fault') {
                 _this.$message({
                   message: 'fail!',
@@ -1277,7 +1277,7 @@ export default {
     copy () { // createWithReferenceForm中仅有id，对应Quotation表中的id
       this.Visible5 = false
       const _this = this
-      axios.post('link', this.createWithReferenceForm).then(function (resp) { // copy,注意需传两个值
+      axios.post('http://127.0.0.1:5000/searchQuotationAndItem', this.createWithReferenceForm).then(function (resp) { // copy,注意需传两个值
         _this.form = resp.data[0]
         _this.materialList = resp.data[1]
       })

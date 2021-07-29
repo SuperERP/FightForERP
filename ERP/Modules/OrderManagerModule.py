@@ -17,7 +17,7 @@ class OrderManagerModule(AbstractModule):
         '''
         向数据库中插入询价单
         :param data:
-        :return:
+        :return:询价单号
         '''
         Base.metadata.create_all()
         data['id'] = 'IN' + self.getTimeId()
@@ -38,7 +38,7 @@ class OrderManagerModule(AbstractModule):
         '''
         向数据库中插入报价单
         :param data:
-        :return:
+        :return:报价单号
         '''
         Base.metadata.create_all()
         data['id'] = 'QU' + self.getTimeId()
@@ -97,7 +97,7 @@ class OrderManagerModule(AbstractModule):
 
     def createSalesOrder(self, data):
         '''
-        创建销售订单的时候创建发货单
+        创建销售订单的，同时创建发货单
         :param data:
         :return:生成的销售订单的编号
 
@@ -109,6 +109,16 @@ class OrderManagerModule(AbstractModule):
         newSalesOrder = SalesOrder(**data)
         self.insertData(newSalesOrder)
         return data['id']
+
+    def insertSalesOrderItem(self, data: dict):
+        '''
+        向数据库中插入销售订单物料项
+        :param data:
+        :return:
+        '''
+        Base.metadata.create_all()
+        newData = SalesOrderItem(**data)
+        self.insertData(newData)
 
     def searchInquiry(self, id='',customerId='',warehouseId='',POcode='',PODate='',effectiveDate='',expirationDate=''):
         '''
@@ -134,6 +144,37 @@ class OrderManagerModule(AbstractModule):
         res=[]
 
         for idata in self.session.query(InquiryItem).filter(InquiryItem.inquiryId == inquiryId).all():
+            a = self.to_dict(idata)
+            a['price'] = self.to_dict(self.session.query(MaterialDic).filter(MaterialDic.id == a['material']).all()[0])['price']
+            res.append(a)
+
+        return res
+    
+    def searchQuotation(self, id='',customerId='',warehouseId='',POcode='',PODate='',effectiveDate='',expirationDate='',requestedDeliveryDate=''):
+        '''
+        按条件查找报价单
+        '''
+        res=[]
+
+        for idata in self.session.query(Quotation).filter(or_(Quotation.id==id,id==''))\
+            .filter(or_(Quotation.customerId==customerId,customerId==''))\
+                .filter(or_(Quotation.warehouseId==warehouseId,warehouseId==''))\
+                    .filter(or_(Quotation.POcode==POcode,POcode==''))\
+                        .filter(or_(Quotation.PODate==PODate,PODate==''))\
+                            .filter(or_(Quotation.effectiveDate==effectiveDate,effectiveDate==''))\
+                                .filter(or_(Quotation.requestedDeliveryDate==requestedDeliveryDate,requestedDeliveryDate==''))\
+                                    .filter(or_(Quotation.expirationDate==expirationDate,expirationDate=='')).all():
+            res.append(self.to_dict(idata))
+
+        return res
+    
+    def searchQuotationItem(self, quotationId):
+        '''
+        根据给定报价单号查找报价单物料项，并加入price
+        '''
+        res=[]
+
+        for idata in self.session.query(QuotationItem).filter(QuotationItem.quotationId == quotationId).all():
             a = self.to_dict(idata)
             a['price'] = self.to_dict(self.session.query(MaterialDic).filter(MaterialDic.id == a['material']).all()[0])['price']
             res.append(a)

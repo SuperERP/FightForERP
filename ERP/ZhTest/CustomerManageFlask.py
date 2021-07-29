@@ -93,7 +93,8 @@ def createInquiry():
         id = newOrderManager.insertInquiry(a)
         for item in b:
             item['inquiryId'] = id # 把询价单编号加进询价单物料项的词条
-            del item['price']
+            if 'price' in item:
+                del item['price']
             newOrderManager.insertInquiryItem(item)
     except Exception as e:
         return("false")
@@ -118,9 +119,11 @@ def createQuotation():
         id = newOrderManager.insertQuotation(a)
         for item in b:
             item['quotationId'] = id # 把报价单编号加进报价单物料项的词条
-            del item['price']
+            if 'price' in item:
+                del item['price']
             newOrderManager.insertQuotationItem(item)
     except Exception as e:
+        print(e)
         return("false")
     return(id)
 
@@ -134,13 +137,47 @@ def searchInquiry():
 def searchInquiryAndItem():
     searchTerm = request.get_json()
     res1 = newOrderManager.searchInquiry(id = searchTerm['id'])[0]
-    print(res1)
     res2 = newOrderManager.searchInquiryItem(inquiryId = searchTerm['id'])
     res = []
     res.append(res1)
     res.append(res2)
-    print(res)
     return(jsonify(res))
 
+@app.route('/searchQuotation', methods=['post']) # 按条件查找报价单
+def searchQuotation():
+    searchTerm = request.get_json()
+    res = newOrderManager.searchQuotation(customerId=searchTerm['customerId'],warehouseId=searchTerm['warehouseId'],POcode=searchTerm['POcode'],PODate=searchTerm['PODate'],effectiveDate=searchTerm['effectiveDate'],expirationDate=searchTerm['expirationDate'])
+    return(jsonify(res))
+
+@app.route('/searchQuotationAndItem', methods=['post']) # 按给定报价单号查找报价单及报价单物料项
+def searchQuotationAndItem():
+    searchTerm = request.get_json()
+    res1 = newOrderManager.searchQuotation(id = searchTerm['id'])[0]
+    res2 = newOrderManager.searchQuotationItem(quotationId = searchTerm['id'])
+    res = []
+    res.append(res1)
+    res.append(res2)
+    return(jsonify(res))
+
+@app.route('/createSalesOrder', methods=['post']) # 创建销售订单及销售订单物料项
+def createSalesOrder():
+    a = request.get_json()[0]
+    b = request.get_json()[1]
+    a['PODate'] = datetime.strptime(a['PODate'],'%Y-%m-%d')
+    a['effectiveDate'] = datetime.strptime(a['effectiveDate'],'%Y-%m-%d')
+    a['expirationDate'] = datetime.strptime(a['expirationDate'],'%Y-%m-%d')
+    a['requestedDeliveryDate'] = datetime.strptime(a['requestedDeliveryDate'],'%Y-%m-%d')
+    if 'id' in a:
+        del a['id']
+    try:
+        id = newOrderManager.createSalesOrder(a)
+        for item in b:
+            item['salesOrderId'] = id # 把销售订单编号加进销售订单物料项的词条
+            if 'price' in item:
+                del item['price']
+            newOrderManager.insertSalesOrderItem(item)
+    except Exception as e:
+        return("false")
+    return(id)
 if __name__ == '__main__':
     app.run()

@@ -118,7 +118,7 @@ class SalesOrder(Base):
 
 class SalesOrderItem(Base):
     __tablename__ = 'SalesOrderItem'
-    saleOrderId = Column(String(30), ForeignKey('SalesOrder.id'))
+    salesOrderId = Column(String(30), ForeignKey('SalesOrder.id'))
     material = Column(String(10), ForeignKey('MaterialDic.id'))
     itemDescription = Column(Text())
     orderQuantity = Column(Integer())
@@ -128,11 +128,11 @@ class SalesOrderItem(Base):
 
     __table_args__ = (
         # 联合主键约束
-        PrimaryKeyConstraint('saleOrderId', 'material'),
+        PrimaryKeyConstraint('salesOrderId', 'material'),
     )
 
     def __init__(self, **kwargs):
-        self.saleOrderId = kwargs['saleOrderId']
+        self.salesOrderId = kwargs['salesOrderId']
         self.material = kwargs['material']
         self.itemDescription = kwargs['itemDescription']
         self.orderQuantity = kwargs['orderQuantity']

@@ -17,3 +17,6 @@ SELECT * FROM Quotation;
 SELECT * FROM Quotationitem;
 INSERT INTO Quotation VALUES ('QU112', 1000000, 'lz101', 123,'2021-07-21', '2021-07-21','2021-07-21', 'K004', '13','2021-07-21');
 INSERT INTO Quotationitem VALUES ('QU000', 'sb102', 'mat2', 1, 'EA', 'K004', 10);
+DROP TABLE SalesOrder;
+SELECT * FROM SalesOrder;
+SELECT * FROM SalesOrderItem;
