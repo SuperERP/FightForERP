@@ -429,7 +429,7 @@ export default {
     bpRelationshipSearchClick () { // 对应CustomerAndContactPerson表的全表查询
       this.Visible5 = true
       const _this = this
-      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+      axios.get('http://127.0.0.1:5000/showBPRelationship').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.bpRelationshipList = resp.data
       })
     },
@@ -539,24 +539,27 @@ export default {
         case 'customer': {
           this.$refs.customerForm.validate((valid) => {
             if (valid) {
-              axios.post('link', this.customerForm).then(function (resp) { // 传入id，传出customer表信息
-                _this.forCustomerForm1 = resp.data
-              })
+              // axios.post('http://127.0.0.1:5000/searchCustomer', this.customerForm).then(function (resp) { // 传入id，传出customer表信息
+              //  _this.forCustomerForm1 = resp.data
+              //   console.log(_this.forCustomerForm1)
+              // })
+              console.log(_this.forCustomerForm1)
+              // this.forCustomerVisible = true
               this.$router.push({
                 path: '/DisplayCustomer',
                 name: '显示客户',
                 params: {
-                  id: this.customerForm.id,
-                  name: this.forCustomerForm1.name,
-                  POcode: this.forCustomerForm1.POcode,
-                  street: this.forCustomerForm1.street,
-                  postcode: this.forCustomerForm1.postcode,
-                  city: this.forCustomerForm1.city,
-                  country: this.forCustomerForm1.country,
-                  region: this.forCustomerForm1.region,
-                  language: this.forCustomerForm1.language,
-                  sales_channel_number: this.forCustomerForm1.sales_channel_number,
-                  distribution_channel: this.forCustomerForm1.distribution_channel
+                  id: this.customerForm.id
+                  // name: this.forCustomerForm1.name,
+                  // POcode: this.forCustomerForm1.POcode,
+                  // street: this.forCustomerForm1.street,
+                  // postcode: this.forCustomerForm1.postcode,
+                  // city: this.forCustomerForm1.city,
+                  // country: this.forCustomerForm1.country,
+                  // region: this.forCustomerForm1.region,
+                  // language: this.forCustomerForm1.language,
+                  // sales_channel_number: this.forCustomerForm1.sales_channel_number,
+                  // distribution_channel: this.forCustomerForm1.distribution_channel
                 }
               })
             } else {

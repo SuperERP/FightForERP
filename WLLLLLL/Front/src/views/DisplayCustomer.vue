@@ -97,6 +97,7 @@ body{
 </style>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -126,13 +127,13 @@ export default {
         }
       })
     }
-  }
+  },
   // 页面加载
-  // created () {
-  //   const _this = this
-  //   axios.get('link' + this.$route.params.id).then(function (resp) {
-  //     _this.form = resp.data
-  //   })
-  // }
+  created () {
+    const _this = this
+    axios.post('http://127.0.0.1:5000/searchCustomer', this.$route.params.id).then(function (resp) {
+      _this.form = resp.data
+    })
+  }
 }
 </script>
