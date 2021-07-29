@@ -1060,10 +1060,10 @@ export default {
       if (this.materialList.length === 0) {
         this.$message.error('At least one material is required!')
       } else {
-        this.form.PODate = this.transfer(this.form.PODate)
-        this.form.effectiveDate = this.transfer(this.form.effectiveDate)
-        this.form.expirationDate = this.transfer(this.form.expirationDate)
-        this.form.requestedDeliveryDate = this.transfer(this.form.requestedDeliveryDate)
+        this.form.PODate = this.dateTransfer(this.form.PODate)
+        this.form.effectiveDate = this.dateTransfer(this.form.effectiveDate)
+        this.form.expirationDate = this.dateTransfer(this.form.expirationDate)
+        this.form.requestedDeliveryDate = this.dateTransfer(this.form.requestedDeliveryDate)
         this.$refs[formName].validate((valid) => {
           if (valid) { // 前后端交互，提交按钮
             axios.post('http://127.0.0.1:5000/createQuotation', [this.form, this.materialList]).then(function (resp) {
@@ -1253,16 +1253,12 @@ export default {
         }
       }
     },
-    // 判断是否已经转化过一次，若否，则可以转化
-    transfer (temp) {
-      if (typeof (temp) === 'object') { temp = this.dateTransfer(temp) }
-      return temp
-    },
     // 日期格式转化
     dateTransfer (temp) {
-      var year = temp.getFullYear()
-      var month = temp.getMonth() + 1
-      var day = temp.getDate()
+      var temp1 = new Date(temp)
+      var year = temp1.getFullYear()
+      var month = temp1.getMonth() + 1
+      var day = temp1.getDate()
       if (month.toString().length === 1) {
         month = '0' + month
       }
