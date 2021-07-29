@@ -101,7 +101,7 @@ export default {
   // 页面加载
   created () {
     const _this = this
-    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id,返回CustomerAndContactPerson数据表信息
+    axios.post('http://127.0.0.1:5000/searchBPRelationship', this.$route.params.id).then(function (resp) { // 传入id,返回CustomerAndContactPerson数据表信息
       _this.form = resp.data
     })
   }

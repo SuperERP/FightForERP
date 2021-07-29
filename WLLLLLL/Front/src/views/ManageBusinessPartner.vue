@@ -381,14 +381,12 @@ export default {
       },
       contactPersonFormRules: {
         id: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },
       bpRelationshipFormRules: {
         id: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },
       formLabelWidth: '160px',
@@ -510,11 +508,11 @@ export default {
     textclick1 (row) {
       this.Visible3 = false
       this.Visible4 = false
-      this.contactPersonForm.id = parseInt(row.id)
+      this.contactPersonForm.id = row.id
     },
     textclick2 (row) {
       this.Visible5 = false
-      this.bpRelationshipForm.id = parseInt(row.id)
+      this.bpRelationshipForm.id = row.id
     },
     resetForm () {
       switch (this.form.businessPartnerType) {

@@ -57,6 +57,19 @@ class CustomerManagerModule(AbstractModule):
 
         return res
 
+    def searchBPRelationship(self,id=''):
+        '''
+        按id查找BP关系
+        :return:
+        '''
+
+        res=[]
+
+        for idata in self.session.query(CustomerAndContactPersonRelationship).filter(CustomerAndContactPersonRelationship.id==id).all():
+            res.append(self.to_dict(idata))
+
+        return res
+        
     def insertCustomerAndContactPersonRelationship(self, data: dict):
         '''
         向数据库中插入新的客户与联系人关系

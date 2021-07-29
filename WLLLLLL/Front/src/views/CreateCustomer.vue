@@ -145,7 +145,7 @@ export default {
       const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) { // 前后端交互，提交按钮
-          axios.post('link', this.form).then(function (resp) {
+          axios.post('http://127.0.0.1:5000/createCustomer', this.form).then(function (resp) {
             if (resp.data === 'fault') {
               _this.$message({
                 message: 'fail!',

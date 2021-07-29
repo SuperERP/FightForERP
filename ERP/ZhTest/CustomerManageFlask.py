@@ -78,8 +78,14 @@ def searchCustomer():
 
 @app.route('/searchContactPerson', methods=['post']) # 按id查询联系人
 def searchContactPerson():
-    searchTerm = request.get_json()
-    res = newBPrelationship.searchContactPerson(id = searchTerm['id'])[0]
+    searchTerm = list(request.form.to_dict().keys())[0]
+    res = newBPrelationship.searchContactPerson(id = searchTerm)[0]
+    return(jsonify(res))
+
+@app.route('/searchBPRelationship', methods=['post']) # 按id查询BP关系
+def searchBPRelationship():
+    searchTerm = list(request.form.to_dict().keys())[0]
+    res = newBPrelationship.searchBPRelationship(id = searchTerm)[0]
     return(jsonify(res))
 
 @app.route('/showWarehouse', methods=['get']) #查询所有仓库信息
