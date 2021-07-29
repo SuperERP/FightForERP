@@ -5,7 +5,7 @@
       </el-header>
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
         <!--点击change按钮，跳转到change界面-->
-        <router-link to="/ChangeCustomer"><el-button type="text" style="margin-left:20px">Change</el-button></router-link>
+        <el-button type="text" style="margin-left:20px" @click="jump">Change</el-button>
         <div>
         <el-form-item label="Customer:" prop="id">
           <el-input v-model="form.id" :disabled="true">
@@ -97,26 +97,42 @@ body{
 </style>
 
 <script>
-
 export default {
   data () {
     return {
       form: {
         id: this.$route.params.id,
-        name: '',
-        POcode: '',
-        street: '',
-        postcode: '',
-        city: '',
-        country: '',
-        region: '',
-        language: '',
-        sales_channel_number: '',
-        distribution_channel: ''
+        name: this.$route.params.name,
+        POcode: this.$route.params.POcode,
+        street: this.$route.params.street,
+        postcode: this.$route.params.postcode,
+        city: this.$route.params.city,
+        country: this.$route.params.country,
+        region: this.$route.params.region,
+        language: this.$route.params.language,
+        sales_channel_number: this.$route.params.sales_channel_number,
+        distribution_channel: this.$route.params.distribution_channel
       }
     }
   },
   methods: {
+    // 点击change，跳转至修改客户信息界面
+    jump () {
+      this.$router.push({
+        path: '/ChangeCustomer',
+        name: '修改客户',
+        params: {
+          id: this.$route.params.id
+        }
+      })
+    }
   }
+  // 页面加载
+  // created () {
+  //   const _this = this
+  //   axios.get('link' + this.$route.params.id).then(function (resp) {
+  //     _this.form = resp.data
+  //   })
+  // }
 }
 </script>

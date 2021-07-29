@@ -18,7 +18,6 @@
 <!--  存储customer输入值的form: customerForm-->
         <el-form ref="customerForm" style="text-align: center" :inline="true" :rules="customerFormRules" :model="customerForm" label-width="200px" size="mini">
         <div>
-
             <el-form-item v-if="isCustomer" label="Customer:" prop="id">
               <el-input v-model.number="customerForm.id">
                 <!--带搜索按钮的输入框-->
@@ -26,7 +25,7 @@
               <!-- 第一层查询 -->
               <el-dialog title="Customers(General)" :visible.sync="Visible1" @close="dialogClosed1">
                 <!-- 查询表单-->
-                <el-form :model="dialogForm1" :rules="dialogForm1rules" ref="dialogForm1">
+                <el-form :model="dialogForm1" ref="dialogForm1">
                   <el-form-item label="Search Term:" prop="POcode" :label-width="formLabelWidth">
                     <el-input v-model="dialogForm1.POcode"  size="mini"  autocomplete="off"></el-input>
                   </el-form-item>
@@ -62,32 +61,32 @@
                       @row-click="textclick"
                       style="width: 100%">
                     <el-table-column
-                        property="SearchTerm"
+                        property="POcode"
                         label="Search Term"
                         width="120">
                     </el-table-column>
                     <el-table-column
-                        property="Country"
+                        property="country"
                         label="Country"
                         width="120">
                     </el-table-column>
                     <el-table-column
-                        property="PostalCode"
+                        property="postcode"
                         label="PostalCode"
                         width="120">
                     </el-table-column>
                     <el-table-column
-                        property="City"
+                        property="city"
                         label="City"
                         width="120">
                     </el-table-column>
                     <el-table-column
-                        property="Name"
+                        property="name"
                         label="Name"
                         width="120">
                     </el-table-column>
                     <el-table-column
-                        property="Customer"
+                        property="id"
                         label="Customer"
                         width="120">
                     </el-table-column>
@@ -140,23 +139,23 @@
                     @row-click="textclick1"
                     style="width: 100%">
                   <el-table-column
-                      property="searchTerm"
+                      property="POcode"
                       label="Search Term"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="lastName"
+                      property="last_name"
                       label="Last Name"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="firstName"
+                      property="first_name"
                       label="First Name"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="partner"
-                      label="Partner"
+                      property="id"
+                      label="CP ID"
                       width="120">
                   </el-table-column>
                 </el-table>
@@ -168,15 +167,73 @@
               </div>
             </el-dialog>
           </el-form-item></div></el-form>
-<!--        business relationship输入框 还问完成-->
+<!--选择bp relationship-->
+        <!--        bp relationship no.输入框 还未完成-->
+        <!--  存储bp relationship输入值的form: bpRelationshipForm-->
+        <el-form ref="bpRelationshipForm" style="text-align: center" :inline="true" :rules="bpRelationshipFormRules" :model="bpRelationshipForm" label-width="200px" size="mini">
+          <div>
+            <el-form-item v-if="isBPRelationship" label="BP Relationship:" prop="id">
+              <el-input v-model.number="bpRelationshipForm.id">
+                <el-button type="text" icon="el-icon-search" slot="suffix"  @click="bpRelationshipSearchClick"></el-button></el-input>
+              <el-dialog
+                  width="55%"
+                  title="Choose BP Relationship ID"
+                  :visible.sync="Visible5"
+                  append-to-body>
+                <el-table
+                    ref="bpRelationshipList"
+                    height="250"
+                    :data="bpRelationshipList.filter(data => !search || data.POcode.toLowerCase().includes(search.toLowerCase()))"
+                    highlight-current-row
+                    @current-change="handleCurrentChange"
+                    @row-click="textclick2"
+                    style="width: 100%">
+                  <el-table-column
+                      property="id"
+                      label="ID"
+                      width="50">
+                  </el-table-column>
+                  <el-table-column
+                      property="customerId"
+                      label="Customer"
+                      width="100">
+                  </el-table-column>
+                  <el-table-column
+                      property="contactId"
+                      label="Contact Person"
+                      width="130">
+                  </el-table-column>
+                  <el-table-column
+                      property="relationshipType"
+                      label="Relationship Type"
+                      width="150">
+                  </el-table-column>
+                  <el-table-column
+                      property="POcode"
+                      label="Search Term"
+                      width="120">
+                  </el-table-column>
+                  <el-table-column
+                      align="right">
+                    <template slot="header" slot-scope="{}">
+                      <el-input
+                          v-model="search"
+                          size="mini"
+                          placeholder="Enter Search Term"/>
+                    </template></el-table-column>
+                </el-table>
+              </el-dialog>
+            </el-form-item>
+          </div></el-form>
+
         <!--底部按钮-->
         <el-footer style="margin-top:330px">
           <el-row :gutter="50" >
             <el-col :offset="18" span="6">
               <el-form-item style="margin-top:20px;">
                 <el-button type="primary" @click="jump">Display</el-button>
-                <!--             清空按钮，不回到主界面-->
-                <el-button type="text" style="color:white;margin-left:10px" @click="resetForm('form')">Clear</el-button>
+                <!--             回到主界面-->
+                <el-button type="text" style="color:white;margin-left:10px" @click="resetForm">Clear</el-button>
               </el-form-item></el-col></el-row>
         </el-footer>
       </el-form></el-container>
@@ -217,27 +274,17 @@ export default {
       Visible2: false, // bp2第二层表格
       Visible3: false, // bp1第一层查询
       Visible4: false, // bp2第二层表格
+      Visible5: false, // bpRelationship第一层表格
       Visible8: false, // relationship category对话框
       isCustomer: true,
       isContactPerson: false,
+      isBPRelationship: false,
+      search: '', // bpRelationship第一层表格的搜索输入框
       //
       form: {
-        name: '',
-        searchTerm: '',
-        street: '',
-        postalCode: '',
-        city: '',
-        country: '',
-        region: '',
-        language: '',
-        salesOrg: '',
-        distributionChannel: '',
-        businessPartnerType: 'customer',
-        POcode: '',
-        relationType: '',
-        id: '',
-        contactId: ''
+        businessPartnerType: 'customer'
       },
+      // 选择框数据
       options: [{
         value: 'customer',
         label: 'Customer'
@@ -245,63 +292,61 @@ export default {
         value: 'contactPerson',
         label: 'Contact Person'
       }, {
-        value: 'businessPartnerRelationship',
-        label: 'Business Partner Relationship'
+        value: 'bpRelationship',
+        label: 'BP Relationship'
       }],
-      // 规则
-      rules: {
-        name: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
-        ],
-        postalCode: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
-        ],
-        city: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
-        ],
-        country: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
-        ],
-        language: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
-        ],
-        businessPartnerType: [
-          { required: true, message: 'Please choose document type', trigger: 'change' }
-        ]
 
-      },
       // 表单
       // customer输入框表单
       customerForm: {
-        id: ''
+        id: '',
+        name: '',
+        POcode: '',
+        street: '',
+        postcode: '',
+        city: '',
+        country: '',
+        region: '',
+        language: '',
+        sales_channel_number: '',
+        distribution_channel: ''
       },
       // contact person输入框表单
       contactPersonForm: {
         id: ''
       },
+      // bp relationship输入框表单
+      bpRelationshipForm: {
+        id: ''
+      },
       // 客户查询对话框第一层表单
-      dialogForm1: {
+      dialogForm1: { // 对应表Customer
         POcode: '',
         city: '',
         country: '',
         postcode: '',
         name: ''
       },
-      dialogForm2: {
-        searchTerm: '',
-        lastName: '',
-        firstName: ''
+      // 联系人查询对话框第一层表单
+      dialogForm2: { // 对应表ContactPerson
+        POcode: '',
+        last_name: '',
+        first_name: ''
       },
-      dialogForm1rules: {
-      },
-      dialogForm2rules: {
-        searchTerm: [
+      // 规则
+      customerFormRules: {
+        id: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
         ]
       },
-      customerFormRules: {
+      contactPersonFormRules: {
+        id: [
+          { required: true, message: 'Please enter...', trigger: 'blur' },
+          { type: 'number', message: 'must be a number' }
+        ]
+      },
+      bpRelationshipFormRules: {
         id: [
           { required: true, message: 'Please enter...', trigger: 'blur' },
           { type: 'number', message: 'must be a number' }
@@ -309,80 +354,54 @@ export default {
       },
       formLabelWidth: '160px',
       formLabelWidth1: '160px',
-      soldToPartyTableData: [{
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20534'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20535'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20535'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20536'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20536'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20536'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20537'
-      }],
-      BP1TableData: [{
-        searchTerm: '036',
+      // 假数据
+      soldToPartyTableData: [{ // 对应Customer表
+        POcode: '036',
+        country: 'US',
+        postcode: '32804',
+        city: 'Orlando',
         name: 'The Bike Zone',
-        partner: '20534'
+        id: '20534'
       }],
-      BP2TableData: [{
-        searchTerm: '036',
-        lastName: 'SMITH',
-        firstName: 'SUSAN',
-        partner: '48013'
+      BP2TableData: [{ // 对应表ContactPerson
+        POcode: '036',
+        last_name: 'SMITH',
+        first_name: 'SUSAN',
+        id: '48013'
       }],
-      relationshipCategoryList: [{
-        relCat: 'BUR001',
-        description: 'Has Contact Person'
+      relationshipCategoryList: [{ // 对应表RelationDic
+        relationType: 'BUR001',
+        definition: 'Has Contact Person'
+      }],
+      bpRelationshipList: [{ // 对应表CustomerAndContactPerson
+        id: '1',
+        customerId: '25027',
+        contactId: '48037',
+        relationshipType: 'BUR002',
+        validTo: '07-27-2021',
+        validFrom: '07-27-2021',
+        POcode: '036'
       }],
       currentRow: null,
       show: true
     }
   },
   methods: {
-    soldToPartyFind (formName) {
+    bpRelationshipSearchClick () { // 对应CustomerAndContactPerson表的全表查询
+      this.Visible5 = true
+      const _this = this
+      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+        _this.bpRelationshipList = resp.data
+      })
+    },
+    soldToPartyFind (formName) { // 按输入内容，检索Customer表
+      const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible2 = true
+          axios.post('http://127.0.0.1:5000/searchBP1', _this.dialogForm1).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+            _this.soldToPartyTableData = resp.data // 注意此处需求与BP不同。此时假数据仍存在，后续调试请视效果去除，假数据存在于soldToPartyTableData
+          })
         } else {
           return false
         }
@@ -394,29 +413,44 @@ export default {
         case 'customer': {
           this.isCustomer = true
           this.isContactPerson = false
+          this.isBPRelationship = false
           break
         }
         case 'contactPerson': {
           this.isContactPerson = true
           this.isCustomer = false
+          this.isBPRelationship = false
           break
         }
-        // case 'customer': this.isCustomer = true
+        case 'bpRelationship': {
+          this.isContactPerson = false
+          this.isCustomer = false
+          this.isBPRelationship = true
+          break
+        }
       }
     },
     BP1Find (formName) {
+      const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible2 = true
+          axios.post('http://127.0.0.1:5000/searchBP1', _this.dialogForm1).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+            _this.BP1TableData = resp.data // 注意此时假数据仍存在，后续调试请视效果去除，假数据存在于BP1TableData
+          })
         } else {
           return false
         }
       })
     },
     BP2Find (formName) {
+      const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible4 = true
+          axios.post('http://127.0.0.1:5000/searchBP2', _this.dialogForm2).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+            _this.BP2TableData = resp.data // 注意此时假数据仍存在，后续调试请视效果去除，假数据存在于BP1TableData
+          })
         } else {
           return false
         }
@@ -432,48 +466,58 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.customerForm.id = parseInt(row.Customer)
+      this.customerForm.id = parseInt(row.id)
     },
     textclick1 (row) {
       this.Visible3 = false
       this.Visible4 = false
-      this.contactPersonForm.id = parseInt(row.partner)
+      this.contactPersonForm.id = parseInt(row.id)
     },
     textclick2 (row) {
-      this.Visible8 = false
-      this.form.relationType = row.relCat
+      this.Visible5 = false
+      this.bpRelationshipForm.id = parseInt(row.id)
     },
-    submitForm (formName) {
-      const _this = this
-      this.$refs[formName].validate((valid) => {
-        if (valid) { // 前后端交互，提交按钮
-          axios.post('link', this.form).then(function (resp) {
-            if (resp.data === 'success') {
-              _this.$message({
-                message: 'submit!',
-                type: 'success'
-              })
-            }
-          })
-        } else {
-          console.log('error execute!!')
-          return false
+    resetForm () {
+      switch (this.form.businessPartnerType) {
+        case 'customer': {
+          this.$refs.customerForm.resetFields()
+          break
         }
-      })
+        case 'contactPerson': {
+          this.$refs.contactPersonForm.resetFields()
+          break
+        }
+        case 'bpRelationship': {
+          this.$refs.bpRelationshipForm.resetFields()
+          break
+        }
+      }
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
-    },
+    // 点击display，页面跳转至显示界面  ??这边前后端交互代码得改一下
     jump () {
+      const _this = this
       switch (this.form.businessPartnerType) {
         case 'customer': {
           this.$refs.customerForm.validate((valid) => {
             if (valid) {
+              axios.post('link', this.customerForm).then(function (resp) { // 传入id，传出customer表信息
+                _this.customerForm = resp.data
+              })
               this.$router.push({
                 path: '/DisplayCustomer',
                 name: '显示客户',
                 params: {
-                  id: this.customerForm.id
+                  id: this.customerForm.id,
+                  name: this.customerForm.name,
+                  POcode: this.customerForm.POcode,
+                  street: this.customerForm.street,
+                  postcode: this.customerForm.postcode,
+                  city: this.customerForm.city,
+                  country: this.customerForm.country,
+                  region: this.customerForm.region,
+                  language: this.customerForm.language,
+                  sales_channel_number: this.customerForm.sales_channel_number,
+                  distribution_channel: this.customerForm.distribution_channel
                 }
               })
             } else {
@@ -484,7 +528,37 @@ export default {
           break
         }
         case 'contactPerson': {
-          this.$router.push({ path: '/DisplayContactPerson' })
+          this.$refs.contactPersonForm.validate((valid) => {
+            if (valid) {
+              this.$router.push({
+                path: '/DisplayContactPerson',
+                name: '显示联系人',
+                params: {
+                  id: this.contactPersonForm.id
+                }
+              })
+            } else {
+              console.log('error!!')
+              return false
+            }
+          })
+          break
+        }
+        case 'bpRelationship': {
+          this.$refs.bpRelationshipForm.validate((valid) => {
+            if (valid) {
+              this.$router.push({
+                path: '/DisplayBPRelationship',
+                name: '显示BP关系',
+                params: {
+                  id: this.bpRelationshipForm.id
+                }
+              })
+            } else {
+              console.log('error!!')
+              return false
+            }
+          })
           break
         }
       }
