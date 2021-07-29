@@ -52,6 +52,11 @@ def showType():
     res = newBPrelationship.searchallRelationshipDic()
     return(jsonify(res))
 
+@app.route('/showBPRelationship', methods=['get']) #查询所有BP关系
+def showBPRelationship():
+    res = newBPrelationship.searchallBPRelationship()
+    return(jsonify(res))
+
 @app.route('/searchBP1', methods=['post']) # 按条件查询客户
 def searchBP1():
     searchTerm = request.get_json()
@@ -62,6 +67,19 @@ def searchBP1():
 def searchBP2():
     searchTerm = request.get_json()
     res = newBPrelationship.searchContactPerson(POcode=searchTerm['POcode'],last_name=searchTerm['last_name'],first_name=searchTerm['first_name'])
+    return(jsonify(res))
+
+@app.route('/searchCustomer', methods=['post']) # 按id查询客户
+def searchCustomer():
+    searchTerm = list(request.form.to_dict().keys())[0]
+    searchTerm = str(searchTerm).zfill(10)
+    res = newBPrelationship.searchCustomer(id = searchTerm)[0]
+    return(jsonify(res))
+
+@app.route('/searchContactPerson', methods=['post']) # 按id查询联系人
+def searchContactPerson():
+    searchTerm = request.get_json()
+    res = newBPrelationship.searchContactPerson(id = searchTerm['id'])[0]
     return(jsonify(res))
 
 @app.route('/showWarehouse', methods=['get']) #查询所有仓库信息

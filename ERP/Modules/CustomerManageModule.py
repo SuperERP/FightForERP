@@ -23,7 +23,7 @@ class CustomerManagerModule(AbstractModule):
             res.append(self.to_dict(item))
         return res
 
-    def searchCustomer(self,POcode='',city='',country='',postcode='',name=''):
+    def searchCustomer(self,id='',POcode='',city='',country='',postcode='',name=''):
         '''
         按条件查找客户，空条件表示所有
         :return:
@@ -35,12 +35,13 @@ class CustomerManagerModule(AbstractModule):
             .filter(or_(Customer.city==city,city==''))\
                 .filter(or_(Customer.country==country,country==''))\
                     .filter(or_(Customer.postcode==postcode,postcode==''))\
-                        .filter(or_(Customer.name==name,name=='')).all():
+                        .filter(or_(Customer.id==id,id==''))\
+                            .filter(or_(Customer.name==name,name=='')).all():
             res.append(self.to_dict(idata))
 
         return res
 
-    def searchContactPerson(self,POcode='',last_name='',first_name=''):
+    def searchContactPerson(self,id='',POcode='',last_name='',first_name=''):
         '''
         按条件查找联系人，空条件表示所有
         :return:
@@ -50,7 +51,8 @@ class CustomerManagerModule(AbstractModule):
 
         for idata in self.session.query(ContactPerson).filter(or_(ContactPerson.POcode==POcode,POcode==''))\
             .filter(or_(ContactPerson.last_name==last_name,last_name==''))\
-                .filter(or_(ContactPerson.first_name==first_name,first_name=='')).all():
+                .filter(or_(ContactPerson.id==id,id==''))\
+                    .filter(or_(ContactPerson.first_name==first_name,first_name=='')).all():
             res.append(self.to_dict(idata))
 
         return res
@@ -91,3 +93,12 @@ class CustomerManagerModule(AbstractModule):
         if self.insertData(new_data):
             self.customerRecord += 1
         return data['id']
+
+    def searchallBPRelationship(self): 
+        '''
+        查找所有BP关系
+        '''
+        res = []
+        for item in self.session.query(CustomerAndContactPersonRelationship).all():
+            res.append(self.to_dict(item))
+        return res
