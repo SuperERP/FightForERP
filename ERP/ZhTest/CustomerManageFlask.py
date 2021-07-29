@@ -88,6 +88,7 @@ def createInquiry():
     a['PODate'] = datetime.strptime(a['PODate'],'%Y-%m-%d')
     a['effectiveDate'] = datetime.strptime(a['effectiveDate'],'%Y-%m-%d')
     a['expirationDate'] = datetime.strptime(a['expirationDate'],'%Y-%m-%d')
+
     try:
         id = newOrderManager.insertInquiry(a)
         for item in b:
@@ -111,6 +112,8 @@ def createQuotation():
     a['effectiveDate'] = datetime.strptime(a['effectiveDate'],'%Y-%m-%d')
     a['expirationDate'] = datetime.strptime(a['expirationDate'],'%Y-%m-%d')
     a['requestedDeliveryDate'] = datetime.strptime(a['requestedDeliveryDate'],'%Y-%m-%d')
+    if 'id' in a:
+        del a['id']
     try:
         id = newOrderManager.insertQuotation(a)
         for item in b:
@@ -120,6 +123,24 @@ def createQuotation():
     except Exception as e:
         return("false")
     return(id)
+
+@app.route('/searchInquiry', methods=['post']) # 按条件查找询价单
+def searchInquiry():
+    searchTerm = request.get_json()
+    res = newOrderManager.searchInquiry(customerId=searchTerm['customerId'],warehouseId=searchTerm['warehouseId'],POcode=searchTerm['POcode'],PODate=searchTerm['PODate'],effectiveDate=searchTerm['effectiveDate'],expirationDate=searchTerm['expirationDate'])
+    return(jsonify(res))
+
+@app.route('/searchInquiryAndItem', methods=['post']) # 按给定询价单号查找询价单及询价单物料项
+def searchInquiryAndItem():
+    searchTerm = request.get_json()
+    res1 = newOrderManager.searchInquiry(id = searchTerm['id'])[0]
+    print(res1)
+    res2 = newOrderManager.searchInquiryItem(inquiryId = searchTerm['id'])
+    res = []
+    res.append(res1)
+    res.append(res2)
+    print(res)
+    return(jsonify(res))
 
 if __name__ == '__main__':
     app.run()

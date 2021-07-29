@@ -1,4 +1,3 @@
-请重新检查数据插入
-Cannot compile Column object until its 'name' is assigned.
-请重新检查数据插入
-(sqlite3.OperationalError) table Quotationitem has no column named material [SQL: 'INSERT INTO "Quotationitem" ("quotationId", material, "itemDescription", "orderQuantity", "salesUnit", cnty, amount) VALUES (?, ?, ?, ?, ?, ?, ?)'] [parameters: ('QU20210728175708363819', 'sb102', 'mat2', 1, 'EA', 'K004', 10)] (Background on this error at: http://sqlalche.me/e/e3q8)
+success insert data <ERP.Modules.OrmData.QutationAndSalesOrderData.Quotation object at 0x7fbb80e3fdd8>
+success insert data <ERP.Modules.OrmData.QutationAndSalesOrderData.QuotationItem object at 0x7fbb800d83c8>
+success insert data <ERP.Modules.OrmData.QutationAndSalesOrderData.QuotationItem object at 0x7fbb800d83c8>

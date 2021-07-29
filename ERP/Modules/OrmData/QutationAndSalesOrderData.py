@@ -35,7 +35,7 @@ class Quotation(Base):
     ## 请求交货日期
     requestedDeliveryDate = Column(Date())
     ## 折扣数量
-    cnty = Column(String(10), ForeignKey('DiscountDic.id'))
+    cnty = Column(String(10), ForeignKey('DiscountDic.name'))
     ## 总体折扣数量
     totalCntyPercent = Column(Integer())
 
@@ -46,14 +46,14 @@ class Quotation(Base):
         self.warehouseId = kwargs['warehouseId']
         self.POcode = kwargs['POcode']
         self.PODate = kwargs['PODate']
-        self.effectiveDate = Column(Date())
-        self.expirationDate = Column(Date())
+        self.effectiveDate = kwargs['effectiveDate']
+        self.expirationDate = kwargs['expirationDate']
         ## 请求交货日期
-        self.requestedDeliveryDate = Column(Date())
+        self.requestedDeliveryDate = kwargs['requestedDeliveryDate']
         ## 折扣数量
-        self.cnty = Column(String(10), ForeignKey('DiscountDic.id'))
+        self.cnty = kwargs['cnty']
         ## 总体折扣数量
-        self.totalCntyPercent = Column(Integer())
+        self.totalCntyPercent = kwargs['totalCntyPercent']
 
 
 class QuotationItem(Base):

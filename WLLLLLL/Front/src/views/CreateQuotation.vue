@@ -820,12 +820,10 @@ export default {
       // 规则
       rules: {
         customerId: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         POcode: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         PODate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
@@ -925,7 +923,7 @@ export default {
     inquirySearchClick () { // 对应Inquiry表的全表查询（对应总体折扣）
       this.Visible8 = true
       const _this = this
-      axios.get('link').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
+      axios.get('http://127.0.0.1:5000/searchInquiry').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
         _this.inquiryTableData = resp.data
       })
     },
@@ -1002,7 +1000,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Visible7 = true
-          axios.post('link', _this.inquirySearchForm).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+          axios.post('http://127.0.0.1:5000/searchInquiry', _this.inquirySearchForm).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
             _this.inquiryTableData = resp.data // 此时假数据仍存在，后续调试请视效果去除，假数据存在于inquiryTableData
           })
         } else {
@@ -1027,7 +1025,7 @@ export default {
     textclickGetInquiryId (row) { // 表单处理
       this.Visible6 = false
       this.Visible7 = false
-      this.createWithReferenceForm.id = parseInt(row.id)
+      this.createWithReferenceForm.id = row.id
     },
     textclick2 (row) {
       this.Visible8 = false
@@ -1069,6 +1067,11 @@ export default {
       if (this.materialList.length === 0) {
         this.$message.error('At least one material is required!')
       } else {
+        // console.log('第一个date')
+        // console.log(this.form.PODate)
+        // this.form.PODate = this.form.PODate.format('yyyy-MM-dd')
+        // console.log('第二个date')
+        // console.log(this.form.PODate)
         this.$refs[formName].validate((valid) => {
           if (valid) { // 前后端交互，提交按钮
             axios.post('http://127.0.0.1:5000/createQuotation', [this.form, this.materialList]).then(function (resp) {
@@ -1262,7 +1265,7 @@ export default {
     copy () { // createWithReferenceForm中仅有id，对应Inquiry表中的id
       this.Visible5 = false
       const _this = this
-      axios.post('link', this.createWithReferenceForm).then(function (resp) { // copy,注意需传两个值
+      axios.post('http://127.0.0.1:5000/searchInquiryAndItem', this.createWithReferenceForm).then(function (resp) { // copy,注意需传两个值
         _this.form = resp.data[0]
         _this.materialList = resp.data[1]
       })
