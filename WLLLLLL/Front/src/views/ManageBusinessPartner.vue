@@ -5,6 +5,42 @@
       </el-header>
 
       <el-form ref="form" style="text-align: center" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
+<!--customer隐藏对话框-->
+        <el-dialog :visible.sync="forCustomerVisible">
+          <!-- 查询表单-->
+          <el-form :model="forCustomerForm1" ref="forCustomerForm1">
+            <el-form-item prop="name" :label-width="formLabelWidth">
+              <el-input v-model="forCustomerForm1.name"  size="mini"  autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="POcode" :label-width="formLabelWidth">
+              <el-input v-model="forCustomerForm1.POcode"  size="mini" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="street" :label-width="formLabelWidth">
+              <el-input v-model="forCustomerForm1.street"  size="mini" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="postcode" :label-width="formLabelWidth">
+              <el-input v-model="forCustomerForm1.postcode"  size="mini" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="city" :label-width="formLabelWidth">
+              <el-input v-model="forCustomerForm1.city"  size="mini" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="country" :label-width="formLabelWidth">
+              <el-input v-model="forCustomerForm1.country"  size="mini" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="region" :label-width="formLabelWidth">
+              <el-input v-model="forCustomerForm1.region"  size="mini" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="language" :label-width="formLabelWidth">
+              <el-input v-model="forCustomerForm1.language"  size="mini" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="sales_channel_number" :label-width="formLabelWidth">
+              <el-input v-model="forCustomerForm1.sales_channel_number"  size="mini" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="distribution_channel" :label-width="formLabelWidth">
+              <el-input v-model="forCustomerForm1.distribution_channel"  size="mini" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+        </el-dialog>
         <el-form-item style="margin-top:100px" label="Business Partner Type:" prop="businessPartnerType">
           <el-select v-model="form.businessPartnerType" placeholder="Please choose..." @change="bpChange">
             <el-option
@@ -279,6 +315,7 @@ export default {
       isCustomer: true,
       isContactPerson: false,
       isBPRelationship: false,
+      forCustomerVisible: false,
       search: '', // bpRelationship第一层表格的搜索输入框
       //
       form: {
@@ -299,7 +336,9 @@ export default {
       // 表单
       // customer输入框表单
       customerForm: {
-        id: '',
+        id: ''
+      },
+      forCustomerForm1: {
         name: '',
         POcode: '',
         street: '',
@@ -501,23 +540,23 @@ export default {
           this.$refs.customerForm.validate((valid) => {
             if (valid) {
               axios.post('link', this.customerForm).then(function (resp) { // 传入id，传出customer表信息
-                _this.customerForm = resp.data
+                _this.forCustomerForm1 = resp.data
               })
               this.$router.push({
                 path: '/DisplayCustomer',
                 name: '显示客户',
                 params: {
                   id: this.customerForm.id,
-                  name: this.customerForm.name,
-                  POcode: this.customerForm.POcode,
-                  street: this.customerForm.street,
-                  postcode: this.customerForm.postcode,
-                  city: this.customerForm.city,
-                  country: this.customerForm.country,
-                  region: this.customerForm.region,
-                  language: this.customerForm.language,
-                  sales_channel_number: this.customerForm.sales_channel_number,
-                  distribution_channel: this.customerForm.distribution_channel
+                  name: this.forCustomerForm1.name,
+                  POcode: this.forCustomerForm1.POcode,
+                  street: this.forCustomerForm1.street,
+                  postcode: this.forCustomerForm1.postcode,
+                  city: this.forCustomerForm1.city,
+                  country: this.forCustomerForm1.country,
+                  region: this.forCustomerForm1.region,
+                  language: this.forCustomerForm1.language,
+                  sales_channel_number: this.forCustomerForm1.sales_channel_number,
+                  distribution_channel: this.forCustomerForm1.distribution_channel
                 }
               })
             } else {
