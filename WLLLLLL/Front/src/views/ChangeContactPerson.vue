@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Change Contact Person: Overview
+      <el-header>Change Contact Person: {{ this.$route.params.id }}
       </el-header>
 
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
@@ -92,7 +92,7 @@ export default {
   data () {
     return {
       form: {
-        id: '',
+        id: this.$route.params.id,
         POcode: '',
         prefixName: '',
         first_name: '',
@@ -119,7 +119,7 @@ export default {
       const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) { // 前后端交互，提交按钮
-          axios.post('link', this.form).then(function (resp) {
+          axios.post('link', this.form).then(function (resp) { // 修改ContactPerson表内容
             if (resp.data === 'fault') {
               _this.$message({
                 message: 'fail!',
@@ -127,13 +127,13 @@ export default {
               })
             } else {
               _this.$message({
-                message: 'submit!' + resp.data,
+                message: 'Change successfully!',
                 type: 'success'
               })
             }
           })
         } else {
-          console.log('error submit!!')
+          console.log('error change!!')
           return false
         }
       })
@@ -141,6 +141,12 @@ export default {
     resetForm (formName) {
       this.$refs[formName].resetFields()
     }
+  },
+  created () {
+    const _this = this
+    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id,返回ContactPerson数据表信息
+      _this.form = resp.data
+    })
   }
 }
 </script>

@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Display Contact Person: Overview
+      <el-header>Display Contact Person: {{ this.$route.params.id }}
       </el-header>
 
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
         <!--点击change按钮，跳转到change界面-->
-        <router-link to="/ChangeContactPerson"><el-button type="text" style="margin-left:20px">Change</el-button></router-link>
+        <el-button type="text" style="margin-left:20px" @click="jump">Change</el-button>
         <div>
           <el-form-item label="Contact Person:" prop="id">
             <el-input v-model="form.id" :disabled="true">
@@ -78,11 +78,13 @@
 <script>
 // import axios from 'axios'
 
+import axios from '_axios@0.21.1@axios'
+
 export default {
   data () {
     return {
       form: {
-        id: '',
+        id: this.$route.params.id,
         POcode: '',
         prefixName: '',
         first_name: '',
@@ -105,6 +107,23 @@ export default {
     }
   },
   methods: {
+    // 点击change，跳转至修改客户信息界面
+    jump () {
+      this.$router.push({
+        path: '/ChangeContactPerson',
+        name: '修改联系人',
+        params: {
+          id: this.$route.params.id
+        }
+      })
+    }
+  },
+  // 页面加载
+  created () {
+    const _this = this
+    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id,返回ContactPerson数据表信息
+      _this.form = resp.data
+    })
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Change New Customer: Overview
+      <el-header>Change Customer: {{ this.$route.params.id }}
       </el-header>
 
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
@@ -75,7 +75,7 @@
               <el-form-item style="margin-top:20px;">
                 <el-button type="primary" @click="submitForm('form')">Change</el-button>
                 <!--             清空按钮，不回到主界面-->
-                <el-button type="text" style="color:white">Clear</el-button>
+                <el-button type="text" style="color:white" @click="resetForm('form')">Clear</el-button>
               </el-form-item></el-col></el-row>
         </el-footer>
       </el-form></el-container>
@@ -114,7 +114,7 @@ export default {
   data () {
     return {
       form: {
-        id: '',
+        id: this.$route.params.id,
         name: '',
         POcode: '',
         street: '',
@@ -152,7 +152,7 @@ export default {
       const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) { // 前后端交互，提交按钮
-          axios.post('link', this.form).then(function (resp) {
+          axios.post('link', this.form).then(function (resp) { // 修改Customer表内容
             if (resp.data === 'fault') {
               _this.$message({
                 message: 'fail!',
@@ -160,20 +160,27 @@ export default {
               })
             } else {
               _this.$message({
-                message: 'submit!' + resp.data,
+                message: 'Change successfully!',
                 type: 'success'
               })
             }
           })
         } else {
-          console.log('error submit!!')
+          console.log('error change!!')
           return false
         }
       })
     },
     resetForm (formName) {
-      this.$refs.dialogform1.resetFields()
+      this.$refs[formName].resetFields()
     }
+  },
+  // 页面加载
+  created () {
+    const _this = this
+    axios.post('http://127.0.0.1:5000/searchCustomer', this.$route.params.id).then(function (resp) {
+      _this.form = resp.data
+    })
   }
 }
 </script>
