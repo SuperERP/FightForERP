@@ -16,6 +16,10 @@ import DisplayContactPerson from '../views/DisplayContactPerson'
 import ChangeContactPerson from '../views/ChangeContactPerson'
 import DisplayBPRelationship from '../views/DisplayBPRelationship'
 import ChangeBPRelationship from '../views/ChangeBPRelationship'
+import DisplayInquiry from '../views/DisplayInquiry'
+import DisplayQuotation from '../views/DisplayQuotation'
+import ChangeInquiry from '../views/ChangeInquiry'
+import ChangeQuotation from '../views/ChangeQuotation'
 // import test1 from '../views/test1'
 // import test from '../views/test'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
@@ -40,7 +44,7 @@ const routes = [
   },
   {
     path: '/DisplaySalesOrder',
-    name: '查看销售订单',
+    name: '显示销售订单',
     component: DisplaySalesOrder
   },
   {
@@ -99,10 +103,40 @@ const routes = [
     component: DisplayBPRelationship
   },
   {
+    path: '/DisplayInquiry',
+    name: '显示询价单',
+    component: DisplayInquiry
+  },
+  {
+    path: '/DisplayQuotation',
+    name: '显示报价单',
+    component: DisplayQuotation
+  },
+  {
+    path: '/ChangeQuotation',
+    name: '修改报价单',
+    component: ChangeQuotation
+  },
+  {
+    path: '/ChangeInquiry',
+    name: '修改询价单',
+    component: ChangeInquiry
+  },
+  {
     path: '/ChangeBPRelationship',
     name: '修改BP关系',
     component: ChangeBPRelationship
   }
+  // {
+  //   path: '/test',
+  //   name: '测试',
+  //   component: test
+  // },
+  // {
+  //   path: '/test1',
+  //   name: '测试1',
+  //   component: test1
+  // }
 ]
 
 const router = new VueRouter({

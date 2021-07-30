@@ -1,16 +1,16 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Change Standard Order: {{ this.$route.params.id }}
+      <el-header>Change Quotation: {{ this.$route.params.id }}
       </el-header>
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
         <!--      sold to party搜索功能-->
         <el-row :gutter="50" style="margin-top:10px">
           <el-col :span="8">
-            <el-form-item label="Standard Order:" prop="id" >
-            <el-input style="width:110px;" v-model="form.id" :disabled="true">
-            </el-input>
-          </el-form-item>
+            <el-form-item label="Quotation:" prop="id" >
+              <el-input style="width:110px;" v-model="form.id" :disabled="true">
+              </el-input>
+            </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="Net Value:">
@@ -797,7 +797,7 @@ export default {
         this.form.requestedDeliveryDate = this.dateTransfer(this.form.requestedDeliveryDate)
         this.$refs[formName].validate((valid) => {
           if (valid) { // 前后端交互，提交按钮
-            axios.post('link', [this.form, this.materialList]).then(function (resp) { // 修改salesOrder和salesOrderItem表内容
+            axios.post('link', [this.form, this.materialList]).then(function (resp) { // 修改quotation和quotationItem表内容
               if (resp.data === 'fault') {
                 _this.$message({
                   message: 'fail!',
@@ -1011,7 +1011,7 @@ export default {
   // 页面加载
   created () {
     const _this = this
-    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id，传出salesOrder表和salesOrderItem表的信息
+    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id，传出quotation表和quotationItem表的信息
       _this.form = resp.data[0]
       _this.materialList = resp.data[1]
     })

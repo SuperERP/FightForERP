@@ -1,14 +1,14 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Display Standard Order: {{ this.$route.params.id }}
+      <el-header>Display Quotation: {{ this.$route.params.id }}
       </el-header>
       <el-form ref="form" :inline="true" :model="form"  label-width="200px" size="mini" >
-        <!--点击change按钮，跳转到changeSalesOrder界面-->
-       <el-button type="text" style="margin-left:20px" @click="jump">Change</el-button>
+        <!--点击change按钮，跳转到changeQuotation界面-->
+        <el-button type="text" style="margin-left:20px" @click="jump">Change</el-button>
         <el-row :gutter="50" style="margin-top:10px">
           <el-col :span="8">
-            <el-form-item label="Standard Order:" prop="id" >
+            <el-form-item label="Quotation:" prop="id" >
               <el-input style="width:110px;" v-model="form.id" :disabled="true">
               </el-input>
             </el-form-item>
@@ -149,8 +149,8 @@ export default {
     // 点击change，跳转至修改客户信息界面
     jump () {
       this.$router.push({
-        path: '/ChangeSalesOrder',
-        name: '修改销售订单',
+        path: '/ChangeQuotation',
+        name: '修改报价单',
         params: {
           id: this.$route.params.id
         }
@@ -215,7 +215,7 @@ export default {
   // 页面加载
   created () {
     const _this = this
-    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id，传出salesOrder表和salesOrderItem表的信息
+    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id，传出quotation表和quotationItem表的信息
       _this.form = resp.data[0]
       _this.materialList = resp.data[1]
     })

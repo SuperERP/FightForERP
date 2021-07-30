@@ -1,17 +1,18 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Change Standard Order: {{ this.$route.params.id }}
+      <el-header>Change Inquiry: {{ this.$route.params.id }}
       </el-header>
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
-        <!--      sold to party搜索功能-->
-        <el-row :gutter="50" style="margin-top:10px">
+
+        <el-row :gutter="50" style="margin-top:20px" >
           <el-col :span="8">
-            <el-form-item label="Standard Order:" prop="id" >
-            <el-input style="width:110px;" v-model="form.id" :disabled="true">
-            </el-input>
-          </el-form-item>
+            <el-form-item label="Inquiry:" prop="id" >
+              <el-input style="width:110px;" v-model="form.id" :disabled="true">
+              </el-input>
+            </el-form-item>
           </el-col>
+
           <el-col :span="12">
             <el-form-item label="Net Value:">
               <el-input style="width:110px;" size='mini' v-model="netValueForm.netValue1" :disabled="true"></el-input>
@@ -20,6 +21,7 @@
           </el-col></el-row>
         <el-row :gutter="50" >
           <el-col :span="8">
+            <!--      sold to party搜索功能-->
             <el-form-item label="Sold-To Party:" prop="customerId">
               <el-input style="width:110px;" v-model.number="form.customerId">
                 <!--带搜索按钮的输入框-->
@@ -103,42 +105,36 @@
             </el-form-item>
           </el-col></el-row>
         <!--      plant搜索框-->
-        <el-row :gutter="50">
-          <el-col :span="8">
-            <el-form-item label="Plant:" prop="warehouseId">
-              <el-input style="width:110px;" v-model.number="form.warehouseId">
-                <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantSearchClick"></el-button>
-              </el-input>
-              <el-dialog
-                  width="55%"
-                  title="Choose plant"
-                  :visible.sync="plantVisible"
-                  append-to-body>
-                <el-table
-                    ref="plantList"
-                    height="250"
-                    :data="plantList"
-                    highlight-current-row
-                    @current-change="handleCurrentChange"
-                    @row-click="plantTextClick"
-                    style="width: 100%">
-                  <el-table-column
-                      property="id"
-                      label="Plant Number"
-                      width="120">
-                  </el-table-column>
-                  <el-table-column
-                      property="name"
-                      label="Plant Name"
-                      width="120">
-                  </el-table-column>
-                </el-table>
-              </el-dialog>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12"><el-form-item label="Req. Deliv. Date:" prop="requestedDeliveryDate">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="form.requestedDeliveryDate" style="width: 130px;"></el-date-picker></el-form-item>
-          </el-col></el-row>
+        <el-form-item label="Plant:" prop="warehouseId">
+          <el-input style="width:110px;" v-model.number="form.warehouseId">
+            <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantSearchClick"></el-button>
+          </el-input>
+          <el-dialog
+              width="55%"
+              title="Choose plant"
+              :visible.sync="plantVisible"
+              append-to-body>
+            <el-table
+                ref="plantList"
+                height="250"
+                :data="plantList"
+                highlight-current-row
+                @current-change="handleCurrentChange"
+                @row-click="plantTextClick"
+                style="width: 100%">
+              <el-table-column
+                  property="id"
+                  label="Plant Number"
+                  width="120">
+              </el-table-column>
+              <el-table-column
+                  property="name"
+                  label="Plant Name"
+                  width="120">
+              </el-table-column>
+            </el-table>
+          </el-dialog>
+        </el-form-item>
 
         <el-row :gutter="50" >
           <el-col :span="8">
@@ -147,13 +143,13 @@
               </el-input>
             </el-form-item></el-col>
           <el-col :span="12"><el-form-item label="Cust. Ref. Date:" prop="PODate">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="form.PODate" style="width: 130px;"></el-date-picker>
+            <el-date-picker type="date" v-model="form.PODate" value-format="yyyy-MM-dd" style="width: 130px;"></el-date-picker>
           </el-form-item></el-col>
           <el-col :span="8"><el-form-item label="Valid From:" prop="effectiveDate">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="form.effectiveDate" style="width: 130px;"></el-date-picker>
+            <el-date-picker type="date" v-model="form.effectiveDate" value-format="yyyy-MM-dd" style="width: 130px;"></el-date-picker>
           </el-form-item></el-col>
           <el-col :span="12"><el-form-item label="Valid To:" prop="expirationDate">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="form.expirationDate" style="width: 130px;"></el-date-picker>
+            <el-date-picker type="date" v-model="form.expirationDate" value-format="yyyy-MM-dd" style="width: 130px;"></el-date-picker>
           </el-form-item></el-col>
         </el-row>
         <!--      下半部分-->
@@ -164,55 +160,11 @@
                 <el-input style="width:110px;" size='mini' v-model="netValueForm.expectOrdVal" :disabled="true"></el-input>
                 <el-input style="width:60px;" placeholder="USD" size='mini' :disabled="true"></el-input>
               </el-form-item></el-col></el-row>
-          <!--总体折扣-->
-          <el-row :gutter="50">
-            <el-col  :span="8">
-              <el-form-item label="Total Cnty:" prop="cnty">
-                <el-input style="width:110px;" size='mini' v-model="form.cnty">
-                  <el-button type="text" icon="el-icon-search" slot="suffix"  @click="cntySearchClick"></el-button></el-input>
-                <!--          cnty列表-->
-                <el-dialog
-                    width="55%"
-                    title="Choose condition type"
-                    :visible.sync="Visible8"
-                    append-to-body>
-                  <el-table
-                      ref="cntyList"
-                      height="250"
-                      :data="cntyList"
-                      highlight-current-row
-                      @current-change="handleCurrentChange"
-                      @row-click="textclick2"
-                      style="width: 100%">
-                    <el-table-column
-                        property="id"
-                        label="Condition No."
-                        width="120">
-                    </el-table-column>
-                    <el-table-column
-                        property="name"
-                        label="Name"
-                        width="120">
-                    </el-table-column>
-                    <el-table-column
-                        property="discountCalcu"
-                        label="Method"
-                        width="300">
-                    </el-table-column>
-                  </el-table>
-                </el-dialog>
-              </el-form-item></el-col>
-            <el-col  :span="8">
-              <el-form-item label="Total Cnty Amount:" prop="totalCntyPercent">
-                <el-input style="width:110px;" size='mini' v-model="form.totalCntyPercent" @change="cntyActivate"></el-input>
-              </el-form-item></el-col>
-          </el-row>
           <h4 style="margin-left: 30px;margin-bottom:7px">All Items<el-button size="mini" style="margin-left:30px" type="primary" @click="totalAdd">Add Material</el-button></h4>
           <!--    添加material对话框-->
           <el-dialog title="Add Material" :visible.sync="Visible3" @close="dialogClosed2">
             <!--      添加material表单-->
             <el-form :model="addMaterialForm" :rules="addMaterialFormRules" ref="addMaterialFormRef">
-              <!--          searchMaterial列表-->
               <el-form-item label="Material" prop="material" :label-width="formLabelWidth1">
                 <el-input v-model.number="addMaterialForm.material" size="mini" autocomplete="off">
                   <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialSearchClick"></el-button></el-input>
@@ -260,7 +212,6 @@
                   </el-table>
                 </el-dialog>
               </el-form-item>
-
               <el-form-item label="Order Quantity" prop="orderQuantity" :label-width="formLabelWidth1">
                 <el-input v-model.number="addMaterialForm.orderQuantity" size="mini" autocomplete="off"></el-input>
               </el-form-item>
@@ -273,44 +224,8 @@
               <el-form-item label="Item Description" prop="itemDescription" :label-width="formLabelWidth1">
                 <el-input v-model="addMaterialForm.itemDescription" size="mini" autocomplete="off"></el-input>
               </el-form-item>
-              <!--          单项折扣-->
-              <el-form-item label="Cnty" prop="cnty" :label-width="formLabelWidth1">
-                <el-input v-model.number="addMaterialForm.cnty" size="mini" autocomplete="off">
-                  <el-button type="text" icon="el-icon-search" slot="suffix"  @click="cntySearchClick1"></el-button></el-input>
-                <!--          cnty列表-->
-                <el-dialog
-                    width="55%"
-                    title="Choose condition type"
-                    :visible.sync="Visible9"
-                    append-to-body>
-                  <el-table
-                      ref="cntyList"
-                      height="250"
-                      :data="cntyList"
-                      highlight-current-row
-                      @current-change="handleCurrentChange"
-                      @row-click="textclick3"
-                      style="width: 100%">
-                    <el-table-column
-                        property="id"
-                        label="Condition No."
-                        width="120">
-                    </el-table-column>
-                    <el-table-column
-                        property="name"
-                        label="Name"
-                        width="120">
-                    </el-table-column>
-                    <el-table-column
-                        property="discountCalcu"
-                        label="Method"
-                        width="300">
-                    </el-table-column>
-                  </el-table>
-                </el-dialog>
-              </el-form-item>
-              <el-form-item label="CntyAmount" prop="amount" :label-width="formLabelWidth1">
-                <el-input v-model.number="addMaterialForm.amount" size="mini" autocomplete="off"></el-input>
+              <el-form-item label="Order Probability(%)" prop="orderProbability" :label-width="formLabelWidth1">
+                <el-input v-model.number="addMaterialForm.orderProbability" size="mini" autocomplete="off"></el-input>
               </el-form-item>
             </el-form>
             <!--        add&cancel按钮-->
@@ -375,7 +290,7 @@
                 <el-input v-model.number="editMaterialForm.orderQuantity" size="mini" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="Price" prop="price" :label-width="formLabelWidth1">
-                <el-input v-model.number="editMaterialForm.price" size="mini" autocomplete="off"></el-input>
+                <el-input v-model="editMaterialForm.price" size="mini" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="Sales Unit" prop="salesUnit" :label-width="formLabelWidth1">
                 <el-input v-model="editMaterialForm.salesUnit" size="mini" autocomplete="off"></el-input>
@@ -383,44 +298,8 @@
               <el-form-item label="Item Description" prop="itemDescription" :label-width="formLabelWidth1">
                 <el-input v-model="editMaterialForm.itemDescription" size="mini" autocomplete="off"></el-input>
               </el-form-item>
-              <!--          单项折扣-->
-              <el-form-item label="Cnty" prop="cnty" :label-width="formLabelWidth1">
-                <el-input v-model.number="editMaterialForm.cnty" size="mini" autocomplete="off">
-                  <el-button type="text" icon="el-icon-search" slot="suffix"  @click="cntySearchClick1"></el-button></el-input>
-                <!--          cnty列表-->
-                <el-dialog
-                    width="55%"
-                    title="Choose condition type"
-                    :visible.sync="Visible9"
-                    append-to-body>
-                  <el-table
-                      ref="cntyList"
-                      height="250"
-                      :data="cntyList"
-                      highlight-current-row
-                      @current-change="handleCurrentChange"
-                      @row-click="textclick4"
-                      style="width: 100%">
-                    <el-table-column
-                        property="id"
-                        label="Condition No."
-                        width="120">
-                    </el-table-column>
-                    <el-table-column
-                        property="name"
-                        label="Name"
-                        width="120">
-                    </el-table-column>
-                    <el-table-column
-                        property="discountCalcu"
-                        label="Method"
-                        width="300">
-                    </el-table-column>
-                  </el-table>
-                </el-dialog>
-              </el-form-item>
-              <el-form-item label="CntyAmount" prop="amount" :label-width="formLabelWidth1">
-                <el-input v-model.number="editMaterialForm.amount" size="mini" autocomplete="off"></el-input>
+              <el-form-item label="Order Probability(%)" prop="orderProbability" :label-width="formLabelWidth1">
+                <el-input v-model.number="editMaterialForm.orderProbability" size="mini" autocomplete="off"></el-input>
               </el-form-item>
             </el-form>
             <!--        edit&cancel按钮-->
@@ -443,8 +322,7 @@
             <el-table-column label="Sales Unit" prop="salesUnit">
             </el-table-column>
             <el-table-column label="Item Description" prop="itemDescription"></el-table-column>
-            <el-table-column label="Cnty" prop="cnty"></el-table-column>
-            <el-table-column label="CntyAmount" prop="amount"></el-table-column>
+            <el-table-column label="Order Probabiity(%)" prop="orderProbability"></el-table-column>
             <!--edit&delete按钮-->
             <el-table-column
                 fixed="right"
@@ -469,7 +347,7 @@
               <el-form-item style="margin-top:20px;">
                 <el-button type="primary" @click="submitForm('form')">Change</el-button>
                 <!--             清空按钮，不回到主界面-->
-                <el-button type="text" style="color:white;" @click="resetForm('form')">Clear</el-button>
+                <el-button type="text" style="color:white" @click="resetForm('form')">Clear</el-button>
               </el-form-item></el-col></el-row>
         </el-footer>
       </el-form></el-container>
@@ -504,36 +382,23 @@ export default {
   },
   data () {
     return {
-      Visible1: false, // soldToParty第一层查询
-      Visible2: false, // soldToParty第二层表格
+      Visible1: false, // 第一层查询
+      Visible2: false, // 第二层表格
       Visible3: false, // 添加Material表单
       Visible4: false, // 修改Material表单
-      Visible5: false, // createWithReference
-      Visible6: false, // inquiry第一层查询
-      Visible7: false, // inquiry第二层表格
-      Visible8: false, // cnty列表
-      Visible9: false, // 单项cnty查询列表（其实与总体相同）
       plantVisible: false, // plant列表选择
       materialVisible: false, // material列表选择
       search: '',
-      // 数据填充
-      form: {
+      form: { // 对接Inquiry
         id: this.$route.params.id,
         customerId: '',
-        warehouseId: '',
         POcode: '',
         PODate: '',
         effectiveDate: '',
         expirationDate: '',
-        // netValue1: '',
-        // netValue2: '',
-        // expectOrdVal: '',
-        cnty: '',
-        totalCntyPercent: '',
-        requestedDeliveryDate: ''
+        warehouseId: ''
       },
       netValueForm: {
-        price: 0,
         expectOrdVal: 0,
         netValue1: 0,
         netValueLabel: 'USD'
@@ -541,36 +406,24 @@ export default {
       priceForCal: {
         price: 0
       },
-      addMaterialForm: {
+      addMaterialForm: { // InquiryItem
         material: '',
         orderQuantity: '',
         price: '',
         salesUnit: '',
         itemDescription: '',
-        cnty: '',
-        amount: ''
+        orderProbability: ''
       },
-      editMaterialForm: {
+      editMaterialForm: { // InquiryItem
+        // item: '',
         material: '',
         orderQuantity: '',
         price: '',
         salesUnit: '',
         itemDescription: '',
-        cnty: '',
-        amount: ''
+        orderProbability: ''
       },
-      createWithReferenceForm: {
-        id: ''
-      },
-      quotSearchForm: { // 对应表Inquiry,Search Inquiry查询表单对应数据集
-        customerId: '',
-        warehouseId: '',
-        POcode: '',
-        PODate: '',
-        effectiveDate: '',
-        expirationDate: ''
-      },
-
+      // 数据填充
       // 客户查询对话框第一层表单
       dialogForm1: { // 查询条件，对应Customer表
         POcode: '',
@@ -579,12 +432,9 @@ export default {
         postcode: '',
         name: ''
       },
-      dialogForm3: {
-        quotNum: ''
-      },
       // material假数据，对接InquiryItem
       materialList: [],
-      plantList: [{
+      plantList: [{ // 对应warehouse表
         id: 'MI00',
         name: 'Miami Plant'
       }],
@@ -598,10 +448,12 @@ export default {
       // 规则
       rules: {
         customerId: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
+          { required: true, message: 'Please enter...', trigger: 'blur' },
+          { type: 'number', message: 'must be a number' }
         ],
         POcode: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
+          { required: true, message: 'Please enter...', trigger: 'blur' },
+          { type: 'number', message: 'must be a number' }
         ],
         PODate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
@@ -613,9 +465,6 @@ export default {
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         warehouseId: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
-        ],
-        requestedDeliveryDate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },
@@ -652,12 +501,6 @@ export default {
           { type: 'number', message: 'must be a number' }
         ]
       },
-      quotSearchFormRules: {
-        purchaseOrderNum: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
-        ]
-      },
       // 客户查询对话框第一层表单的验证规则对象
       dialogForm1rules: {
       },
@@ -671,42 +514,11 @@ export default {
         name: 'The Bike Zone',
         id: '20534'
       }],
-      quotTableData: [{ // 对应Inquiry，Search Inquiry的结果数据集
-        id: '10000132',
-        customerId: '25027',
-        warehouseId: 'MI00',
-        POcode: '036',
-        PODate: '10.07.21',
-        requestedDeliveryDate: '10.07.21'
-      }],
-      cntyList: [{
-        id: '1',
-        name: 'K004',
-        discountCalcu: 'Reduce price'
-      }, {
-        id: '2',
-        name: 'RA00',
-        discountCalcu: '%Discount from Net'
-      }],
       currentRow: null,
       show: true
     }
   },
   methods: {
-    cntySearchClick () { // 对应DiscountDic表的全表查询（总体折扣）
-      this.Visible8 = true
-      const _this = this
-      axios.get('http://127.0.0.1:5000/showDiscountDic').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
-        _this.cntyList = resp.data
-      })
-    },
-    cntySearchClick1 () { // 对应DiscountDic表的全表查询(单项折扣)
-      this.Visible9 = true
-      const _this = this
-      axios.get('http://127.0.0.1:5000/showDiscountDic').then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应
-        _this.cntyList = resp.data
-      })
-    },
     plantSearchClick () { // 对应warehouse表的全表查询
       this.plantVisible = true
       const _this = this
@@ -734,52 +546,28 @@ export default {
         }
       })
     },
-    quotSearchFind (formName) { // 按输入内容，检索Quotation表(ForInquiry)
-      const _this = this
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.Visible7 = true
-          axios.post('http://127.0.0.1:5000/searchQuotation', _this.quotSearchForm).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
-            _this.quotTableData = resp.data // 此时假数据仍存在，后续调试请视效果去除，假数据存在于inquiryTableData
-          })
-        } else {
-          return false
-        }
-      })
-    },
+    // 全局变量
     // 监听客户查询对话框（第一层表单）的关闭事件
     dialogClosed1 () {
       this.$refs.dialogForm1.resetFields()
     },
-    textclick (row) {
+    textclick (row) { // 对应Sold-To Party
       this.Visible1 = false
       this.Visible2 = false
       this.form.customerId = parseInt(row.id)
-    },
-    textclick2 (row) {
-      this.Visible8 = false
-      this.form.cnty = row.name
-    },
-    textclick3 (row) {
-      this.Visible9 = false
-      this.addMaterialForm.cnty = row.name
-    },
-    textclick4 (row) {
-      this.Visible9 = false
-      this.editMaterialForm.cnty = row.name
     },
     plantTextClick (row) {
       this.plantVisible = false
       this.form.warehouseId = row.id
     },
-    materialTextClick (row) {
+    materialTextClick (row) { // materialClick对应Choose Material的rowClick
       this.materialVisible = false
       this.addMaterialForm.material = row.id
       this.addMaterialForm.itemDescription = row.name
       this.addMaterialForm.salesUnit = row.salesUnit
       this.addMaterialForm.price = row.price
     },
-    materialTextClick1 (row) {
+    materialTextClick1 (row) { // materialClick对应Choose Material的rowClick
       this.materialVisible = false
       this.editMaterialForm.material = row.id
       this.editMaterialForm.itemDescription = row.name
@@ -787,6 +575,7 @@ export default {
       this.editMaterialForm.price = row.price
     },
     submitForm (formName) {
+      console.log(this.materialList)
       const _this = this
       if (this.materialList.length === 0) {
         this.$message.error('At least one material is required!')
@@ -794,10 +583,9 @@ export default {
         this.form.PODate = this.dateTransfer(this.form.PODate)
         this.form.effectiveDate = this.dateTransfer(this.form.effectiveDate)
         this.form.expirationDate = this.dateTransfer(this.form.expirationDate)
-        this.form.requestedDeliveryDate = this.dateTransfer(this.form.requestedDeliveryDate)
         this.$refs[formName].validate((valid) => {
           if (valid) { // 前后端交互，提交按钮
-            axios.post('link', [this.form, this.materialList]).then(function (resp) { // 修改salesOrder和salesOrderItem表内容
+            axios.post('link', [this.form, this.materialList]).then(function (resp) { // 修改inquiry和inquiryItem表的值
               if (resp.data === 'fault') {
                 _this.$message({
                   message: 'fail!',
@@ -805,7 +593,7 @@ export default {
                 })
               } else {
                 _this.$message({
-                  message: 'Change Successfully',
+                  message: 'Change Successfully!',
                   type: 'success'
                 })
               }
@@ -829,29 +617,13 @@ export default {
     add () {
       this.$refs.addMaterialFormRef.validate(valid => {
         if (valid) {
-          // if语句判断折扣类型和折扣数量是否都填写完整
-          if (this.addMaterialForm.cnty === '' | this.addMaterialForm.amount === '') {
-            this.materialList.push(JSON.parse(JSON.stringify(this.addMaterialForm)))
-            this.updateNetValue(this.materialList)
-            this.Visible3 = false
-            this.$message({
-              message: 'Add Successfully',
-              type: 'success'
-            })
-          } else {
-            // if语句判断期望折扣是否小于0
-            if (this.checkExpectOrdVal1()) {
-              this.materialList.push(JSON.parse(JSON.stringify(this.addMaterialForm)))
-              this.updateNetValue(this.materialList)
-              this.Visible3 = false
-              this.$message({
-                message: 'Add Successfully',
-                type: 'success'
-              })
-            } else {
-              this.$message.error('Too much Discount!')
-            }
-          }
+          this.materialList.push(JSON.parse(JSON.stringify(this.addMaterialForm)))
+          this.updateNetValue(this.materialList)
+          this.Visible3 = false
+          this.$message({
+            message: 'Add Successfully',
+            type: 'success'
+          })
         } else {
           return false
         }
@@ -860,28 +632,14 @@ export default {
     // 点击按钮，修改material(对话框内)
     edit2 () {
       this.$refs.editMaterialFormRef.validate(valid => {
+        // console.log(valid)
         if (valid) {
-          // if语句判断折扣类型和折扣数量是否都填写完整
-          if (this.editMaterialForm.cnty === '' | this.editMaterialForm.amount === '') {
-            this.updateNetValue(this.materialList)
-            this.$message({
-              message: 'Edit Successfully',
-              type: 'success'
-            })
-            this.Visible4 = false
-          } else {
-            // if语句检查expectOrdVal是否大于0
-            if (this.checkExpectOrdVal2(this.materialList)) {
-              this.updateNetValue(this.materialList)
-              this.$message({
-                message: 'Edit Successfully',
-                type: 'success'
-              })
-              this.Visible4 = false
-            } else {
-              this.$message.error('Too much Discount!')
-            }
-          }
+          this.updateNetValue(this.materialList)
+          this.$message({
+            message: 'Edit Successfully',
+            type: 'success'
+          })
+          this.Visible4 = false
         } else {
           return false
         }
@@ -891,10 +649,6 @@ export default {
     dialogClosed2 () {
       this.$refs.addMaterialFormRef.resetFields()
     },
-    // 监听createWithReference对话框的关闭事件
-    dialogClosed3 () {
-      this.$refs.dialogForm2.resetFields()
-    },
     edit1 (row) {
       this.Visible4 = true
       this.editMaterialForm = row
@@ -903,86 +657,16 @@ export default {
       rows.splice(index, 1)
       this.updateNetValue(this.materialList)
     },
-    // 检查ExpectOrdVal是否大于0
-    checkExpectOrdVal1 () {
-      var temp
-      temp = parseInt(this.addMaterialForm.orderQuantity) * this.addMaterialForm.price - parseInt(this.addMaterialForm.amount)
-      // if语句判断期望折扣是否小于0
-      if (temp > 0) {
-        return true
-      } else {
-        return false
-      }
-    },
-    checkExpectOrdVal2 (materialList) {
-      ExpectOrdVal = 0
-      var temp
-      materialList.forEach((row) => {
-        if (row.amount === '') {
-          temp = 0
-        } else {
-          temp = row.amount
-        }
-        // 计算
-        ExpectOrdVal += row.orderQuantity * row.price - temp
-      })
-      // if语句判断期望折扣是否小于0
-      if (ExpectOrdVal > 0) { return true } else { return false }
-    },
     // 更新合计价格信息
     updateNetValue (materialList) {
       netValue = 0
       ExpectOrdVal = 0
       materialList.forEach((row) => {
-        netValue = netValue + row.orderQuantity * row.price
-        // 根据选择折扣方法的不同，施加不同折扣
-        switch (row.cnty) {
-          case 'K004' : { // 降价
-            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price - row.amount
-            break
-          }
-          case 'RA00' : { // 打折
-            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price * (1 - row.amount / 100)
-            break
-          }
-        }
+        netValue = netValue + row.price * row.orderQuantity
+        ExpectOrdVal = ExpectOrdVal + row.price * row.orderQuantity * row.orderProbability / 100
       })
       this.netValueForm.netValue1 = netValue
       this.netValueForm.expectOrdVal = ExpectOrdVal
-    },
-    // 激活整体折扣
-    cntyActivate () {
-      if (this.materialList.length === 0) {
-        this.$message.error('At least one material is required!')
-      } else {
-        if (this.form.cnty === '' | this.form.totalCntyPercent === '') { this.$message.error('Please Enter Total Cnty and Total Cnty Percent!') } else {
-          ExpectOrdVal = 0
-          var temp = 0
-          var temp1
-          this.materialList.forEach((row) => {
-            // 如果折扣数量为空，则用0代替
-            if (row.amount === '') {
-              temp1 = 0
-            } else {
-              temp1 = row.amount
-            }
-            // 计算
-            temp += row.orderQuantity * row.price - temp1
-          })
-          // 根据选择折扣方法的不同，施加不同折扣
-          switch (this.form.cnty) {
-            case 'K004' : { // 降价
-              ExpectOrdVal = temp - this.form.totalCntyPercent
-              break
-            }
-            case 'RA00' : { // 打折
-              ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
-              break
-            }
-          }
-          this.netValueForm.expectOrdVal = ExpectOrdVal
-        }
-      }
     },
     // 日期格式转化
     dateTransfer (temp) {
@@ -997,26 +681,16 @@ export default {
         day = '0' + day
       }
       return year + '-' + month + '-' + day
-    },
-    // 将询价单信息复制到报价单
-    copy () { // createWithReferenceForm中仅有id，对应Quotation表中的id
-      this.Visible5 = false
-      const _this = this
-      axios.post('http://127.0.0.1:5000/searchQuotationAndItem', this.createWithReferenceForm).then(function (resp) { // copy,注意需传两个值
-        _this.form = resp.data[0]
-        _this.materialList = resp.data[1]
-      })
     }
   },
   // 页面加载
   created () {
     const _this = this
-    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id，传出salesOrder表和salesOrderItem表的信息
+    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id，传出inquiry表和inquiryItem表的信息
       _this.form = resp.data[0]
       _this.materialList = resp.data[1]
     })
     this.updateNetValue(this.materialList)
-    this.cntyActivate()
   }
 }
 </script>
