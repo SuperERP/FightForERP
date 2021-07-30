@@ -132,8 +132,7 @@ export default {
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         postcode: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         city: [
           { required: true, message: 'Please enter...', trigger: 'blur' }

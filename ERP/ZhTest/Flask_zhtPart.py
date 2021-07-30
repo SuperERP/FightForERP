@@ -33,7 +33,7 @@ def createContactPerson():
     try:
         id = newContactPerson.insertContactPerson(a)
     except Exception as e:
-        return("false")
+        return("fault")
     return(id)
 
 @app.route('/createBPrelationship', methods=['post']) # 创建客户联系人关系
@@ -44,7 +44,7 @@ def createBPrelationship():
     try:
         id = newBPrelationship.insertCustomerAndContactPersonRelationship(a)
     except Exception as e:
-        return("false")
+        return("fault")
     return(id)
 
 @app.route('/showType', methods=['get']) #查询所有联系人类型
@@ -98,13 +98,6 @@ def showMaterialDic():
     res = newWarehouseManager.searchallMaterialDic()
     return(jsonify(res))
 
-# @app.route('/searchPrice', methods=['post']) # 查询对应物料的价格
-# def searchPrice():
-#     id = request.get_json()
-#     res = newWarehouseManager.searchPrice(id['material'])
-#     print("查询结果是",res[0])
-#     return(jsonify(res[0]))
-
 @app.route('/createInquiry', methods=['post']) # 创建询价单及询价单物料项
 def createInquiry():
     a = request.get_json()[0]
@@ -121,7 +114,7 @@ def createInquiry():
                 del item['price']
             newOrderManager.insertInquiryItem(item)
     except Exception as e:
-        return("false")
+        return("fault")
     return(id)
 
 @app.route('/showDiscountDic', methods=['get']) #查询所有物料词条
@@ -148,7 +141,28 @@ def createQuotation():
             newOrderManager.insertQuotationItem(item)
     except Exception as e:
         print(e)
-        return("false")
+        return("fault")
+    return(id)
+
+@app.route('/createSalesOrder', methods=['post']) # 创建销售订单及销售订单物料项
+def createSalesOrder():
+    a = request.get_json()[0]
+    b = request.get_json()[1]
+    a['PODate'] = datetime.strptime(a['PODate'],'%Y-%m-%d')
+    a['effectiveDate'] = datetime.strptime(a['effectiveDate'],'%Y-%m-%d')
+    a['expirationDate'] = datetime.strptime(a['expirationDate'],'%Y-%m-%d')
+    a['requestedDeliveryDate'] = datetime.strptime(a['requestedDeliveryDate'],'%Y-%m-%d')
+    if 'id' in a:
+        del a['id']
+    try:
+        id = newOrderManager.createSalesOrder(a)
+        for item in b:
+            item['salesOrderId'] = id # 把销售订单编号加进销售订单物料项的词条
+            if 'price' in item:
+                del item['price']
+            newOrderManager.insertSalesOrderItem(item)
+    except Exception as e:
+        return("fault")
     return(id)
 
 @app.route('/searchInquiry', methods=['post']) # 按条件查找询价单
@@ -162,6 +176,16 @@ def searchInquiryAndItem():
     searchTerm = request.get_json()
     res1 = newOrderManager.searchInquiry(id = searchTerm['id'])[0]
     res2 = newOrderManager.searchInquiryItem(inquiryId = searchTerm['id'])
+    res = []
+    res.append(res1)
+    res.append(res2)
+    return(jsonify(res))
+
+@app.route('/searchInquiryAndItem2', methods=['post']) # 按给定询价单号查找询价单及询价单物料项，页面预加载方法
+def searchInquiryAndItem2():
+    searchTerm = list(request.form.to_dict().keys())[0]
+    res1 = newOrderManager.searchInquiry(id = searchTerm)[0]
+    res2 = newOrderManager.searchInquiryItem(inquiryId = searchTerm)
     res = []
     res.append(res1)
     res.append(res2)
@@ -183,26 +207,31 @@ def searchQuotationAndItem():
     res.append(res2)
     return(jsonify(res))
 
-@app.route('/createSalesOrder', methods=['post']) # 创建销售订单及销售订单物料项
-def createSalesOrder():
-    a = request.get_json()[0]
-    b = request.get_json()[1]
-    a['PODate'] = datetime.strptime(a['PODate'],'%Y-%m-%d')
-    a['effectiveDate'] = datetime.strptime(a['effectiveDate'],'%Y-%m-%d')
-    a['expirationDate'] = datetime.strptime(a['expirationDate'],'%Y-%m-%d')
-    a['requestedDeliveryDate'] = datetime.strptime(a['requestedDeliveryDate'],'%Y-%m-%d')
-    if 'id' in a:
-        del a['id']
-    try:
-        id = newOrderManager.createSalesOrder(a)
-        for item in b:
-            item['salesOrderId'] = id # 把销售订单编号加进销售订单物料项的词条
-            if 'price' in item:
-                del item['price']
-            newOrderManager.insertSalesOrderItem(item)
-    except Exception as e:
-        return("false")
-    return(id)
+@app.route('/searchQuotationAndItem2', methods=['post']) # 按给定报价单号查找报价单及报价单物料项，页面预加载方法
+def searchQuotationAndItem2():
+    searchTerm = list(request.form.to_dict().keys())[0]
+    res1 = newOrderManager.searchQuotation(id = searchTerm)[0]
+    res2 = newOrderManager.searchQuotationItem(quotationId = searchTerm)
+    res = []
+    res.append(res1)
+    res.append(res2)
+    return(jsonify(res))
+
+@app.route('/searchSalesOrder', methods=['post']) # 按条件查找销售订单
+def searchSalesOrder():
+    searchTerm = request.get_json()
+    res = newOrderManager.searchSalesOrder(customerId=searchTerm['customerId'],warehouseId=searchTerm['warehouseId'],POcode=searchTerm['POcode'],PODate=searchTerm['PODate'],effectiveDate=searchTerm['effectiveDate'],expirationDate=searchTerm['expirationDate'])
+    return(jsonify(res))
+
+@app.route('/searchSalesOrderAndItem', methods=['post']) # 按给定销售订单号查找销售订单及销售订单物料项，页面预加载方法
+def searchSalesOrderAndItem():
+    searchTerm = list(request.form.to_dict().keys())[0]
+    res1 = newOrderManager.searchSalesOrder(id = searchTerm)[0]
+    res2 = newOrderManager.searchSalesOrderItem(salesOrderId = searchTerm)
+    res = []
+    res.append(res1)
+    res.append(res2)
+    return(jsonify(res))
 
 @app.route('/changeCustomer', methods=['post']) # 修改客户信息
 def changeCustomer():
@@ -238,6 +267,74 @@ def changeBPRelationship():
     a['validFrom'] = datetime.strptime(a['validFrom'],'%Y-%m-%d')
     try:
         newBPrelationship.changeBPRelationship(id = id, data = a)
+    except Exception as e:
+        return("fault")
+    return("success")
+
+@app.route('/changeInquiryAndItem', methods=['post']) # 修改询价单及物料项
+def changeInquiryAndItem():
+    a = request.get_json()[0]
+    b = request.get_json()[1]
+    id = a['id']
+    if 'id' in a:
+        del a['id']
+    a['PODate'] = datetime.strptime(a['PODate'],'%Y-%m-%d')
+    a['effectiveDate'] = datetime.strptime(a['effectiveDate'],'%Y-%m-%d')
+    a['expirationDate'] = datetime.strptime(a['expirationDate'],'%Y-%m-%d')
+
+    try:
+        newOrderManager.changeInquiry(id = id, data = a)
+        for item in b:
+            item['inquiryId'] = id
+            if 'price' in item:
+                del item['price']
+            newOrderManager.insertInquiryItem(item)
+    except Exception as e:
+        return("fault")
+    return("success")
+
+@app.route('/changeQuotationAndItem', methods=['post']) # 修改报价单及物料项
+def changeQuotationAndItem():
+    a = request.get_json()[0]
+    b = request.get_json()[1]
+    id = a['id']
+    if 'id' in a:
+        del a['id']
+    a['PODate'] = datetime.strptime(a['PODate'],'%Y-%m-%d')
+    a['effectiveDate'] = datetime.strptime(a['effectiveDate'],'%Y-%m-%d')
+    a['expirationDate'] = datetime.strptime(a['expirationDate'],'%Y-%m-%d')
+    a['requestedDeliveryDate'] = datetime.strptime(a['requestedDeliveryDate'],'%Y-%m-%d')
+
+    try:
+        newOrderManager.changeQuotation(id = id, data = a)
+        for item in b:
+            item['quotationId'] = id
+            if 'price' in item:
+                del item['price']
+            newOrderManager.insertQuotationItem(item)
+    except Exception as e:
+        return("fault")
+    return("success")
+
+@app.route('/changeSalesOrderAndItem', methods=['post']) # 修改销售订单及物料项
+def changeSalesOrderAndItem():
+    a = request.get_json()[0]
+    b = request.get_json()[1]
+    id = a['id']
+    if 'id' in a:
+        del a['id']
+    a['PODate'] = datetime.strptime(a['PODate'],'%Y-%m-%d')
+    a['effectiveDate'] = datetime.strptime(a['effectiveDate'],'%Y-%m-%d')
+    a['expirationDate'] = datetime.strptime(a['expirationDate'],'%Y-%m-%d')
+    a['requestedDeliveryDate'] = datetime.strptime(a['requestedDeliveryDate'],'%Y-%m-%d')
+
+    try:
+        newOrderManager.changeSalesOrder(id = id, data = a)
+        for item in b:
+            item['salesOrderId'] = id
+            if 'price' in item:
+                del item['price']
+            newOrderManager.insertSalesOrderItem(item)
     except Exception as e:
         return("fault")
     return("success")

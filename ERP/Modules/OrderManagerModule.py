@@ -180,3 +180,72 @@ class OrderManagerModule(AbstractModule):
             res.append(a)
 
         return res
+    
+    def searchSalesOrder(self, id='',customerId='',warehouseId='',POcode='',PODate='',effectiveDate='',expirationDate=''):
+        '''
+        按条件查找销售订单
+        '''
+        res=[]
+
+        for idata in self.session.query(SalesOrder).filter(or_(SalesOrder.id==id,id==''))\
+            .filter(or_(SalesOrder.customerId==customerId,customerId==''))\
+                .filter(or_(SalesOrder.warehouseId==warehouseId,warehouseId==''))\
+                    .filter(or_(SalesOrder.POcode==POcode,POcode==''))\
+                        .filter(or_(SalesOrder.PODate==PODate,PODate==''))\
+                            .filter(or_(SalesOrder.effectiveDate==effectiveDate,effectiveDate==''))\
+                                .filter(or_(SalesOrder.expirationDate==expirationDate,expirationDate=='')).all():
+            res.append(self.to_dict(idata))
+
+        return res
+    
+    def searchSalesOrderItem(self, salesOrderId):
+        '''
+        根据给定销售订单号查找销售订单物料项，并加入price
+        '''
+        res=[]
+
+        for idata in self.session.query(SalesOrderItem).filter(SalesOrderItem.salesOrderId == salesOrderId).all():
+            a = self.to_dict(idata)
+            a['price'] = self.to_dict(self.session.query(MaterialDic).filter(MaterialDic.id == a['material']).all()[0])['price']
+            res.append(a)
+
+        return res
+
+    def changeInquiry(self,id, data :dict):
+        '''
+        修改询价单，并清空该询价单下的物料项
+        '''
+        try:
+            self.session.query(Inquiry).filter(Inquiry.id==id).update(data)
+            self.session.query(InquiryItem).filter(InquiryItem.inquiryId == id).delete()
+            self.session.commit()
+        except Exception as e:
+            self.logging.info('请重新检查数据修改')
+            self.logging.error(e)
+            self.session.rollback()
+
+    def changeQuotation(self,id, data :dict):
+        '''
+        修改报价单，并清空该报价单下的物料项
+        '''
+        try:
+            self.session.query(Quotation).filter(Quotation.id==id).update(data)
+            self.session.query(QuotationItem).filter(QuotationItem.quotationId == id).delete()
+            self.session.commit()
+        except Exception as e:
+            self.logging.info('请重新检查数据修改')
+            self.logging.error(e)
+            self.session.rollback()
+    
+    def changeSalesOrder(self,id, data :dict):
+        '''
+        修改销售订单，并清空该销售订单下的物料项
+        '''
+        try:
+            self.session.query(SalesOrder).filter(SalesOrder.id==id).update(data)
+            self.session.query(SalesOrderItem).filter(SalesOrderItem.salesOrderId == id).delete()
+            self.session.commit()
+        except Exception as e:
+            self.logging.info('请重新检查数据修改')
+            self.logging.error(e)
+            self.session.rollback()

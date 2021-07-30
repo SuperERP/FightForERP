@@ -448,12 +448,10 @@ export default {
       // 规则
       rules: {
         customerId: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         POcode: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         PODate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
@@ -575,35 +573,30 @@ export default {
       this.editMaterialForm.price = row.price
     },
     submitForm (formName) {
-      console.log(this.materialList)
       const _this = this
-      if (this.materialList.length === 0) {
-        this.$message.error('At least one material is required!')
-      } else {
-        this.form.PODate = this.dateTransfer(this.form.PODate)
-        this.form.effectiveDate = this.dateTransfer(this.form.effectiveDate)
-        this.form.expirationDate = this.dateTransfer(this.form.expirationDate)
-        this.$refs[formName].validate((valid) => {
-          if (valid) { // 前后端交互，提交按钮
-            axios.post('link', [this.form, this.materialList]).then(function (resp) { // 修改inquiry和inquiryItem表的值
-              if (resp.data === 'fault') {
-                _this.$message({
-                  message: 'fail!',
-                  type: 'fail'
-                })
-              } else {
-                _this.$message({
-                  message: 'Change Successfully!',
-                  type: 'success'
-                })
-              }
-            })
-          } else {
-            console.log('error change!!')
-            return false
-          }
-        })
-      }
+      this.form.PODate = this.dateTransfer(this.form.PODate)
+      this.form.effectiveDate = this.dateTransfer(this.form.effectiveDate)
+      this.form.expirationDate = this.dateTransfer(this.form.expirationDate)
+      this.$refs[formName].validate((valid) => {
+        if (valid) { // 前后端交互，提交按钮
+          axios.post('http://127.0.0.1:5000/changeInquiryAndItem', [this.form, this.materialList]).then(function (resp) { // 修改inquiry和inquiryItem表的值
+            if (resp.data === 'fault') {
+              _this.$message({
+                message: 'fail!',
+                type: 'fail'
+              })
+            } else {
+              _this.$message({
+                message: 'Change Successfully!',
+                type: 'success'
+              })
+            }
+          })
+        } else {
+          console.log('error change!!')
+          return false
+        }
+      })
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
@@ -686,7 +679,7 @@ export default {
   // 页面加载
   created () {
     const _this = this
-    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id，传出inquiry表和inquiryItem表的信息
+    axios.post('http://127.0.0.1:5000/searchInquiryAndItem2', this.$route.params.id).then(function (resp) { // 传入id，传出inquiry表和inquiryItem表的信息
       _this.form = resp.data[0]
       _this.materialList = resp.data[1]
     })

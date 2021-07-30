@@ -147,7 +147,7 @@ export default {
   // 页面加载
   created () {
     const _this = this
-    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id，传出inquiry表和inquiryItem表的信息
+    axios.post('http://127.0.0.1:5000/searchInquiryAndItem2', this.$route.params.id).then(function (resp) { // 传入id，传出inquiry表和inquiryItem表的信息
       _this.form = resp.data[0]
       _this.materialList = resp.data[1]
     })

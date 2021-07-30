@@ -788,34 +788,30 @@ export default {
     },
     submitForm (formName) {
       const _this = this
-      if (this.materialList.length === 0) {
-        this.$message.error('At least one material is required!')
-      } else {
-        this.form.PODate = this.dateTransfer(this.form.PODate)
-        this.form.effectiveDate = this.dateTransfer(this.form.effectiveDate)
-        this.form.expirationDate = this.dateTransfer(this.form.expirationDate)
-        this.form.requestedDeliveryDate = this.dateTransfer(this.form.requestedDeliveryDate)
-        this.$refs[formName].validate((valid) => {
-          if (valid) { // 前后端交互，提交按钮
-            axios.post('link', [this.form, this.materialList]).then(function (resp) { // 修改quotation和quotationItem表内容
-              if (resp.data === 'fault') {
-                _this.$message({
-                  message: 'fail!',
-                  type: 'fail'
-                })
-              } else {
-                _this.$message({
-                  message: 'Change Successfully',
-                  type: 'success'
-                })
-              }
-            })
-          } else {
-            console.log('error change!!')
-            return false
-          }
-        })
-      }
+      this.form.PODate = this.dateTransfer(this.form.PODate)
+      this.form.effectiveDate = this.dateTransfer(this.form.effectiveDate)
+      this.form.expirationDate = this.dateTransfer(this.form.expirationDate)
+      this.form.requestedDeliveryDate = this.dateTransfer(this.form.requestedDeliveryDate)
+      this.$refs[formName].validate((valid) => {
+        if (valid) { // 前后端交互，提交按钮
+          axios.post('http://127.0.0.1:5000/changeQuotationAndItem', [this.form, this.materialList]).then(function (resp) { // 修改quotation和quotationItem表内容
+            if (resp.data === 'fault') {
+              _this.$message({
+                message: 'fail!',
+                type: 'fail'
+              })
+            } else {
+              _this.$message({
+                message: 'Change Successfully',
+                type: 'success'
+              })
+            }
+          })
+        } else {
+          console.log('error change!!')
+          return false
+        }
+      })
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
@@ -952,37 +948,31 @@ export default {
     },
     // 激活整体折扣
     cntyActivate () {
-      if (this.materialList.length === 0) {
-        this.$message.error('At least one material is required!')
-      } else {
-        if (this.form.cnty === '' | this.form.totalCntyPercent === '') { this.$message.error('Please Enter Total Cnty and Total Cnty Percent!') } else {
-          ExpectOrdVal = 0
-          var temp = 0
-          var temp1
-          this.materialList.forEach((row) => {
-            // 如果折扣数量为空，则用0代替
-            if (row.amount === '') {
-              temp1 = 0
-            } else {
-              temp1 = row.amount
-            }
-            // 计算
-            temp += row.orderQuantity * row.price - temp1
-          })
-          // 根据选择折扣方法的不同，施加不同折扣
-          switch (this.form.cnty) {
-            case 'K004' : { // 降价
-              ExpectOrdVal = temp - this.form.totalCntyPercent
-              break
-            }
-            case 'RA00' : { // 打折
-              ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
-              break
-            }
-          }
-          this.netValueForm.expectOrdVal = ExpectOrdVal
+      ExpectOrdVal = 0
+      var temp = 0
+      var temp1
+      this.materialList.forEach((row) => {
+        // 如果折扣数量为空，则用0代替
+        if (row.amount === '') {
+          temp1 = 0
+        } else {
+          temp1 = row.amount
+        }
+        // 计算
+        temp += row.orderQuantity * row.price - temp1
+      })
+      // 根据选择折扣方法的不同，施加不同折扣
+      switch (this.form.cnty) {
+        case 'K004' : { // 降价
+          ExpectOrdVal = temp - this.form.totalCntyPercent
+          break
+        }
+        case 'RA00' : { // 打折
+          ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
+          break
         }
       }
+      this.netValueForm.expectOrdVal = ExpectOrdVal
     },
     // 日期格式转化
     dateTransfer (temp) {
@@ -1011,12 +1001,12 @@ export default {
   // 页面加载
   created () {
     const _this = this
-    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id，传出quotation表和quotationItem表的信息
+    axios.post('http://127.0.0.1:5000/searchQuotationAndItem2', this.$route.params.id).then(function (resp) { // 传入id，传出quotation表和quotationItem表的信息
       _this.form = resp.data[0]
       _this.materialList = resp.data[1]
+      _this.updateNetValue(_this.materialList)
+      _this.cntyActivate()
     })
-    this.updateNetValue(this.materialList)
-    this.cntyActivate()
   }
 }
 </script>

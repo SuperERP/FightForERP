@@ -1017,7 +1017,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.salesOrderVisible2 = true
-          axios.post('link', _this.salesOrderSearchForm).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
+          axios.post('http://127.0.0.1:5000/searchSalesOrder', _this.salesOrderSearchForm).then(function (resp) { // 注意此处需要读取后端格式，现为springboot对应形式，请注意是否能对应，另外此处只需要局部数据，请与芳展交流
             _this.salesOrderTableData = resp.data // 此时假数据仍存在，后续调试请视效果去除，假数据存在于salesOrderTableData
           })
         } else {

@@ -158,36 +158,32 @@ export default {
     },
     // 激活整体折扣
     cntyActivate () {
-      if (this.materialList.length === 0) {
-        this.$message.error('At least one material is required!')
-      } else {
-        if (this.form.cnty === '' | this.form.totalCntyPercent === '') { this.$message.error('Please Enter Total Cnty and Total Cnty Percent!') } else {
-          ExpectOrdVal = 0
-          var temp = 0
-          var temp1
-          this.materialList.forEach((row) => {
-            // 如果折扣数量为空，则用0代替
-            if (row.amount === '') {
-              temp1 = 0
-            } else {
-              temp1 = row.amount
-            }
-            // 计算
-            temp += row.orderQuantity * row.price - temp1
-          })
-          // 根据选择折扣方法的不同，施加不同折扣
-          switch (this.form.cnty) {
-            case 'K004' : { // 降价
-              ExpectOrdVal = temp - this.form.totalCntyPercent
-              break
-            }
-            case 'RA00' : { // 打折
-              ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
-              break
-            }
+      if (this.form.cnty === '' | this.form.totalCntyPercent === '') { this.$message.error('Please Enter Total Cnty and Total Cnty Percent!') } else {
+        ExpectOrdVal = 0
+        var temp = 0
+        var temp1
+        this.materialList.forEach((row) => {
+          // 如果折扣数量为空，则用0代替
+          if (row.amount === '') {
+            temp1 = 0
+          } else {
+            temp1 = row.amount
           }
-          this.netValueForm.expectOrdVal = ExpectOrdVal
+          // 计算
+          temp += row.orderQuantity * row.price - temp1
+        })
+        // 根据选择折扣方法的不同，施加不同折扣
+        switch (this.form.cnty) {
+          case 'K004' : { // 降价
+            ExpectOrdVal = temp - this.form.totalCntyPercent
+            break
+          }
+          case 'RA00' : { // 打折
+            ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
+            break
+          }
         }
+        this.netValueForm.expectOrdVal = ExpectOrdVal
       }
     },
     // 更新合计价格信息
@@ -215,12 +211,12 @@ export default {
   // 页面加载
   created () {
     const _this = this
-    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id，传出salesOrder表和salesOrderItem表的信息
+    axios.post('http://127.0.0.1:5000/searchSalesOrderAndItem', this.$route.params.id).then(function (resp) { // 传入id，传出salesOrder表和salesOrderItem表的信息
       _this.form = resp.data[0]
       _this.materialList = resp.data[1]
+      _this.updateNetValue(_this.materialList)
+      _this.cntyActivate()
     })
-    this.updateNetValue(this.materialList)
-    this.cntyActivate()
   }
 }
 </script>
