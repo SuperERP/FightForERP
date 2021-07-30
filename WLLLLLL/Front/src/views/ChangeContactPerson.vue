@@ -119,7 +119,7 @@ export default {
       const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) { // 前后端交互，提交按钮
-          axios.post('link', this.form).then(function (resp) { // 修改ContactPerson表内容
+          axios.post('http://127.0.0.1:5000/changeContactPerson', this.form).then(function (resp) { // 修改ContactPerson表内容
             if (resp.data === 'fault') {
               _this.$message({
                 message: 'fail!',

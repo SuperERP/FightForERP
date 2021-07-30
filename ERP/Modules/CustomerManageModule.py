@@ -115,3 +115,41 @@ class CustomerManagerModule(AbstractModule):
         for item in self.session.query(CustomerAndContactPersonRelationship).all():
             res.append(self.to_dict(item))
         return res
+
+    def changeCustomer(self,id, data :dict):
+        '''
+        修改用户信息
+        '''
+        try:
+            self.session.query(Customer).filter(Customer.id==id).update(data)
+            self.session.commit()
+        except Exception as e:
+            self.logging.info('请重新检查数据修改')
+            self.logging.error(e)
+            self.session.rollback()
+
+    def changeContactPerson(self,id, data :dict):
+        '''
+        修改联系人信息
+        '''
+        try:
+            self.session.query(ContactPerson).filter(ContactPerson.id==id).update(data)
+            self.session.commit()
+        except Exception as e:
+            self.logging.info('请重新检查数据修改')
+            self.logging.error(e)
+            self.session.rollback()
+    
+    def changeBPRelationship(self,id, data :dict):
+        '''
+        修改BP关系
+        '''
+        try:
+            self.session.query(CustomerAndContactPersonRelationship).filter(CustomerAndContactPersonRelationship.id==id).update(data)
+            self.session.commit()
+        except Exception as e:
+            self.logging.info('请重新检查数据修改')
+            self.logging.error(e)
+            self.session.rollback()
+ 
+    

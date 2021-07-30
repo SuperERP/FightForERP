@@ -203,5 +203,44 @@ def createSalesOrder():
     except Exception as e:
         return("false")
     return(id)
+
+@app.route('/changeCustomer', methods=['post']) # 修改客户信息
+def changeCustomer():
+    a = request.get_json()
+    id = a['id']
+    if 'id' in a:
+        del a['id']
+    try:
+        newCustomer.changeCustomer(id = id, data = a)
+    except Exception as e:
+        return("fault")
+    return("success")
+
+@app.route('/changeContactPerson', methods=['post']) # 修改联系人信息
+def changeContactPerson():
+    a = request.get_json()
+    id = a['id']
+    if 'id' in a:
+        del a['id']
+    try:
+        newContactPerson.changeContactPerson(id = id, data = a)
+    except Exception as e:
+        return("fault")
+    return("success")
+
+@app.route('/changeBPRelationship', methods=['post']) # 修改BP关系
+def changeBPRelationship():
+    a = request.get_json()
+    id = a['id']
+    if 'id' in a:
+        del a['id']
+    a['validTo'] = datetime.strptime(a['validTo'],'%Y-%m-%d')
+    a['validFrom'] = datetime.strptime(a['validFrom'],'%Y-%m-%d')
+    try:
+        newBPrelationship.changeBPRelationship(id = id, data = a)
+    except Exception as e:
+        return("fault")
+    return("success")
+
 if __name__ == '__main__':
     app.run()

@@ -369,7 +369,7 @@ export default {
         this.form.validFrom = this.dateTransfer(this.form.validFrom)
         this.form.validTo = this.dateTransfer(this.form.validTo)
         if (valid) { // 前后端交互，提交按钮
-          axios.post('link', this.form).then(function (resp) { // 修改CustomerAndContactPerson表内容
+          axios.post('http://127.0.0.1:5000/changeBPRelationship', this.form).then(function (resp) { // 修改CustomerAndContactPerson表内容
             if (resp.data === 'fault') {
               _this.$message({
                 message: 'fail!',
