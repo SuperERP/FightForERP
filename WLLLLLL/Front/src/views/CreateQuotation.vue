@@ -653,8 +653,7 @@
             <el-col :offset="18" span="6">
               <el-form-item style="margin-top:20px;">
                 <el-button type="primary" @click="submitForm('form')">submit</el-button>
-                <!--             退出按钮，回到主界面-->
-                <el-button type="text" style="color:white;">Cancel</el-button>
+                <el-button type="text" style="color:white" @click="resetForm('form')">Clear</el-button>
               </el-form-item></el-col></el-row>
         </el-footer>
       </el-form></el-container>
@@ -1087,7 +1086,7 @@ export default {
       }
     },
     resetForm (formName) {
-      this.$refs.dialogform1.resetFields()
+      this.$refs[formName].resetFields()
     },
     // 物料相关
     // 点击add material按钮，关闭窗口
