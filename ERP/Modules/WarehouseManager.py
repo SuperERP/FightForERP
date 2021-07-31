@@ -69,3 +69,28 @@ class WareHouseDataManager(AbstractModule):
             res.append(self.to_dict(idata))
 
         return res
+
+    def searchInventory(self, warehouseId='', materialDicId=''):
+        '''
+        根据条件查询库存
+        '''
+        res=[]
+
+        for idata in self.session.query(Inventory).filter(or_(Inventory.materialDicId==materialDicId,materialDicId==''))\
+                .filter(or_(Inventory.warehouseId==warehouseId,warehouseId=='')).all():
+            res.append(self.to_dict(idata))
+
+        return res
+    
+    def changeInventory(self,warehouseId, materialDicId, data :dict):
+        '''
+        修改库存信息
+        '''
+        try:
+            self.session.query(Inventory).filter(Inventory.warehouseId==warehouseId).filter(Inventory.materialDicId==materialDicId).update(data)
+            self.session.commit()
+        except Exception as e:
+            self.logging.info('请重新检查数据修改')
+            self.logging.error(e)
+            self.session.rollback()
+    

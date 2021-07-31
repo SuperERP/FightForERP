@@ -20,3 +20,5 @@ INSERT INTO Quotationitem VALUES ('QU000', 'sb102', 'mat2', 1, 'EA', 'K004', 10)
 DROP TABLE SalesOrder;
 SELECT * FROM SalesOrder;
 SELECT * FROM SalesOrderItem;
+SELECT * FROM Inventory;
+INSERT INTO Inventory VALUES ('lz102', 'sb103', 1, 10, 10);

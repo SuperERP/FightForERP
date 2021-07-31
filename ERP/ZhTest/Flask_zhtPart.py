@@ -339,5 +339,28 @@ def changeSalesOrderAndItem():
         return("fault")
     return("success")
 
+@app.route('/searchInventory', methods=['post']) # 按条件查找库存
+def searchInventory():
+    searchTerm = request.get_json()
+    res = newWarehouseManager.searchInventory(warehouseId=searchTerm['warehouseId'],materialDicId=searchTerm['materialDicId'])
+    return(jsonify(res))
+
+@app.route('/changeInventory', methods=['post']) # 更改库存
+def changeInventory():
+    a = request.get_json()
+    try:
+        for item in a:
+            iwarehouseId = item['warehouseId']
+            imaterialDicId = item['materialDicId']
+            if 'warehouseId' in item:
+                del item['warehouseId']
+            if 'materialDicId' in item:
+                del item['materialDicId']
+            newWarehouseManager.changeInventory(warehouseId=iwarehouseId, materialDicId=imaterialDicId, data=item)
+    except Exception as e:
+        return("fault")
+    return("success")
+
+
 if __name__ == '__main__':
     app.run()

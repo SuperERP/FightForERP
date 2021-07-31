@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "el-table-infinite-scroll": "^1.0.10",
     "element-ui": "^2.15.2",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
@@ -42,9 +43,7 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {
-
-    }
+    "rules": {}
   },
   "browserslist": [
     "> 1%",
