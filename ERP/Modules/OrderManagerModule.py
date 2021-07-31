@@ -2,6 +2,7 @@ from .AbstractModule import AbstractModule
 from .OrmData.QutationAndSalesOrderData import *
 from .OrmData.InquiryData import *
 from ERP.Modules.OrmData.WareHouse import Warehouse
+from .OrmData.CustomerData import *
 
 
 class OrderManagerModule(AbstractModule):
@@ -12,28 +13,51 @@ class OrderManagerModule(AbstractModule):
         :param logging:
         '''
         super().__init__(session, logging)
-        
+
+    def searchAllSalesOrderItems(self, saleOrderId):
+        '''
+        寻找所有的销售订单物料项
+        @return :注意这里返回的是类的列表
+        '''
+        data = self.session.query(SalesOrderItem).filter(SalesOrderItem.saleOrderId == saleOrderId).all()
+
+        return data
+
     def searchOrders(self, customerId=None, warehouseId=None, saleorderId=None):
 
         def getSaleOrders(data):
             print(data)
 
-            id = data['warehouseId']
-            self.logging.info(id)
-            data['warehousename'] = self.session.query(
-                Warehouse).filter(Warehouse.id == id).all()[0].name
+            '''
+            获得销售订单关联的warehouse的名字
+            客户的名字
+            '''
+            warehouseid = data['warehouseId']
+            data['warehouseName'] = self.session.query(
+                Warehouse).filter(Warehouse.id == warehouseid).all()[0].name
+
+            cusId = data['customerId']
+            data['customerName'] = self.session.query(Customer).filter(Customer.id == cusId).all()[0].name
             return data
 
-        ret=[]
+        ret = []
         if saleorderId is not None:
-            for idata in self.session.query(SalesOrder).filter(SalesOrder.id == saleorderId).all():
-                ret.append(getSaleOrders(self.to_dict(idata)))
+            idata = self.session.query(SalesOrder).filter(SalesOrder.id == saleorderId).all()[0]
+            return getSaleOrders(self.to_dict(idata))
         else:
             for idata in self.session.query(SalesOrder).all():
                 ret.append(getSaleOrders(self.to_dict(idata)))
-
-
         return ret
+
+    def insertSalesOrderItem(self, data: dict):
+        '''
+        向数据库中插入销售订单物料项
+        :param data:
+        :return:
+        '''
+        Base.metadata.create_all()
+        newData = SalesOrderItem(**data)
+        self.insertData(newData)
 
     def insertDiscount(self, data: dict):
         '''

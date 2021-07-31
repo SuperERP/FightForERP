@@ -65,7 +65,7 @@ class QuotationItem(Base):
     orderQuantity = Column(Integer())
     salesUnit = Column(String(10))
     cnty = Column(String(10), ForeignKey('DiscountDic.id'))
-    amount = Column(Integer()) #折扣数量命名
+    amount = Column(Integer())  # 折扣数量命名
     __table_args__ = (
         # 联合主键约束
         PrimaryKeyConstraint('quotationId', 'material'),
@@ -139,3 +139,6 @@ class SalesOrderItem(Base):
         self.salesUnit = kwargs['salesUnit']
         self.cnty = kwargs['cnty']
         self.amount = kwargs['amount']
+
+    def __repr__(self):
+        return '<SaleOrderItem saleOrder=%r>' % (self.saleOrderId)

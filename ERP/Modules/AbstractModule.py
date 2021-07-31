@@ -7,6 +7,9 @@ class AbstractModule:
     def to_dict(self,data):
         return {c.name: getattr(data, c.name, None) for c in data.__table__.columns}
 
+
+
+
     def getTimeId(self):
         '''
         获取时间戳标记id
@@ -24,6 +27,8 @@ class AbstractModule:
         import datetime
         from dateutil import parser
         return parser.parse(dateStr).date()
+
+
 
     def insertData(self, ormData):
         ans = True
