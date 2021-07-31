@@ -114,14 +114,9 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) { // 前后端交互，提交按钮
           axios.post('http://127.0.0.1:5000/createContactPerson', this.form).then(function (resp) {
-            if (resp.data === 'fault') {
+            if (resp.data === 'success') {
               _this.$message({
-                message: 'fail!',
-                type: 'fail'
-              })
-            } else {
-              _this.$message({
-                message: 'submit! id:' + resp.data,
+                message: 'submit!',
                 type: 'success'
               })
             }

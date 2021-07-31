@@ -24,16 +24,10 @@
       <el-form-item label="Sold-To Party:" prop="soldToParty">
       <el-input style="width:110px;" v-model="form.soldToParty" :disabled="true"></el-input>
       </el-form-item></el-col></el-row>
-      <el-row :gutter="50">
-        <el-col :span="8">
       <el-form-item label="Plant:" prop="plant">
         <el-input style="width:110px;" v-model="form.plant" :disabled="true">
         </el-input>
       </el-form-item>
-        </el-col>
-        <el-col :span="12"><el-form-item label="Req. Deliv. Date:" prop="requestedDeliveryDate">
-          <el-date-picker type="date" v-model="form.requestedDeliveryDate" style="width: 130px;" :disabled="true"></el-date-picker></el-form-item>
-        </el-col></el-row>
       <el-row :gutter="50" >
         <el-col :span="8">
           <el-form-item label="Cust. Reference:" prop="custReference">
@@ -127,8 +121,7 @@ export default {
         expectOrdVal: '',
         totalCnty: '',
         totalCntyPercent: '',
-        standardOrder: '',
-        requestedDeliveryDate: ''
+        standardOrder: ''
       },
       // material假数据
       materialList: [{

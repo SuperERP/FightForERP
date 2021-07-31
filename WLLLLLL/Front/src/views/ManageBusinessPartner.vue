@@ -14,99 +14,78 @@
                 :value="item.value">
             </el-option>
           </el-select></el-form-item>
-          <!--选择customer-->
-<!--  存储customer输入值的form: customerForm-->
-        <el-form ref="customerForm" style="text-align: center" :inline="true" :rules="customerFormRules" :model="customerForm" label-width="200px" size="mini">
+          <!--customer输入框-->
         <div>
-
-            <el-form-item v-if="isCustomer" label="Customer:" prop="id">
-              <el-input v-model.number="customerForm.id">
-                <!--带搜索按钮的输入框-->
-                <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
-              <!-- 第一层查询 -->
-              <el-dialog title="Customers(General)" :visible.sync="Visible1" @close="dialogClosed1">
-                <!-- 查询表单-->
-                <el-form :model="dialogForm1" :rules="dialogForm1rules" ref="dialogForm1">
-                  <el-form-item label="Search Term:" prop="POcode" :label-width="formLabelWidth">
-                    <el-input v-model="dialogForm1.POcode"  size="mini"  autocomplete="off"></el-input>
-                  </el-form-item>
-                  <p></p>
-                  <el-form-item label="City:" prop="city" :label-width="formLabelWidth">
-                    <el-input v-model="dialogForm1.city"  size="mini" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <p></p>
-                  <el-form-item label="Country:" prop="country" :label-width="formLabelWidth">
-                    <el-input v-model="dialogForm1.country"  size="mini" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <p></p>
-                  <el-form-item label="Postal Code:" prop="postcode" :label-width="formLabelWidth">
-                    <el-input v-model="dialogForm1.postcode"  size="mini" autocomplete="off"></el-input>
-                  </el-form-item>
-                  <p></p>
-                  <el-form-item label="Name:" prop="name" :label-width="formLabelWidth">
-                    <el-input v-model="dialogForm1.name"  size="mini" autocomplete="off"></el-input>
-                  </el-form-item>
-                </el-form>
-                <!-- 第二层表格    -->
-                <el-dialog
-                    width="55%"
-                    title="Choose your customer"
-                    :visible.sync="Visible2"
-                    append-to-body>
-                  <el-table
-                      ref="Table1"
-                      height="250"
-                      :data="soldToPartyTableData"
-                      highlight-current-row
-                      @current-change="handleCurrentChange"
-                      @row-click="textclick"
-                      style="width: 100%">
-                    <el-table-column
-                        property="SearchTerm"
-                        label="Search Term"
-                        width="120">
-                    </el-table-column>
-                    <el-table-column
-                        property="Country"
-                        label="Country"
-                        width="120">
-                    </el-table-column>
-                    <el-table-column
-                        property="PostalCode"
-                        label="PostalCode"
-                        width="120">
-                    </el-table-column>
-                    <el-table-column
-                        property="City"
-                        label="City"
-                        width="120">
-                    </el-table-column>
-                    <el-table-column
-                        property="Name"
-                        label="Name"
-                        width="120">
-                    </el-table-column>
-                    <el-table-column
-                        property="Customer"
-                        label="Customer"
-                        width="120">
-                    </el-table-column>
-                  </el-table>
-                </el-dialog>
-                <!--第一层find&cancel按钮-->
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="Visible1 = false">cancel</el-button>
-                  <el-button type="primary" @click="soldToPartyFind('dialogForm1')">find</el-button>
-                </div>
+          <el-form-item v-if="isCustomer" label="Customer:" prop="businessCustomer">
+            <el-input v-model.number="form.customerId">
+              <!--带搜索按钮的输入框-->
+              <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
+            <!-- 第一层查询 -->
+            <el-dialog title="Customer" :visible.sync="Visible1" @close="dialogClosed1">
+              <!-- 查询表单-->
+              <el-form :model="dialogForm1" :rules="dialogForm1rules" ref="dialogForm1">
+                <el-form-item label="Search Term:" prop="POcode" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.POcode"  size="mini"  autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="City:" prop="city" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.city"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Country:" prop="country" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.country"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Postal Code:" prop="postcode" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.postcode"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+                <p></p>
+                <el-form-item label="Name:" prop="name" :label-width="formLabelWidth">
+                  <el-input v-model="dialogForm1.name"  size="mini" autocomplete="off"></el-input>
+                </el-form-item>
+              </el-form>
+              <!-- 第二层表格    -->
+              <el-dialog
+                  width="55%"
+                  title="Choose your business customer"
+                  :visible.sync="Visible2"
+                  append-to-body>
+                <el-table
+                    ref="Table1"
+                    height="250"
+                    :data="BP1TableData"
+                    highlight-current-row
+                    @current-change="handleCurrentChange"
+                    @row-click="textclick"
+                    style="width: 100%">
+                  <el-table-column
+                      property="searchTerm"
+                      label="Search Term"
+                      width="120">
+                  </el-table-column>
+                  <el-table-column
+                      property="name"
+                      label="Name"
+                      width="120">
+                  </el-table-column>
+                  <el-table-column
+                      property="partner"
+                      label="Partner"
+                      width="120">
+                  </el-table-column>
+                </el-table>
               </el-dialog>
-            </el-form-item>
-         </div></el-form>
-<!--选择 contact person-->
+              <!--第一层find&cancel按钮-->
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="Visible1 = false">cancel</el-button>
+                <el-button type="primary" @click="BP1Find('dialogForm1')">find</el-button>
+              </div>
+            </el-dialog>
+          </el-form-item></div>
 <!--        contact person输入框-->
-        <el-form ref="contactPersonForm" style="text-align: center" :inline="true" :rules="contactPersonFormRules" :model="contactPersonForm" label-width="200px" size="mini">
         <div>
-          <el-form-item v-if="isContactPerson" label="Contact Person:" prop="id">
-            <el-input  v-model.number="contactPersonForm.id">
+          <el-form-item v-if="isContactPerson" label="Contact Person:" prop="contactId">
+            <el-input  v-model.number="form.contactId">
               <!--带搜索按钮的输入框-->
               <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible3 = true"></el-button></el-input>
             <!-- 第一层查询 -->
@@ -167,16 +146,16 @@
                 <el-button type="primary" @click="BP2Find('dialogForm2')">find</el-button>
               </div>
             </el-dialog>
-          </el-form-item></div></el-form>
+          </el-form-item></div>
 <!--        business relationship输入框 还问完成-->
         <!--底部按钮-->
         <el-footer style="margin-top:330px">
           <el-row :gutter="50" >
             <el-col :offset="18" span="6">
               <el-form-item style="margin-top:20px;">
-                <el-button type="primary" @click="jump">Display</el-button>
+                <el-button type="primary" @click="submitForm('form')">Display</el-button>
                 <!--             清空按钮，不回到主界面-->
-                <el-button type="text" style="color:white;margin-left:10px" @click="resetForm('form')">Clear</el-button>
+                <el-button type="text" style="color:white">Clear</el-button>
               </el-form-item></el-col></el-row>
         </el-footer>
       </el-form></el-container>
@@ -220,7 +199,6 @@ export default {
       Visible8: false, // relationship category对话框
       isCustomer: true,
       isContactPerson: false,
-      //
       form: {
         name: '',
         searchTerm: '',
@@ -235,7 +213,7 @@ export default {
         businessPartnerType: 'customer',
         POcode: '',
         relationType: '',
-        id: '',
+        customerId: '',
         contactId: ''
       },
       options: [{
@@ -269,16 +247,6 @@ export default {
         businessPartnerType: [
           { required: true, message: 'Please choose document type', trigger: 'change' }
         ]
-
-      },
-      // 表单
-      // customer输入框表单
-      customerForm: {
-        id: ''
-      },
-      // contact person输入框表单
-      contactPersonForm: {
-        id: ''
       },
       // 客户查询对话框第一层表单
       dialogForm1: {
@@ -301,64 +269,8 @@ export default {
           { type: 'number', message: 'must be a number' }
         ]
       },
-      customerFormRules: {
-        id: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
-        ]
-      },
       formLabelWidth: '160px',
       formLabelWidth1: '160px',
-      soldToPartyTableData: [{
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20534'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20535'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20535'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20536'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20536'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20536'
-      }, {
-        SearchTerm: '036',
-        Country: 'US',
-        PostalCode: '32804',
-        City: 'Orlando',
-        Name: 'The Bike Zone',
-        Customer: '20537'
-      }],
       BP1TableData: [{
         searchTerm: '036',
         name: 'The Bike Zone',
@@ -379,15 +291,6 @@ export default {
     }
   },
   methods: {
-    soldToPartyFind (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.Visible2 = true
-        } else {
-          return false
-        }
-      })
-    },
     // 选择框改变
     bpChange (selectValue) {
       switch (selectValue) {
@@ -432,12 +335,12 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.customerForm.id = parseInt(row.Customer)
+      this.form.customerId = parseInt(row.partner)
     },
     textclick1 (row) {
       this.Visible3 = false
       this.Visible4 = false
-      this.contactPersonForm.id = parseInt(row.partner)
+      this.form.contactId = parseInt(row.partner)
     },
     textclick2 (row) {
       this.Visible8 = false
@@ -462,32 +365,7 @@ export default {
       })
     },
     resetForm (formName) {
-      this.$refs[formName].resetFields()
-    },
-    jump () {
-      switch (this.form.businessPartnerType) {
-        case 'customer': {
-          this.$refs.customerForm.validate((valid) => {
-            if (valid) {
-              this.$router.push({
-                path: '/DisplayCustomer',
-                name: '显示客户',
-                params: {
-                  id: this.customerForm.id
-                }
-              })
-            } else {
-              console.log('error!!')
-              return false
-            }
-          })
-          break
-        }
-        case 'contactPerson': {
-          this.$router.push({ path: '/DisplayContactPerson' })
-          break
-        }
-      }
+      this.$refs.dialogform1.resetFields()
     }
   }
 }

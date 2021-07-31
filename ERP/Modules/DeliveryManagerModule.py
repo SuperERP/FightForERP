@@ -11,16 +11,20 @@ class DeliveryManagerModule(AbstractModule):
         '''
         super().__init__(session, logging)
 
-    def deliveryOrder2to3(self, deliveryOrderId):
+    def deliveryOrder2to3(self, deliveryOrderId, datestr):
         '''
         将发货单的状态从2改为3
+
         '''
+        from dateutil import parser
         try:
             self.session.query(DeliveryOrder).filter(DeliveryOrder.id == deliveryOrderId).update(
-                {'deliveryPhase': 3}
+                {
+                    'deliveryPhase': 3,
+                    'actualDeliveryTime': parser.parse(datestr)
+                }
             )
-
-
+            self.session.commit()
         except Exception as e:
             self.logging.info('请重新检查数据插入')
             self.logging.error(e)
@@ -45,10 +49,13 @@ class DeliveryManagerModule(AbstractModule):
                     if deliveryItem.pickingStatus == 1:
                         cnt += 1
 
-                if cnt == len(deliveryItemData) and cnt is not 0:
+                if cnt == len(deliveryItemData) and cnt != 0:
                     self.session.query(DeliveryOrder).filter(
                         DeliveryOrder.id == item.id).filter(DeliveryOrder.deliveryPhase == 1).update(
                         {'deliveryPhase': 2})
+
+            self.session.commit()
+
 
         except Exception as e:
             self.logging.error(e)
@@ -63,6 +70,7 @@ class DeliveryManagerModule(AbstractModule):
             self.session.query(DeliveryItem).filter(
                 DeliveryItem.deliveryOrderId == deliveryOrderId and DeliveryItem.materialId == materialId). \
                 update({'pickingStatus': 1})
+            self.session.commit()
         except Exception as e:
             self.logging.info('请重新检查数据插入')
             self.logging.error(e)

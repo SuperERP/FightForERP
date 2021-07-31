@@ -11,14 +11,43 @@ import CreateBPRelationship from '../views/CreateBPRelationship'
 import ManageSDDocument from '../views/ManageSDDocument'
 import ManageBusinessPartner from '../views/ManageBusinessPartner'
 import DisplayCustomer from '../views/DisplayCustomer'
-import ChangeCustomer from '../views/ChangeCustomer'
-import DisplayContactPerson from '../views/DisplayContactPerson'
-import ChangeContactPerson from '../views/ChangeContactPerson'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
+
+import CreateOutboundDeliveries from '../views/CreateOutboundDeliveries'
+import OutboundDeliveries from '../views/OutboundDeliveries'
+
+import PickingOutboundDelivery1 from '../views/PickingOutboundDelivery1'
+import Plugin from 'v-fit-columns';
+
+Vue.use(Plugin);
+
 Vue.use(elTableInfiniteScroll)
 Vue.use(VueRouter)
 
 const routes = [
+
+  // {
+  //   path: '/AnalyzeDeliveryLog',
+  //   name: 'AnalyzeDeliveryLog',
+  //   component: AnalyzeDeliveryLog
+  //
+  // },
+
+  {
+    path: '/CreateOutboundDeliveries',
+    name: 'CreateOutboundDeliveries',
+    component: CreateOutboundDeliveries
+  },
+  {
+    path: '/OutboundDeliveries',
+    name: 'OutboundDeliveries',
+    component: OutboundDeliveries
+  },
+  {
+    path: '/PickingOutboundDelivery1',
+    name: 'PickingOutboundDelivery1',
+    component: PickingOutboundDelivery1
+  },
   {
     path: '/CreateInquiry',
     name: '创建询价单',
@@ -73,21 +102,6 @@ const routes = [
     path: '/DisplayCustomer',
     name: '显示客户',
     component: DisplayCustomer
-  },
-  {
-    path: '/ChangeCustomer',
-    name: '修改客户',
-    component: ChangeCustomer
-  },
-  {
-    path: '/DisplayContactPerson',
-    name: '显示联系人',
-    component: DisplayContactPerson
-  },
-  {
-    path: '/ChangeContactPerson',
-    name: '修改联系人',
-    component: ChangeContactPerson
   }
 ]
 

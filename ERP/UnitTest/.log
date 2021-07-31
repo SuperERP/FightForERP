@@ -1,21 +1,2 @@
-success insert data <Customer(id='0001000000',name='zht', street='sp',postcode='111',country='CN',language='CH',paycode='dsafdsfs',distribution_channel='00',city='dsafdsfs',sregion='sdfsd',POcode='123')>
-success insert data <MaterialDic(id='sb101',name='mat1',price=123.0)>
-success insert data <MaterialDic(id='sb102',name='mat2',price=123.0)>
-success insert data <MaterialDic(id='sb103',name='mat3',price=123.0)>
-success insert data <MaterialDic(id='sb104',name='mat4',price=123.0)>
-success insert data <DiscountDic(id='zk101',name='zk1',discountCalcu='A')>
-success insert data <DiscountDic(id='zk102',name='zk2',discountCalcu='A')>
-success insert data <DiscountDic(id='zk103',name='zk3',discountCalcu='B')>
-success insert data <DiscountDic(id='zk104',name='zk4',discountCalcu='B')>
-success insert data <Warehouse()>
-success insert data <Warehouse()>
-success insert data <Warehouse()>
-success insert data <Warehouse()>
-success insert data <>
-success insert data <>
-success insert data <>
-success insert data <>
-success insert data <DeliveryOrder(id='OD20210731154916801062',plannedDeliveryTime=datetime.date(2010, 12, 7),actualDeliveryTime=None,salesOrderId='SO20210731154916789415',warehouse='lz101',deliveryPhase=1)>
-success insert data <DeliveryOrder(id='OD20210731154916805241',plannedDeliveryTime=datetime.date(2010, 12, 7),actualDeliveryTime=None,salesOrderId='SO20210731154916792490',warehouse='lz101',deliveryPhase=1)>
-success insert data <DeliveryOrder(id='OD20210731154916807934',plannedDeliveryTime=datetime.date(2010, 12, 7),actualDeliveryTime=None,salesOrderId='SO20210731154916794769',warehouse='lz101',deliveryPhase=1)>
-success insert data <DeliveryOrder(id='OD20210731154916810723',plannedDeliveryTime=datetime.date(2010, 12, 7),actualDeliveryTime=None,salesOrderId='SO20210731154916797102',warehouse='lz101',deliveryPhase=1)>
+success insert data <DeliveryOrder(id='OD20210731213258407822',plannedDeliveryTime=datetime.date(2010, 12, 7),actualDeliveryTime=None,salesOrderId='SO20210731172746282591',warehouse='lz101',deliveryPhase=0)>
+success insert data <DeliveryOrder(id='OD20210731222031925877',plannedDeliveryTime=datetime.date(2010, 12, 7),actualDeliveryTime=None,salesOrderId='SO20210731172746282591',warehouse='lz101',deliveryPhase=0)>

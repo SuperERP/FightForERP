@@ -2,29 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56025184-4582-4c39-899a-d01072ca7ea5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ERP/UnitTest/cbflask.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ERP/UnitTest/fakedata.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ERP/Modules/AbstractModule.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/Modules/AbstractModule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ERP/Modules/CustomerManageModule.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/Modules/CustomerManageModule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ERP/Modules/DeliveryManagerModule.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/Modules/DeliveryManagerModule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ERP/Modules/OrderManagerModule.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/Modules/OrderManagerModule.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ERP/Modules/OrmData/DeliveryData.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/Modules/OrmData/DeliveryData.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ERP/Modules/OrmData/QutationAndSalesOrderData.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/Modules/OrmData/QutationAndSalesOrderData.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ERP/Modules/WarehouseManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/Modules/WarehouseManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ERP/UnitTest/.log" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/UnitTest/.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ERP/UnitTest/createContactPerson.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/UnitTest/createContactPerson.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ERP/ZhTest/CustomerManageFlask.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/ZhTest/CustomerManageFlask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/tutorial.db" beforeDir="false" afterPath="$PROJECT_DIR$/Test/tutorial.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WLLLLLL/Front/src/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/WLLLLLL/Front/src/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WLLLLLL/Front/src/views/ChangeContactPerson.vue" beforeDir="false" afterPath="$PROJECT_DIR$/WLLLLLL/Front/src/views/ChangeContactPerson.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WLLLLLL/Front/src/views/ChangeCustomer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/WLLLLLL/Front/src/views/ChangeCustomer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WLLLLLL/Front/src/views/CreateBPRelationship.vue" beforeDir="false" afterPath="$PROJECT_DIR$/WLLLLLL/Front/src/views/CreateBPRelationship.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WLLLLLL/Front/src/views/CreateContactPerson.vue" beforeDir="false" afterPath="$PROJECT_DIR$/WLLLLLL/Front/src/views/CreateContactPerson.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WLLLLLL/Front/src/views/CreateCustomer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/WLLLLLL/Front/src/views/CreateCustomer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WLLLLLL/Front/src/views/DisplayContactPerson.vue" beforeDir="false" afterPath="$PROJECT_DIR$/WLLLLLL/Front/src/views/DisplayContactPerson.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WLLLLLL/Front/src/views/DisplayCustomer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/WLLLLLL/Front/src/views/DisplayCustomer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WLLLLLL/Front/src/views/ManageBusinessPartner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/WLLLLLL/Front/src/views/ManageBusinessPartner.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WLLLLLL/Front/src/views/ManageSDDocument.vue" beforeDir="false" afterPath="$PROJECT_DIR$/WLLLLLL/Front/src/views/ManageSDDocument.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tutorial.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ERP/UnitTest/cbflask.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/UnitTest/cbflask.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ERP/UnitTest/fakedata.py" beforeDir="false" afterPath="$PROJECT_DIR$/ERP/UnitTest/fakedata.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ERP/UnitTest/tutorial.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +65,7 @@
     <setting file="file://$PROJECT_DIR$/ERP/Modules/OrmData/InquiryData.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ERP/UnitTest/.log" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ERP/Utils/__init__.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ERP/__init__.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Test/FlaskForTest.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1vk4W2CO5PVXTMUtPZaU2VHZarg" />
@@ -91,28 +78,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Python.fakedata">
-    <configuration name="BaseTest" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="myERP" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ERP/UnitTest" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ERP/UnitTest/BaseTest.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.cbflask">
     <configuration name="CBTestFlask" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="myERP" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -197,13 +163,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest for cbflask.test1" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="NewErp" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ERP/UnitTest" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;cbflask.test1&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.fakedata" />
         <item itemvalue="Python.cbflask" />
+        <item itemvalue="Python tests.pytest for cbflask.test1" />
+        <item itemvalue="Python.fakedata" />
         <item itemvalue="Python.CBTestFlask" />
         <item itemvalue="Python.createCustomer" />
-        <item itemvalue="Python.BaseTest" />
       </list>
     </recent_temporary>
   </component>
@@ -229,5 +211,21 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ERP/Modules/DeliveryManagerModule.py</url>
+          <line>20</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ERP/UnitTest/cbflask.py</url>
+          <line>149</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

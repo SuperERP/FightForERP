@@ -187,7 +187,7 @@ newDeliveryItems = [
         'materialState': 'sadfsd'
     }
 ]
-newSaleOrder=OrderManagerModule()
+
 for idata in session.query(SalesOrder).all():
     for idata1 in session.query(MaterialDic).all():
         item = {
@@ -199,6 +199,7 @@ for idata in session.query(SalesOrder).all():
             'cnty': '12312',
             'amount': 12312
         }
-        session.add
+        newOrder.insertSalesOrderItem(item)
+
 for idata in newDeliveryItems:
     newDelivery.insertDeliveryItem(idata)

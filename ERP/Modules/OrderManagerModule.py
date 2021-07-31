@@ -23,11 +23,10 @@ class OrderManagerModule(AbstractModule):
 
         return data
 
-    def searchOrders(self, customerId=None, warehouseId=None, saleorderId=None):
-
+    def searchOrders(self, id='', customerId='', warehouseId='', POcode='', PODate='', effectiveDate='',
+                     expirationDate='',
+                     saleorderId=None):
         def getSaleOrders(data):
-            print(data)
-
             '''
             获得销售订单关联的warehouse的名字
             客户的名字
@@ -40,14 +39,20 @@ class OrderManagerModule(AbstractModule):
             data['customerName'] = self.session.query(Customer).filter(Customer.id == cusId).all()[0].name
             return data
 
-        ret = []
         if saleorderId is not None:
-            idata = self.session.query(SalesOrder).filter(SalesOrder.id == saleorderId).all()[0]
-            return getSaleOrders(self.to_dict(idata))
-        else:
-            for idata in self.session.query(SalesOrder).all():
-                ret.append(getSaleOrders(self.to_dict(idata)))
-        return ret
+            return getSaleOrders(self.to_dict(self.session.query(SalesOrder).filter(SalesOrder.id == saleorderId).all()[0]))
+
+        res = []
+
+        for idata in self.session.query(SalesOrder).filter(or_(SalesOrder.id == id, id == '')) \
+                .filter(or_(SalesOrder.customerId == customerId, customerId == '')) \
+                .filter(or_(SalesOrder.warehouseId == warehouseId, warehouseId == '')) \
+                .filter(or_(SalesOrder.POcode == POcode, POcode == '')) \
+                .filter(or_(SalesOrder.PODate == PODate, PODate == '')) \
+                .filter(or_(SalesOrder.effectiveDate == effectiveDate, effectiveDate == '')) \
+                .filter(or_(SalesOrder.expirationDate == expirationDate, expirationDate == '')).all():
+            res.append(getSaleOrders(self.to_dict(idata)))
+        return res
 
     def insertSalesOrderItem(self, data: dict):
         '''
