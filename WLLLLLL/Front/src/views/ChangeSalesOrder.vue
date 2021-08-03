@@ -614,9 +614,6 @@ export default {
         ],
         warehouseId: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
-        ],
-        requestedDeliveryDate: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },
       addMaterialFormRules: {

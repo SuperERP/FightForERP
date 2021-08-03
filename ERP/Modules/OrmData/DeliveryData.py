@@ -42,9 +42,9 @@ class DeliveryItem(Base):
     description = Column(Text())
     amount = Column(Integer())
     unit = Column(String(10))
-    pickingStatus = Column(Enum(''))
+    pickingStatus = Column(Integer())
     pickingAmount = Column(Integer())
-    materialState = Column(Enum(''))
+    materialState = Column(String(20))
 
     __table_args__ = (
         PrimaryKeyConstraint('deliveryOrderId', 'materialId'),

@@ -51,32 +51,32 @@
                     @row-click="textclick"
                     style="width: 100%">
                   <el-table-column
-                      property="POcode"
+                      property="SearchTerm"
                       label="Search Term"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="country"
+                      property="Country"
                       label="Country"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="postcode"
+                      property="PostalCode"
                       label="PostalCode"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="city"
+                      property="City"
                       label="City"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="name"
+                      property="Name"
                       label="Name"
                       width="120">
                   </el-table-column>
                   <el-table-column
-                      property="id"
+                      property="Customer"
                       label="Customer"
                       width="120">
                   </el-table-column>
@@ -100,7 +100,7 @@
 <!--      plant搜索框-->
       <el-form-item label="Plant:" prop="warehouseId">
         <el-input style="width:110px;" v-model.number="form.warehouseId">
-          <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantSearchClick"></el-button>
+          <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantVisible = true"></el-button>
         </el-input>
         <el-dialog
             width="55%"
@@ -116,12 +116,12 @@
               @row-click="plantTextClick"
               style="width: 100%">
             <el-table-column
-                property="id"
+                property="plantNum"
                 label="Plant Number"
                 width="120">
             </el-table-column>
             <el-table-column
-                property="name"
+                property="plantName"
                 label="Plant Name"
                 width="120">
             </el-table-column>
@@ -160,7 +160,7 @@
       <el-form :model="addMaterialForm" :rules="addMaterialFormRules" ref="addMaterialFormRef">
         <el-form-item label="Material" prop="material" :label-width="formLabelWidth1">
           <el-input v-model.number="addMaterialForm.material" size="mini" autocomplete="off">
-            <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialSearchClick"></el-button></el-input>
+            <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialVisible = true"></el-button></el-input>
           <el-dialog
               width="55%"
               title="Choose material"
@@ -169,18 +169,18 @@
             <el-table
                 ref="searchMaterialList"
                 height="250"
-                :data="searchMaterialList.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
+                :data="searchMaterialList.filter(data => !search || data.material.toLowerCase().includes(search.toLowerCase()))"
                 highlight-current-row
                 @current-change="handleCurrentChange"
                 @row-click="materialTextClick"
                 style="width: 100%">
               <el-table-column
-                  property="id"
+                  property="material"
                   label="Material"
                   width="120">
               </el-table-column>
               <el-table-column
-                  property="name"
+                  property="itemDescription"
                   label="Item Description"
                   width="200">
               </el-table-column>
@@ -234,7 +234,7 @@
       <el-form :model="editMaterialForm" :rules="editMaterialFormRules" ref="editMaterialFormRef">
         <el-form-item label="Material" prop="material" :label-width="formLabelWidth1">
           <el-input v-model.number="editMaterialForm.material" size="mini" autocomplete="off">
-            <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialSearchClick"></el-button></el-input>
+            <el-button type="text" icon="el-icon-search" slot="suffix"  @click="materialVisible = true"></el-button></el-input>
           <el-dialog
               width="55%"
               title="Choose material"
@@ -243,18 +243,18 @@
             <el-table
                 ref="searchMaterialList"
                 height="250"
-                :data="searchMaterialList.filter(data => !search || data.id.toLowerCase().includes(search.toLowerCase()))"
+                :data="searchMaterialList.filter(data => !search || data.material.toLowerCase().includes(search.toLowerCase()))"
                 highlight-current-row
                 @current-change="handleCurrentChange"
                 @row-click="materialTextClick1"
                 style="width: 100%">
               <el-table-column
-                  property="id"
+                  property="material"
                   label="Material"
                   width="120">
               </el-table-column>
               <el-table-column
-                  property="name"
+                  property="itemDescription"
                   label="Item Description"
                   width="200">
               </el-table-column>
@@ -417,7 +417,7 @@ export default {
       },
       // 数据填充
       // 客户查询对话框第一层表单
-      dialogForm1: { // 查询条件，对应Customer表
+      dialogForm1: {
         POcode: '',
         city: '',
         country: '',
@@ -1094,8 +1094,14 @@ export default {
       }],
       // 查询material对话框出现的表格
       searchMaterialList: [{
-        id: 'DXTR',
-        name: 'Deluxe Touring Bike(black)',
+        material: 'DXTR',
+        itemDescription: 'Deluxe Touring Bike(black)',
+        salesUnit: 'EA',
+        price: '20'
+      },
+      {
+        material: 'PXTR',
+        itemDescription: 'Professional Touring Bike(black)',
         salesUnit: 'EA',
         price: '20'
       }],
@@ -1160,13 +1166,55 @@ export default {
       },
       formLabelWidth: '120px',
       formLabelWidth1: '160px',
-      soldToPartyTableData: [{ // 对应Customer表
-        POcode: '036',
-        country: 'US',
-        postcode: '32804',
-        city: 'Orlando',
-        name: 'The Bike Zone',
-        id: '20534'
+      soldToPartyTableData: [{
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20534'
+      }, {
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20535'
+      }, {
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20535'
+      }, {
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20536'
+      }, {
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20536'
+      }, {
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20536'
+      }, {
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20537'
       }],
       currentRow: null,
       show: true
@@ -1205,19 +1253,19 @@ export default {
     dialogClosed1 () {
       this.$refs.dialogForm1.resetFields()
     },
-    textclick (row) { // 对应Sold-To Party
+    textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.form.customerId = parseInt(row.id)
+      this.form.customerId = parseInt(row.Customer)
     },
     plantTextClick (row) {
       this.plantVisible = false
-      this.form.warehouseId = row.id
+      this.form.warehouseId = row.plantNum
     },
     materialTextClick (row) { // materialClick对应Choose Material的rowClick
       this.materialVisible = false
-      this.addMaterialForm.material = row.id
-      this.addMaterialForm.itemDescription = row.name
+      this.addMaterialForm.material = row.material
+      this.addMaterialForm.itemDescription = row.itemDescription
       this.addMaterialForm.salesUnit = row.salesUnit
       this.addMaterialForm.price = row.price
     },
@@ -1239,12 +1287,7 @@ export default {
             axios.post('http://127.0.0.1:5000/createInquiry', [this.form, this.materialList]).then(function (resp) {
               if (resp.data === 'fault') {
                 _this.$message({
-                  message: 'fail!',
-                  type: 'fail'
-                })
-              } else {
-                _this.$message({
-                  message: 'submit! id:' + resp.data,
+                  message: 'submit!',
                   type: 'success'
                 })
               }

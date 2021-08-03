@@ -685,7 +685,6 @@
 
 <script>
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
-import axios from 'axios'
 let netValue = 0
 let ExpectOrdVal = 0
 export default {
@@ -799,7 +798,7 @@ export default {
       },
 
       // 客户查询对话框第一层表单
-      dialogForm1: { // 查询条件，对应Customer表
+      dialogForm1: {
         POcode: '',
         city: '',
         country: '',
@@ -812,16 +811,23 @@ export default {
       // material假数据，对接InquiryItem
       materialList: [],
       plantList: [{
-        id: 'MI00',
-        name: 'Miami Plant'
+        plantNum: 'MI00',
+        plantName: 'Miami Plant'
       }],
       // 查询material对话框出现的表格
       searchMaterialList: [{
-        id: 'DXTR',
-        name: 'Deluxe Touring Bike(black)',
+        material: 'DXTR',
+        itemDescription: 'Deluxe Touring Bike(black)',
         salesUnit: 'EA',
         price: '20'
-      }],
+      },
+      {
+        material: 'PXTR',
+        itemDescription: 'Professional Touring Bike(black)',
+        salesUnit: 'EA',
+        price: '20'
+      }
+      ],
       // 规则
       rules: {
         customerId: [
@@ -830,19 +836,16 @@ export default {
         POcode: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        PODate: [
+        custRefDate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        effectiveDate: [
+        validFrom: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        expirationDate: [
+        validTo: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
-        warehouseId: [
-          { required: true, message: 'Please enter...', trigger: 'blur' }
-        ],
-        requestedDeliveryDate: [
+        plant: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },
@@ -896,13 +899,41 @@ export default {
       },
       formLabelWidth: '120px',
       formLabelWidth1: '160px',
-      soldToPartyTableData: [{ // 对应Customer表
-        POcode: '036',
-        country: 'US',
-        postcode: '32804',
-        city: 'Orlando',
-        name: 'The Bike Zone',
-        id: '20534'
+      soldToPartyTableData: [{
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20534'
+      }, {
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20535'
+      }, {
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20535'
+      }, {
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20536'
+      }, {
+        SearchTerm: '036',
+        Country: 'US',
+        PostalCode: '32804',
+        City: 'Orlando',
+        Name: 'The Bike Zone',
+        Customer: '20536'
       }],
       quotTableData: [{ // 对应Inquiry，Search Inquiry的结果数据集
         id: '10000132',
@@ -913,7 +944,7 @@ export default {
         requestedDeliveryDate: '10.07.21'
       }],
       cntyList: [{
-        id: '1',
+        conditionNum: '1',
         name: 'K004',
         discountCalcu: 'Reduce price'
       }, {
@@ -1014,7 +1045,7 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.form.customerId = parseInt(row.id)
+      this.form.soldToParty = parseInt(row.Customer)
     },
     textclickForInquiry (row) { // ForInquiry
       this.Visible1ForInquiry = false
@@ -1040,7 +1071,7 @@ export default {
     },
     plantTextClick (row) {
       this.plantVisible = false
-      this.form.warehouseId = row.id
+      this.form.plant = row.plantNum
     },
     plantTextClickForInquiry (row) { // ForInquiry
       this.plantVisibleForInquiry = false
@@ -1048,21 +1079,20 @@ export default {
     },
     materialTextClick (row) {
       this.materialVisible = false
-      this.addMaterialForm.material = row.id
-      this.addMaterialForm.itemDescription = row.name
+      this.addMaterialForm.material = row.material
+      this.addMaterialForm.itemDescription = row.itemDescription
       this.addMaterialForm.salesUnit = row.salesUnit
       this.addMaterialForm.price = row.price
     },
     materialTextClick1 (row) {
       this.materialVisible = false
-      this.editMaterialForm.material = row.id
-      this.editMaterialForm.itemDescription = row.name
+      this.editMaterialForm.material = row.material
+      this.editMaterialForm.itemDescription = row.itemDescription
       this.editMaterialForm.salesUnit = row.salesUnit
       this.editMaterialForm.price = row.price
     },
     submitForm (formName) {
       console.log(this.materialList)
-      const _this = this
       if (this.materialList.length === 0) {
         this.$message.error('At least one material is required!')
       } else {
@@ -1222,8 +1252,8 @@ export default {
           }
         }
       })
-      this.netValueForm.netValue1 = netValue
-      this.netValueForm.expectOrdVal = ExpectOrdVal
+      this.form.netValue1 = netValue
+      this.form.expectOrdVal = ExpectOrdVal
     },
     // 激活整体折扣
     cntyActivate () {

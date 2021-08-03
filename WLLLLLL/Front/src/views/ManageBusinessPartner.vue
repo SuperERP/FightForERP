@@ -50,9 +50,7 @@
                 :value="item.value">
             </el-option>
           </el-select></el-form-item>
-          <!--选择customer-->
-<!--  存储customer输入值的form: customerForm-->
-        <el-form ref="customerForm" style="text-align: center" :inline="true" :rules="customerFormRules" :model="customerForm" label-width="200px" size="mini">
+          <!--customer输入框-->
         <div>
             <el-form-item v-if="isCustomer" label="Customer:" prop="id">
               <el-input v-model.number="customerForm.id">
@@ -134,14 +132,17 @@
                   <el-button type="primary" @click="soldToPartyFind('dialogForm1')">find</el-button>
                 </div>
               </el-dialog>
-            </el-form-item>
-         </div></el-form>
-<!--选择 contact person-->
+              <!--第一层find&cancel按钮-->
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="Visible1 = false">cancel</el-button>
+                <el-button type="primary" @click="BP1Find('dialogForm1')">find</el-button>
+              </div>
+            </el-dialog>
+          </el-form-item></div>
 <!--        contact person输入框-->
-        <el-form ref="contactPersonForm" style="text-align: center" :inline="true" :rules="contactPersonFormRules" :model="contactPersonForm" label-width="200px" size="mini">
         <div>
-          <el-form-item v-if="isContactPerson" label="Contact Person:" prop="id">
-            <el-input  v-model.number="contactPersonForm.id">
+          <el-form-item v-if="isContactPerson" label="Contact Person:" prop="contactId">
+            <el-input  v-model.number="form.contactId">
               <!--带搜索按钮的输入框-->
               <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible3 = true"></el-button></el-input>
             <!-- 第一层查询 -->

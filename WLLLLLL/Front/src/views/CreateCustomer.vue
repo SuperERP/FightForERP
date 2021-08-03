@@ -153,7 +153,7 @@ export default {
               })
             } else {
               _this.$message({
-                message: 'submit! id:' + resp.data,
+                message: 'submit!' + resp.data,
                 type: 'success'
               })
             }

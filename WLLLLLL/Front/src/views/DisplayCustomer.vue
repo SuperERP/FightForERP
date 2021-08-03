@@ -1,8 +1,9 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Display Customer: {{ this.$route.params.id }}
+      <el-header>Display Customer: Overview
       </el-header>
+
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
         <!--点击change按钮，跳转到change界面-->
         <el-button type="text" style="margin-left:20px" @click="jump">Change</el-button>
@@ -10,7 +11,7 @@
         <el-form-item label="Customer:" prop="id">
           <el-input v-model="form.id" :disabled="true">
           </el-input>
-        </el-form-item></div>
+        </el-form-item>
         <el-divider content-position="left">Basic Information</el-divider>
         <el-row :gutter="50" >
           <el-col :span="8">
@@ -55,7 +56,7 @@
           </el-input></el-form-item>
 
         <el-divider content-position="left">Sales and Distribution</el-divider>
-        <el-row :gutter="50" style="margin-bottom:20px">
+        <el-row :gutter="50" >
           <el-col :span="8">
             <el-form-item label="Sales Org:" prop="salesOrg">
               <el-input v-model="form.sales_channel_number" :disabled="true">
@@ -67,6 +68,16 @@
               </el-input>
             </el-form-item></el-col></el-row>
 
+        <!--底部按钮-->
+        <el-footer style="margin-top:20px">
+          <el-row :gutter="50" >
+            <el-col :offset="18" span="6">
+              <el-form-item style="margin-top:20px;">
+                <el-button type="primary">Change</el-button>
+                <!--             清空按钮，回到主界面-->
+                <el-button type="text" style="color:white">Cancel</el-button>
+              </el-form-item></el-col></el-row>
+        </el-footer>
       </el-form></el-container>
   </div>
 </template>

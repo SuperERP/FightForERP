@@ -23,10 +23,42 @@ import ChangeQuotation from '../views/ChangeQuotation'
 // import test1 from '../views/test1'
 // import test from '../views/test'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
+
+import CreateOutboundDeliveries from '../views/CreateOutboundDeliveries'
+import OutboundDeliveries from '../views/OutboundDeliveries'
+
+import PickingOutboundDelivery1 from '../views/PickingOutboundDelivery1'
+import Plugin from 'v-fit-columns';
+
+Vue.use(Plugin);
+
 Vue.use(elTableInfiniteScroll)
 Vue.use(VueRouter)
 
 const routes = [
+
+  // {
+  //   path: '/AnalyzeDeliveryLog',
+  //   name: 'AnalyzeDeliveryLog',
+  //   component: AnalyzeDeliveryLog
+  //
+  // },
+
+  {
+    path: '/CreateOutboundDeliveries',
+    name: 'CreateOutboundDeliveries',
+    component: CreateOutboundDeliveries
+  },
+  {
+    path: '/OutboundDeliveries',
+    name: 'OutboundDeliveries',
+    component: OutboundDeliveries
+  },
+  {
+    path: '/PickingOutboundDelivery1',
+    name: 'PickingOutboundDelivery1',
+    component: PickingOutboundDelivery1
+  },
   {
     path: '/CreateInquiry',
     name: '创建询价单',

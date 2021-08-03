@@ -1,4 +1,4 @@
-from .AbstractModule import*
+from .AbstractModule import *
 from .OrmData.CustomerData import *
 
 
@@ -13,8 +13,8 @@ class CustomerManagerModule(AbstractModule):
         self.session = session
         self.logging = logging
         self.customerRecord = customerRecord
-    
-    def searchallRelationshipDic(self): 
+
+    def searchallRelationshipDic(self):
         '''
         查找所有关系字典
         '''
@@ -29,7 +29,7 @@ class CustomerManagerModule(AbstractModule):
         :return:
         '''
 
-        res=[]
+        res = []
 
         for idata in self.session.query(Customer).filter(or_(Customer.POcode==POcode,POcode==''))\
             .filter(or_(Customer.city==city,city==''))\
@@ -47,7 +47,7 @@ class CustomerManagerModule(AbstractModule):
         :return:
         '''
 
-        res=[]
+        res = []
 
         for idata in self.session.query(ContactPerson).filter(or_(ContactPerson.POcode==POcode,POcode==''))\
             .filter(or_(ContactPerson.last_name==last_name,last_name==''))\
@@ -80,7 +80,7 @@ class CustomerManagerModule(AbstractModule):
         data['id'] = 'BP' + self.getTimeId()
         new_data = CustomerAndContactPersonRelationship(**data)
         self.insertData(new_data)
-        return(data['id'])
+        return (data['id'])
 
     def insertContactPerson(self, data: dict):
         '''
@@ -92,7 +92,7 @@ class CustomerManagerModule(AbstractModule):
         data['id'] = 'CP' + self.getTimeId()
         new_data = ContactPerson(**data)
         self.insertData(new_data)
-        return(data['id'])
+        return (data['id'])
 
     def insertCustomer(self, data: dict):
         '''
