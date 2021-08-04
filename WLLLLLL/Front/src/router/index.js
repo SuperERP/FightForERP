@@ -20,13 +20,43 @@ import DisplayInquiry from '../views/DisplayInquiry'
 import DisplayQuotation from '../views/DisplayQuotation'
 import ChangeInquiry from '../views/ChangeInquiry'
 import ChangeQuotation from '../views/ChangeQuotation'
+import ShellHome from '../views/ShellHome'
+import CreateOutboundDeliveries from '../views/CreateOutboundDeliveries'
+import OutboundDeliveries from '../views/OutboundDeliveries'
+import PickingOutboundDelivery from '../views/PickingOutboundDelivery'
 // import test1 from '../views/test1'
 // import test from '../views/test'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
+import ManageStock from '../views/ManageStock'
 Vue.use(elTableInfiniteScroll)
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/ManageStock',
+    name: 'ManageStock',
+    component: ManageStock
+  },
+  {
+    path: '/CreateOutboundDeliveries',
+    name: 'CreateOutboundDeliveries',
+    component: CreateOutboundDeliveries
+  },
+  {
+    path: '/OutboundDeliveries',
+    name: 'OutboundDeliveries',
+    component: OutboundDeliveries
+  },
+  {
+    path: '/PickingOutboundDelivery',
+    name: 'PickingOutboundDelivery',
+    component: PickingOutboundDelivery
+  },
+  {
+    path: '/ShellHome',
+    name: '概览',
+    component: ShellHome
+  },
   {
     path: '/CreateInquiry',
     name: '创建询价单',

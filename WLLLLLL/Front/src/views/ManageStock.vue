@@ -19,7 +19,38 @@
             <el-form-item label="Material" prop="materialDicId">
               <el-input style="width:110px;" v-model.number="formInline.materialDicId">
                 <!--带搜索按钮的输入框-->
+                <el-button type="text" icon="el-icon-search" slot="suffix"  @click="MaterialName"></el-button>
               </el-input>
+              <el-dialog
+                  width="35%"
+                  title="Choose Material"
+                  :visible.sync="show1"
+                  append-to-body>
+                <el-table
+                    ref="MaterialData1"
+                    height="250"
+                    :data="MaterialData1"
+                    highlight-current-row
+                    @current-change="handleCurrentChange"
+                    @row-click="plantTextClick1"
+                    style="width: 100%">
+                  <el-table-column
+                      property="id"
+                      label="Material Id"
+                      width="150">
+                  </el-table-column>
+                  <el-table-column
+                      property="name"
+                      label="Material Name"
+                      width="200">
+                  </el-table-column>
+                  <el-table-column
+                      property="price"
+                      label="Price"
+                      width="120">
+                  </el-table-column>
+                </el-table>
+              </el-dialog>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -28,7 +59,7 @@
                 <el-button type="text" icon="el-icon-search" slot="suffix"  @click="WarehouseFind"></el-button>
               </el-input>
               <el-dialog
-                  width="35%"
+                  width="25%"
                   title="Choose plant"
                   :visible.sync="plantVisible"
                   append-to-body>
@@ -147,6 +178,7 @@ export default {
     return {
       Visible1: false, // 控制库存修改的对话框
       show: false, // 控制物料表是否可见，Go触发可见
+      show1: false, // 控制材料检索框是否可见
       plantVisible: false, // 仓库选择对话框
       // datachange: false, // 监测是否修改了库存
       formLabelWidth: '130px',
@@ -157,6 +189,11 @@ export default {
       Warehouse: [{ // 对应数据库中Warehouse，仓库检索对话框
         id: 'MI00',
         name: 'Miami Plant'
+      }],
+      MaterialData1: [{
+        id: 'DXTR1001',
+        name: 'Deluxe Touring Bike',
+        price: '1000'
       }],
       MaterialData: [{ // 对应表inventory，初始页面物料表
         materialDicId: 'DXTR1001',
@@ -187,11 +224,18 @@ export default {
     }
   },
   methods: {
+    MaterialName () {
+      const _this = this
+      this.show1 = true
+      axios.get('http://127.0.0.1:5000/showMaterialDic').then(function (resp) {
+        _this.MaterialData1 = resp.data
+      })
+    },
     MaterialFind () {
       // eslint-disable-next-line no-unused-vars
       const _this = this
       this.show = true
-      axios.post('link', _this.formInline).then(function (resp) {
+      axios.post('http://127.0.0.1:5000/searchInventory', _this.formInline).then(function (resp) {
         _this.MaterialData = resp.data
       })
     }, // 由物料名和仓库名寻找物料
@@ -199,7 +243,7 @@ export default {
       // eslint-disable-next-line no-unused-vars
       const _this = this
       this.plantVisible = true
-      axios.post('link', _this.formInline).then(function (resp) {
+      axios.get('http://127.0.0.1:5000/showWarehouse').then(function (resp) {
         _this.Warehouse = resp.data
       })
     },
@@ -219,7 +263,11 @@ export default {
     plantTextClick (row) {
       this.plantVisible = false
       this.formInline.warehouseId = row.id
-    },
+    }, // 控制仓库检索
+    plantTextClick1 (row) {
+      this.show1 = false
+      this.formInline.materialDicId = row.id
+    }, // 控制物料检索
     handleSelectionChange (val) {
       this.multipleSelection = val
     },
@@ -252,15 +300,12 @@ export default {
     // 减少
     Save () {
       const _this = this
-      axios.post('link', _this.formInline).then(function (resp) {
-        _this.MaterialData = resp.data
+      axios.post('http://127.0.0.1:5000/changeInventory', _this.MaterialData).then(function (resp) {
       })
       this.$message({
         message: 'Success!',
         type: 'success'
       })
-      this.goToLink('http://localhost:8080/OutboundDeliveries')
-      // 没跳转，可能写错了
     }
   }
 }
