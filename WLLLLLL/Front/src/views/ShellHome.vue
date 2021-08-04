@@ -1,20 +1,22 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Home: Overview
-      </el-header>
+        <el-header>
+          <el-button class="el-icon-s-home"></el-button>
+          <span>Home</span>
+        </el-header>
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" style="background-color: #eff4f9;" @select="handleSelect">
-        <el-menu-item index="1"><a href="#BusinessPartner" style="display:inline-block; width: 100%;text-decoration:none;">BusinessPartner</a></el-menu-item>
-        <el-menu-item index="2"><a href="#OrderManagement" style="display:inline-block; width: 100%;text-decoration:none;">OrderManagement</a></el-menu-item>
-        <el-menu-item index="3"><a href="#DeliveryManagement" style="display:inline-block; width: 100%;text-decoration:none;">DeliveryManagement</a></el-menu-item>
-        <el-menu-item index="4"><a href="#WarehouseManagement" style="display:inline-block; width: 100%;text-decoration:none;">WarehouseManagement</a></el-menu-item>
+        <el-menu-item index="1"><a href="#BusinessPartner" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Business Partner</a></el-menu-item>
+        <el-menu-item index="2"><a href="#OrderManagement" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Order Management</a></el-menu-item>
+        <el-menu-item index="3"><a href="#DeliveryManagement" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Delivery Management</a></el-menu-item>
+        <el-menu-item index="4"><a href="#WarehouseManagement" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Warehouse Management</a></el-menu-item>
         <el-menu-item index="5" disabled style="width: 200px"></el-menu-item>
       </el-menu>
       <!--       BusinessPartner-->
-      <a name="BusinessPartner"><el-divider content-position="left">BusinessPartner</el-divider></a>
+      <a name="BusinessPartner"><el-divider content-position="left">Business Partner</el-divider></a>
       <!--       BusinessPartner-->
       <el-row :gutter="20">
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Create</div>
@@ -23,39 +25,39 @@
             </el-card>
           </el-button>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Create</div>
-              <div class="CardText item">ContactPerson</div>
+              <div class="CardText item">Contact Person</div>
               <div class="el-icon-s-custom" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
             </el-card>
           </el-button>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Create</div>
-              <div class="CardText item">BPRelationship</div>
+              <div class="CardText item">BP Relationship</div>
               <div class="el-icon-share" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
             </el-card>
           </el-button>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Manage</div>
-              <div class="CardText item">BusinessPartner</div>
+              <div class="CardText item">Business Partner</div>
               <div class="el-icon-s-grid" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
             </el-card>
           </el-button>
         </el-col>
       </el-row>
       <!--       OrderManagement-->
-      <a name="OrderManagement"><el-divider content-position="left">OrderManagement</el-divider></a>
+      <a name="OrderManagement"><el-divider content-position="left">Order Management</el-divider></a>
       <!--       OrderManagement-->
       <el-row :gutter="20">
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Create</div>
@@ -64,7 +66,7 @@
             </el-card>
           </el-button>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Create</div>
@@ -73,16 +75,16 @@
             </el-card>
           </el-button>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Create</div>
-              <div class="CardText item">SalesOrder</div>
+              <div class="CardText item">Sales Order</div>
               <div class="el-icon-s-order" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
             </el-card>
           </el-button>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Manage</div>
@@ -93,61 +95,45 @@
         </el-col>
       </el-row>
       <!--       DeliveryManagement-->
-      <a name="DeliveryManagement"><el-divider content-position="left">DeliveryManagement</el-divider></a>
+      <a name="DeliveryManagement"><el-divider content-position="left">Delivery Management</el-divider></a>
       <!--       DeliveryManagement-->
       <el-row :gutter="20">
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Create</div>
-              <div class="CardText item">OutboundDeliveries</div>
-              <div class="el-icon-s-custom" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
+              <div class="CardText item">Outbound Deliveries</div>
+              <div class="el-icon-goods" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
             </el-card>
           </el-button>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
-              <div class="CardText item">OutboundDeliveries</div>
-              <div class="el-icon-s-custom" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
+              <div class="CardText item">Outbound Deliveries</div>
+              <div class="el-icon-s-goods" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
             </el-card>
           </el-button>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Picking</div>
-              <div class="CardText item">OutboundDelivery</div>
-              <div class="el-icon-s-custom" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
+              <div class="CardText item">Outbound Delivery</div>
+              <div class="el-icon-s-goods" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
             </el-card>
           </el-button>
         </el-col>
       </el-row>
       <!--       WarehouseManagement-->
-      <a name="WarehouseManagement"><el-divider content-position="left">WarehouseManagement</el-divider></a>
+      <a name="WarehouseManagement"><el-divider content-position="left">Warehouse Management</el-divider></a>
       <!--       WarehouseManagement-->
       <el-row :gutter="20">
-        <el-col :span="3">
+        <el-col :span="5">
           <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
-              <div class="CardText item">ManageStock</div>
-              <div class="el-icon-s-custom" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
-            </el-card>
-          </el-button>
-        </el-col>
-        <el-col :span="3">
-          <el-button type="text" style="padding: 0;" @click="clickButton($event)">
-            <el-card class="box-card" shadow="hover">
-              <div class="CardText item">BusinessPartner</div>
-              <div class="el-icon-s-custom" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
-            </el-card>
-          </el-button>
-        </el-col>
-        <el-col :span="3">
-          <el-button type="text" style="padding: 0;" @click="clickButton($event)">
-            <el-card class="box-card" shadow="hover">
-              <div class="CardText item">BusinessPartner</div>
-              <div class="el-icon-s-custom" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
+              <div class="CardText item">Manage Stock</div>
+              <div class="el-icon-s-shop" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
             </el-card>
           </el-button>
         </el-col>
@@ -159,7 +145,6 @@
 <style scoped="scoped">
 .el-menu-demo>el-menu-item>a {
   background-color: #eff4f9;
-  color: #606266;
   font-weight: bold;
 }
 .CardText {
@@ -176,16 +161,18 @@
   position: relative;
   height: 176px;
   width: 176px;
-  margin-left: 20px;
+  margin-left: 60px;
   margin-right: 0px;
 }
 .el-divider {
-  margin-bottom: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 .el-divider__text{
   background-color: #eff4f9;
   color: #606266;
   font-weight: bold;
+  font-size: 18px;
 }
 .el-header {
   text-align: center;
@@ -223,6 +210,7 @@ export default {
       var el = event.currentTarget
       var text = el.children[0].innerText
       text = text.replace('\n', '')
+      text = text.replace(' ', '')
       this.$router.push({
         path: '/' + text
       })
