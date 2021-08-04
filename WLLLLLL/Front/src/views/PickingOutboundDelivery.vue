@@ -1,40 +1,43 @@
   <template>
   <el-container>
-      <el-header>
+      <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>
         Pick Outbound Delivery
       </el-header>
 
     <el-row>
-      <el-col span="9">
-        &nbsp;
+      <el-col span="9"><div class="grid-content-deliveryOrderId bg-purple"></div>        &nbsp;
       </el-col>
       <el-col span="6">
-
-       <i> Delivery Order Id
-         <el-input
-        label="dsfasd"
-        style="width:250px;"
-        v-model="deliveryOrderId">
-        <el-button type="text" icon="el-icon-search" slot="suffix"  @click="findDelivery">
-        </el-button>
-        </el-input>
-       </i>
-
+        <div class="grid-content-deliveryOrderId bg-purple">
+          <i> Delivery Order Id
+            <el-input
+                label="dsfasd"
+                style="width:250px;"
+                v-model="deliveryOrderId">
+              <el-button type="text" icon="el-icon-search" slot="suffix"  @click="findDelivery">
+              </el-button>
+            </el-input>
+          </i>
+        </div>
       </el-col>
-      <el-col span="9">
-        &nbsp;
-      </el-col>
-
+      <el-col span="5"><div class="grid-content-deliveryOrderId bg-purple"></div></el-col>
+      <el-col :span="2"><div class="grid-content-deliveryOrderId bg-purple"><br>
+        <el-button type="primary" plain @click="goToLink1">Return</el-button>
+      </div></el-col>
+      <el-col span="2"><div class="grid-content-deliveryOrderId bg-purple"></div></el-col>
     </el-row>
-  <div v-show="visible">
+    <!--查询对话框-->
+  <div v-show="visible" style="margin-top:-30px">
     <!-- 查询Delivery ，如果是在3.2界面点击“>”转进来，应该直接查询相应Delivery的信息-->
-    <div style="border-bottom: 2px #d1e0ee solid;background:#eff4f9">
-      <el-form ref="form" :model="form" size="mini">
-        <el-form-item label="Delivery:" >
+    <div style="border-bottom: 2px #eff4f9 solid;background:#eff4f9">
+      <el-form ref="form" :model="form" size=mini>
+        <el-form-item label="Delivery:">
 
           <!-- 查询Delivery -->
           <el-dialog
-              width="55%"
+              width="80%"
               title="Choose Delivery"
               :visible.sync="findDeliveryVisibleDialog"
               append-to-body>
@@ -68,7 +71,8 @@
               </el-table-column>
               <el-table-column
                   prop="deliveryPhase"
-                  label="Delivery Phase">
+                  label="Delivery Phase"
+                  width="180">
                 <template slot-scope="scope">
                   <i class="el-icon-copy-document" v-show="scope.row.deliveryphase===0" style="color: dodgerblue;font-size: 16px;">
                     未启动发货 </i>
@@ -86,15 +90,18 @@
 
               <el-table-column
                   prop="warehouseName"
-                  label="Warehouse Name">
+                  label="Warehouse Name"
+                  width="180">
               </el-table-column>
               <el-table-column
                   prop="actualDeliveryTime"
-                  label="Actual Delivery Time">
+                  label="Actual Delivery Time"
+                  width="180">
               </el-table-column>
               <el-table-column
                   prop="plannedDeliveryTime"
-                  label="Planned Delivery Time">
+                  label="Planned Delivery Time"
+                  width="180">
               </el-table-column>
             </el-table>
           </el-dialog>
@@ -105,9 +112,11 @@
       <div>
       <el-row>
         <!--Actual GI Date: -->
-        <el-col :span="8"><div class="grid-content bg-purple">
+        <el-col :span="2"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="4"><div class="grid-content bg-purple">Actual GI Date:  </div></el-col>
+        <el-col :span="4"><div class="grid-content bg-purple">
           <div class="block">
-            <span class="demonstration">Actual GI Date:  </span>
+            <span class="demonstration"></span>
             <el-date-picker
                 style=" width:150px"
                 type="date"
@@ -117,19 +126,10 @@
           </div>
         </div>
         </el-col>
-        <!--Gross Weight: 内容等于读取出来的Gross Weight-->
-        <el-col :span="8"><div class="grid-content bg-purple">
-          Gross Weight:
-          <el-input v-model="input" type="number"
-                    size="mini"
-                    style=" width:150px">
-          </el-input>   G
-        </div>
-        </el-col>
+        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
         <!--Picking Status: 由后台数据库决定其状态-->
-        <el-col :span="8"><div class="grid-content bg-purple">
-        Picking Status:
-        <!--Gross Weight在读取信息时将其写入,-->
+        <el-col :span="4"><div class="grid-content bg-purple">Picking Status:</div></el-col>
+        <el-col :span="4"><div class="grid-content bg-purple">
         <!--如果self.onOrderStock是1，则输入框写入Not Yet Processed，如果是2则Completely Processed-->
         <el-input v-model="input1"
                   size="mini"
@@ -138,12 +138,14 @@
                   :disabled="true">
         </el-input>
       </div></el-col>
+      <el-col :span="2"><div class="grid-content bg-purple"></div></el-col>
       </el-row>
       <p><br></p>
       <el-row>
+        <el-col :span="2"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="4"><div class="grid-content bg-purple">Planned GI Date:</div></el-col>
         <!--Planned GI Date在读取信息时将其写入-->
-        <el-col :span="8"><div class="grid-content bg-purple">
-          Planned GI Date:
+        <el-col :span="4"><div class="grid-content bg-purple">
           <!--Planned GI Date在读取信息时将其写入,-->
           <el-input v-model="input2"
                     size="mini"
@@ -153,18 +155,10 @@
           </el-input>
         </div>
         </el-col>
-        <!--New Weight在读取信息时将其写入Gross Weight，可更改，Save按钮存进数据库-->
-        <el-col :span="8"><div class="grid-content bg-purple">
-          New   Weight:
-          <el-input v-model="input3" type="number"
-                    size="mini"
-                    style=" width:150px">
-          </el-input>   G
-        </div>
-        </el-col>
+        <el-col :span="4"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="4"><div class="grid-content bg-purple">Confirmation Status:</div></el-col>
         <!--Confirmation Status在读取信息时将其写入-->
-        <el-col :span="8"><div class="grid-content bg-purple">
-          Confirmation Status:
+        <el-col :span="4"><div class="grid-content bg-purple">
           <!--Confirmation Statusalign在读取信息时将其写入,-->
           <el-input v-model="input2"
                     size="mini"
@@ -172,8 +166,8 @@
                     placeholder="Not Relevant"
                     :disabled="true">
           </el-input>
-        </div>
-        </el-col>
+        </div></el-col>
+        <el-col :span="2"><div class="grid-content bg-purple"></div></el-col>
       </el-row>
       <p><br></p>
     </div>
@@ -222,7 +216,7 @@
           <!--点击Picking此按钮，相应的self.onOrderStock由1改为2
         Delivery Quantity=Picking Quantity则可更改，不等于则提示错误
         -->
-          <el-button type="primary" @click="picking">Picking</el-button>
+          <el-button type="primary" plain @click="picking">Picking</el-button>
         </div></el-col>
         <el-col :span="11"><div class="grid-content"></div></el-col>
 
@@ -236,67 +230,48 @@
             <p>Planned GI Date：20.07.2021</p>
           </div></el-col>
           <el-col :span="8"><div class="grid-content">
-            <p>Gross Weight: 57.170 G</p>
-          </div></el-col>
-          <el-col :span="8"><div class="grid-content">
-            <p>Net Weight: 57.170 G</p>
-          </div></el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8"><div class="grid-content">
             <p>Volume: 0</p>
           </div></el-col>
           <el-col :span="8"><div class="grid-content">
             <p>Priority: Normal item</p>
           </div></el-col>
-          <el-col :span="8"><div class="grid-content">
-            <p>Ship-To Party: The Bike Zone (25031)</p>
-          </div></el-col>
         </el-row>
         <el-row>
           <el-col :span="8"><div class="grid-content">
+            <p>Ship-To Party: The Bike Zone (25031)</p>
+          </div></el-col>
+          <el-col :span="8"><div class="grid-content">
             <p>Address: 2144 N Orange Ave, Orlando FL 32804, USA</p>
           </div></el-col>
-          <el-col :span="8"><div class="grid-content"></div></el-col>
-          <el-col :span="8"><div class="grid-content"></div></el-col>
-          <el-row>
-            <!--点击Post GI此按钮，相应的self.onOrderStock由2改为3-->
-            <el-col :span="11"><div class="grid-content"></div></el-col>
-            <el-col :span="2"><div class="grid-content">
-              <el-button type="primary" @click="showdialog">Post GI</el-button>
-              <el-dialog
-                  title="Goods Issue"
-                  :visible.sync="dialogVisible"
-                  width="30%"
-                  :before-close="handleClose">
-                <p>Enter actual GI date for the 1 selected deliveries</p>
-                <div class="block">
-                  <span class="demonstration"></span>
-                  <el-date-picker
-                      v-model="valueTime"
-                      type="date"
-                      placeholder="选择日期">
-                  </el-date-picker>
-                </div>
-                <span slot="footer" class="dialog-footer">
+          <el-col :span="6"><div class="grid-content"></div></el-col>
+          <!--点击Post GI此按钮，相应的self.onOrderStock由2改为3-->
+          <el-col :span="2"><div class="grid-content">
+            <el-button type="primary" plain @click="showdialog">Post GI</el-button>
+            <el-dialog
+                title="Goods Issue"
+                :visible.sync="dialogVisible"
+                width="30%"
+                :before-close="handleClose">
+              <p>Enter actual GI date for the 1 selected deliveries</p>
+              <div class="block">
+                <span class="demonstration"></span>
+                <el-date-picker
+                    v-model="valueTime"
+                    type="date"
+                    placeholder="选择日期">
+                </el-date-picker>
+              </div>
+              <span slot="footer" class="dialog-footer">
                   <el-button @click="dialogVisible = false">取 消</el-button>
-                  <!--点击确定，相应的Post GI Date存入数据库，同时将相应的self.onOrderStock由2改为3-->
+                <!--点击确定，相应的Post GI Date存入数据库，同时将相应的self.onOrderStock由2改为3-->
                   <el-button type="primary" @click="postGI()">确 定</el-button>
                 </span>
-              </el-dialog>
-            </div></el-col>
-            <el-col :span="11"><div class="grid-content"></div></el-col>
-          </el-row>
+            </el-dialog>
+          </div></el-col>
         </el-row>
       </el-tab-pane>
     </el-tabs>
     </div>
-
-    <el-col :span="11"><div class="grid-content"></div></el-col>
-    <el-col :span="2"><div class="grid-content">
-      <el-button type="primary" @click="goToLink1">Return</el-button>
-    </div></el-col>
-    <el-col :span="11"><div class="grid-content"></div></el-col>
   </div>
   </el-container>
 </template>
@@ -596,5 +571,9 @@ export default {
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
+}
+.grid-content-deliveryOrderId {
+  border-radius: 0;
+  min-height: 100px;
 }
 </style>

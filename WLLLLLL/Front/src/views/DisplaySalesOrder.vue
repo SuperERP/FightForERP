@@ -1,7 +1,9 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Display Standard Order: {{ this.$route.params.id }}
+      <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>Display Standard Order: {{ this.$route.params.id }}
       </el-header>
       <el-form ref="form" :inline="true" :model="form"  label-width="200px" size="mini" >
         <!--点击change按钮，跳转到changeSalesOrder界面-->

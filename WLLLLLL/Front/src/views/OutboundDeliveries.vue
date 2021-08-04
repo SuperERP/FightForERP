@@ -2,7 +2,9 @@
   <div>
     <el-container>
       <!--顶部搜索按钮-->
-      <el-header>
+      <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>
         Outbound Deliveries
       </el-header>
       <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline" label-width="200px" size="mini">
@@ -11,7 +13,7 @@
             <el-form-item>
               <el-row style="text-align: right">
                 <el-col :span="24"><div class="grid-content bg-purple-dark"></div>
-                  <el-button style="margin-right: 15px" type="primary"
+                  <el-button style="margin-right: 15px" type="primary" plain
                              icon="el-icon-search" size="mini" @click="getAllDeliveryOrders"
                   >Go</el-button></el-col>
               </el-row>
@@ -75,7 +77,7 @@
             <el-col :span="6"  >
               <el-form-item style="margin-top:20px;">
                 <!--跳转至拣配或发货界面-->
-                <el-button type="primary" @click="goToLink">
+                <el-button type="primary" plain @click="goToLink">
                   Picking & Post GI</el-button>
                 <!--退出按钮，回到主界面-->
                 <el-button type="text" style="color:white">Cancel</el-button>

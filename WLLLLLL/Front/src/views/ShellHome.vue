@@ -1,16 +1,16 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-        <el-header>
-          <el-button class="el-icon-s-home"></el-button>
-          <span>Home</span>
+        <el-header>Home
         </el-header>
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" style="background-color: #eff4f9;" @select="handleSelect">
         <el-menu-item index="1"><a href="#BusinessPartner" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Business Partner</a></el-menu-item>
         <el-menu-item index="2"><a href="#OrderManagement" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Order Management</a></el-menu-item>
         <el-menu-item index="3"><a href="#DeliveryManagement" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Delivery Management</a></el-menu-item>
         <el-menu-item index="4"><a href="#WarehouseManagement" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Warehouse Management</a></el-menu-item>
-        <el-menu-item index="5" disabled style="width: 200px"></el-menu-item>
+        <el-menu-item index="5" style="float: right; font-size: 15px">Log Out</el-menu-item>
+        <el-menu-item disabled index="6" class="userID" v-text="user.id" style="float: right; text-decoration: underline; color: #583333"></el-menu-item>
+        <el-menu-item disabled index="7" class="userID" style="float: right; text-align: right; color: #583333">Welcome,</el-menu-item>
       </el-menu>
       <!--       BusinessPartner-->
       <a name="BusinessPartner"><el-divider content-position="left">Business Partner</el-divider></a>
@@ -143,6 +143,11 @@
 </template>
 
 <style scoped="scoped">
+.el-menu-item.is-disabled {
+  opacity: 100;
+  padding: 0;
+  font-size: 15px;
+}
 .el-menu-demo>el-menu-item>a {
   background-color: #eff4f9;
   font-weight: bold;
@@ -191,17 +196,21 @@
 </style>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
+
+import axios from "axios";
+
 export default {
   data () {
     return {
       activeIndex: '1',
       activeIndex2: '1',
       user: {
-        id: 'sydlfl'
+        id: this.$route.params.id
       }
     }
   },
+  created () {},
   methods: {
     handleSelect (key, keyPath) {
       console.log(key, keyPath)
@@ -211,8 +220,12 @@ export default {
       var text = el.children[0].innerText
       text = text.replace('\n', '')
       text = text.replace(' ', '')
-      this.$router.push({
-        path: '/' + text
+      axios.post('link',user).then(function (resp) {
+        if(resp.equals(text)) {
+          this.$router.push({
+            path: '/' + text
+          })
+        }
       })
     }
   }

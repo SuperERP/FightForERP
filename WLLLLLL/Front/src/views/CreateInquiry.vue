@@ -1,7 +1,9 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Create Inquiry: Overview
+      <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>Create Inquiry: Overview
       </el-header>
     <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
 
@@ -663,7 +665,9 @@ export default {
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Create Inquiry: Overview
+      <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>Create Inquiry: Overview
       </el-header>
     <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
 

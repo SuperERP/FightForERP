@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-header>Create Outbound Deliveries</el-header>
+    <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>Create Outbound Deliveries</el-header>
     <div style="border-bottom: 2px #d1e0ee solid;">
     <el-row>
       <el-col :span="2" width="100px">
@@ -15,7 +17,7 @@
       </el-col>
       <el-col :span="1">
         <div class="grid-content bg-purple">
-          <el-button type="primary" @click="letsgo" round size=mini>     <!-- GO按钮功能待实现  实现最下方动态表单的更新-->
+          <el-button type="primary" plain @click="letsgo" round size=mini>     <!-- GO按钮功能待实现  实现最下方动态表单的更新-->
             GO
           </el-button>
         </div>
@@ -123,7 +125,7 @@
       </el-col>
       <el-col :span="4">
         <div class="grid-content bg-purple" >
-          <el-select v-model='shippingPointData' multiple collapse-tags style="margin-left: 20px;" placeholder="请选择" size=mini>
+          <el-select v-model='shippingPointData' multiple collapse-tags style="width:130px;" placeholder="请选择" size=mini>
             <el-option
                 v-for="item in options1"
                 :key="item.value"
@@ -138,7 +140,7 @@
         <div class="grid-content bg-purple">
           <div class="block" >
             <el-date-picker
-                size=mini
+                style="width:138px;height: 25px"
                 v-model="value2"
                 type="date"
                 placeholder="选择日期"
@@ -169,7 +171,7 @@
                   </el-form>
                 <!--第二层查询-->
                   <el-dialog
-                      width="55%"
+                      width="70%"
                       title="Choose Sales Order Id"
                       :visible.sync="Visible4"
                       append-to-body>
@@ -183,22 +185,22 @@
                       <el-table-column
                           property="salesOrderId"
                           label="Sales Order Id"
-                          width="120">
+                          width="180">
                       </el-table-column>
                       <el-table-column
                           property="customerId"
                           label="Customer Id"
-                          width="120">
+                          width="180">
                       </el-table-column>
                       <el-table-column
                           property="warehouseId"
                           label="Warehouse Id"
-                          width="120">
+                          width="180">
                       </el-table-column>
                       <el-table-column
                           property="documentDate"
                           label="Document Date"
-                          width="120">
+                          width="180">
                       </el-table-column>
                     </el-table>
                   </el-dialog>
@@ -222,11 +224,11 @@
     <!--动态表单，上方框内内容选好后，未实现点击GO按钮，表格发生变化-->
 
     <el-row >
-      <el-col :span="3">
+      <el-col :span="1">
         &nbsp;&nbsp;
 
       </el-col>
-      <el-col :span="18">
+      <el-col :span="22">
       <el-table
         ref="multipleTable"
         :data="tableData"
@@ -239,27 +241,27 @@
       <el-table-column
           prop="plannedCreationDate"
           label="Planned Creation Date"
-          width="180">
+          width="230">
       </el-table-column>
       <el-table-column
           prop="plannedGIDate"
           label="Planned GI Date"
-          width="150">
+          width="230">
       </el-table-column>
       <el-table-column
           prop="salesOrderId"
           label="Sales Order Id"
-          width="150">
+          width="230">
       </el-table-column>
       <el-table-column
           prop="shippingPointName"
           label="Shipping Point Name"
-          width="180">
+          width="230">
       </el-table-column>
       <el-table-column
           prop="customerId"
           label="Customer Id"
-          width="180">
+          width="230">
       </el-table-column>
 <!--      <el-table-column-->
 <!--          prop="status"-->
@@ -271,16 +273,29 @@
 
 <!--      </el-table-column>-->
     </el-table>
-      <div style="margin-top: 20px">
-      <!-- Display Log按钮，当CreateDeliveries发生后，才可以点击查看Log-->
-      <el-button @click="goToLink" class="btn btn-success">Display LOG</el-button>
-      <el-button @click="createDelivery">CreateDeliveries</el-button>
-      </div>
+
       </el-col>
-        <el-col :span="3">&nbsp;
+        <el-col :span="1">&nbsp;
 &nbsp;&nbsp;
         </el-col>
   </el-row>
+    <el-row>
+      <el-col :span="8"><div class="grid-content"></div></el-col>
+      <el-col :span="2"><div class="grid-content">
+        <div style="margin-top: 20px">
+          <!-- Display Log按钮，当CreateDeliveries发生后，才可以点击查看Log-->
+          <el-button @click="goToLink" class="btn btn-success">Display LOG</el-button>
+        </div>
+      </div></el-col>
+      <el-col :span="4"><div class="grid-content"></div></el-col>
+      <el-col :span="2"><div class="grid-content">
+        <div style="margin-top: 20px">
+          <!-- Display Log按钮，当CreateDeliveries发生后，才可以点击查看Log-->
+          <el-button @click="createDelivery">CreateDeliveries</el-button>
+        </div>
+      </div></el-col>
+      <el-col :span="8"><div class="grid-content"></div></el-col>
+    </el-row>
   </div>
 </template>
 
@@ -549,6 +564,6 @@ export default {
 
 .grid-content {
   border-radius: 0;
-  min-height: 36px;
+  min-height: 40px;
 }
 </style>

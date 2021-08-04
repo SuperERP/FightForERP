@@ -21,6 +21,8 @@ import DisplayQuotation from '../views/DisplayQuotation'
 import ChangeInquiry from '../views/ChangeInquiry'
 import ChangeQuotation from '../views/ChangeQuotation'
 import ShellHome from '../views/ShellHome'
+import Logon from '../views/Logon'
+import ChangePassword from '../views/ChangePassword'
 import CreateOutboundDeliveries from '../views/CreateOutboundDeliveries'
 import OutboundDeliveries from '../views/OutboundDeliveries'
 import PickingOutboundDelivery from '../views/PickingOutboundDelivery'
@@ -32,6 +34,16 @@ Vue.use(elTableInfiniteScroll)
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/ChangePassword',
+    name: 'ChangePassword',
+    component: ChangePassword
+  },
+  {
+    path: '/Logon',
+    name: 'Logon',
+    component: Logon
+  },
   {
     path: '/ManageStock',
     name: 'ManageStock',
