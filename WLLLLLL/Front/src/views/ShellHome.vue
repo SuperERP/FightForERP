@@ -197,9 +197,6 @@
 
 <script>
 import axios from 'axios'
-
-import axios from "axios";
-
 export default {
   data () {
     return {
@@ -220,8 +217,8 @@ export default {
       var text = el.children[0].innerText
       text = text.replace('\n', '')
       text = text.replace(' ', '')
-      axios.post('link',user).then(function (resp) {
-        if(resp.equals(text)) {
+      axios.post('link', this.user).then(function (resp) {
+        if (resp.equals(text)) {
           this.$router.push({
             path: '/' + text
           })
