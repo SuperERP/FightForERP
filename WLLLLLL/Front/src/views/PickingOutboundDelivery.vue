@@ -7,9 +7,9 @@
       </el-header>
 
     <el-row>
-      <el-col span="9"><div class="grid-content-deliveryOrderId bg-purple"></div>        &nbsp;
+      <el-col :span="9"><div class="grid-content-deliveryOrderId bg-purple"></div>        &nbsp;
       </el-col>
-      <el-col span="6">
+      <el-col :span="6">
         <div class="grid-content-deliveryOrderId bg-purple">
           <i> Delivery Order Id
             <el-input
@@ -22,11 +22,11 @@
           </i>
         </div>
       </el-col>
-      <el-col span="5"><div class="grid-content-deliveryOrderId bg-purple"></div></el-col>
+      <el-col :span="5"><div class="grid-content-deliveryOrderId bg-purple"></div></el-col>
       <el-col :span="2"><div class="grid-content-deliveryOrderId bg-purple"><br>
         <el-button type="primary" plain @click="goToLink1">Return</el-button>
       </div></el-col>
-      <el-col span="2"><div class="grid-content-deliveryOrderId bg-purple"></div></el-col>
+      <el-col :span="2"><div class="grid-content-deliveryOrderId bg-purple"></div></el-col>
     </el-row>
     <!--查询对话框-->
   <div v-show="visible" style="margin-top:-30px">
@@ -188,7 +188,7 @@
           <!--                      onkeyup="value=value.replace(/[^\d]/g,'')"-->
           <el-table-column label="DeliveryOrder" prop="DeliveryOrder">
           </el-table-column>
-          <el-table-column label="ItemId" prop="Item">
+          <el-table-column label="ItemId" prop="MaterialId">
           </el-table-column>
           <el-table-column label="Item Description" prop="ItemDescription">
           </el-table-column>
@@ -279,11 +279,10 @@
 <script>
 export default {
   created () {
-    console.log('sdf', this.$route.params)
     if (this.$route.params.isEmpty === false) {
       this.deliveryOrderId = this.$route.params.data
       this.visible = true
-      this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery1',
+      this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery',
         {
           jump: true,
           id: this.deliveryOrderId
@@ -293,7 +292,7 @@ export default {
         this.PickingData = []
         for (var i = 0; i < response.data.data.length; i++) {
           var tdata = {
-            Item: response.data.data[i].materialId,
+            MaterialId: response.data.data[i].materialId,
             ItemDescription: response.data.data[i].description,
             DeliveryQuantity: response.data.data[i].amount,
             PickingStatus: response.data.data[i].pickingStatus,
@@ -366,35 +365,11 @@ export default {
     }
   },
   methods: {
-    getDeliveryItems () {
-      this.deliveryOrderId = this.$route.params.data
-      this.visible = true
-      this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery1',
-        {
-          jump: true,
-          id: this.deliveryOrderId
-        }
-      ).then(response => {
-        console.log(response.data.data)
-        this.PickingData = []
-        for (var i = 0; i < response.data.data.length; i++) {
-          var tdata = {
-            Item: response.data.data[i].materialId,
-            ItemDescription: response.data.data[i].description,
-            DeliveryQuantity: response.data.data[i].amount,
-            PickingStatus: response.data.data[i].pickingStatus,
-            DeliveryOrder: response.data.data[i].deliveryOrderId
-          }
-          this.PickingData = this.PickingData.concat([tdata])
-        }
-      }).catch(error => {
-        console.log(error)
-      })
-    },
+
     findDelivery () {
       this.findDeliveryVisibleDialog = true
 
-      this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery1',
+      this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery',
         {
           search: true
         }
@@ -454,11 +429,26 @@ export default {
     },
     // Post GI发货，存入日期
     postGI () {
+      for (var i = 0; i < this.PickingData.length; i++) {
+        if (this.PickingData[i].PickingStatus !== 1) {
+          this.$alert('存在未拣配的物料项', '操作错误', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$message({
+                type: 'error',
+                message: '物料项未拣配完毕'
+              })
+            }
+          })
+          return
+        }
+      }
+
       if (this.valueTime === '') {
         this.GIOpen()
       } else {
         console.log(this.valueTime)
-        this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery1',
+        this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery',
           {
             '2to3': true,
             date: this.valueTime,
@@ -484,12 +474,13 @@ export default {
 
     handleSelectionChange (val) {
       this.multipleSelection = val
+      console.log(this.multipleSelection)
     },
     textClick1 (row) {
       this.findDeliveryVisibleDialog = false
       this.deliveryOrderId = row.deliveryId
       this.visible = true
-      this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery1',
+      this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery',
         {
           jump: true,
           id: this.deliveryOrderId
@@ -499,7 +490,7 @@ export default {
         this.PickingData = []
         for (var i = 0; i < response.data.data.length; i++) {
           var tdata = {
-            Item: response.data.data[i].materialId,
+            MaterialId: response.data.data[i].materialId,
             ItemDescription: response.data.data[i].description,
             DeliveryQuantity: response.data.data[i].amount,
             PickingStatus: response.data.data[i].pickingStatus,
@@ -521,6 +512,7 @@ export default {
     },
     // picking按钮，如果Delivery Quantity=Picking Quantity则相应的self.onOrderStock由1改为2，不等于则提示错误
     picking () {
+      console.log(this.multipleSelection)
       if (this.multipleSelection.length === 0) {
         this.$alert('没有选中数据', '错误操作', {
           confirmButtonText: '确定',
@@ -531,31 +523,45 @@ export default {
             })
           }
         })
-      } else {
-        console.log(this.multipleSelection)
-        this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery1',
-          {
-            picking: true,
-            pickingitems: this.multipleSelection,
-            id: this.deliveryOrderId
-          }
-        ).then(response => {
-          console.log(response.data.data)
-          this.PickingData = []
-          for (var i = 0; i < response.data.data.length; i++) {
-            var tdata = {
-              Item: response.data.data[i].materialId,
-              ItemDescription: response.data.data[i].description,
-              DeliveryQuantity: response.data.data[i].amount,
-              PickingStatus: response.data.data[i].pickingStatus,
-              DeliveryOrder: response.data.data[i].deliveryOrderId
-            }
-            this.PickingData = this.PickingData.concat([tdata])
-          }
-        }).catch(error => {
-          console.log(error)
-        })
       }
+
+      for (var i = 0; i < this.multipleSelection.length; i++) {
+        if (this.multipleSelection[i].PickingStatus !== 0) {
+          this.$alert('不允许重复拣配', '错误操作', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$message({
+                type: 'error',
+                message: '操作有误'
+              })
+            }
+          })
+          return
+        }
+      }
+
+      this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery',
+        {
+          picking: true,
+          pickingitems: this.multipleSelection,
+          id: this.deliveryOrderId
+        }
+      ).then(response => {
+        console.log(response.data.data)
+        this.PickingData = []
+        for (var i = 0; i < response.data.data.length; i++) {
+          var tdata = {
+            MaterialId: response.data.data[i].materialId,
+            ItemDescription: response.data.data[i].description,
+            DeliveryQuantity: response.data.data[i].amount,
+            PickingStatus: response.data.data[i].pickingStatus,
+            DeliveryOrder: response.data.data[i].deliveryOrderId
+          }
+          this.PickingData = this.PickingData.concat([tdata])
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     },
     goToLink1 () {
       // Return指定跳转地址

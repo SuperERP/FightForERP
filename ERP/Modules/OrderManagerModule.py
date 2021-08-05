@@ -1,7 +1,8 @@
 from .AbstractModule import AbstractModule
 from .OrmData.QutationAndSalesOrderData import *
 from .OrmData.InquiryData import *
-from ERP.Modules.OrmData.WareHouse import MaterialDic, Warehouse
+from Modules.OrmData.WareHouse import MaterialDic, Warehouse
+from .OrmData.CustomerData import *
 
 
 class OrderManagerModule(AbstractModule):
@@ -12,7 +13,7 @@ class OrderManagerModule(AbstractModule):
         :param logging:
         '''
         super().__init__(session, logging)
-        
+
     def insertInquiry(self, data: dict):
         '''
         向数据库中插入询价单
@@ -55,27 +56,67 @@ class OrderManagerModule(AbstractModule):
         newData = QuotationItem(**data)
         self.insertData(newData)
 
-    def searchOrders(self, customerId=None, warehouseId=None, saleorderId=None):
+    def searchAllSalesOrderItems(self, saleOrderId):
+        '''
+        寻找所有的销售订单物料项
+        @return :注意这里返回的是类的列表
+        '''
+        data = self.session.query(SalesOrderItem).filter(
+            SalesOrderItem.saleOrderId == saleOrderId).all()
 
+        return data
+
+    def searchOrders(self, id='', customerId='', warehouseId='', POcode='', PODate='', effectiveDate='',
+                     expirationDate='',
+                     saleorderId=None, flag=False):
         def getSaleOrders(data):
-            print(data)
+            '''
+            获得销售订单关联的warehouse的名字
+            客户的名字
+            '''
+            warehouseid = data['warehouseId']
+            data['warehouseName'] = self.session.query(
+                Warehouse).filter(Warehouse.id == warehouseid).all()[0].name
 
-            id = data['warehouseId']
-            self.logging.info(id)
-            data['warehousename'] = self.session.query(
-                Warehouse).filter(Warehouse.id == id).all()[0].name
+            cusId = data['customerId']
+            data['customerName'] = self.session.query(
+                Customer).filter(Customer.id == cusId).all()[0].name
             return data
 
-        ret=[]
-        if saleorderId is not None:
-            for idata in self.session.query(SalesOrder).filter(SalesOrder.id == saleorderId).all():
-                ret.append(getSaleOrders(self.to_dict(idata)))
+        if saleorderId !='':
+            return getSaleOrders(self.to_dict(self.session.query(SalesOrder).filter(SalesOrder.id == saleorderId).all()[0]))
+
+        res = []
+        if flag == True:
+            for idata in self.session.query(SalesOrder).filter(or_(SalesOrder.id == id, id == '')) \
+                .filter(or_(SalesOrder.customerId == customerId, customerId == '')) \
+                .filter(SalesOrder.warehouseId.in_(tuple(warehouseId))) \
+                .filter(or_(SalesOrder.POcode == POcode, POcode == '')) \
+                .filter(or_(SalesOrder.PODate == PODate, PODate == '')) \
+                .filter(or_(SalesOrder.effectiveDate == effectiveDate, effectiveDate == '')) \
+                    .filter(or_(SalesOrder.expirationDate == expirationDate, expirationDate == '')).all():
+                res.append(getSaleOrders(self.to_dict(idata)))
+
         else:
-            for idata in self.session.query(SalesOrder).all():
-                ret.append(getSaleOrders(self.to_dict(idata)))
+            for idata in self.session.query(SalesOrder).filter(or_(SalesOrder.id == id, id == '')) \
+                .filter(or_(SalesOrder.customerId == customerId, customerId == '')) \
+                .filter(or_(SalesOrder.warehouseId == warehouseId, warehouseId == '')) \
+                .filter(or_(SalesOrder.POcode == POcode, POcode == '')) \
+                .filter(or_(SalesOrder.PODate == PODate, PODate == '')) \
+                .filter(or_(SalesOrder.effectiveDate == effectiveDate, effectiveDate == '')) \
+                    .filter(or_(SalesOrder.expirationDate == expirationDate, expirationDate == '')).all():
+                         res.append(getSaleOrders(self.to_dict(idata)))
+        return res
 
-
-        return ret
+    def insertSalesOrderItem(self, data: dict):
+        '''
+        向数据库中插入销售订单物料项
+        :param data:
+        :return:
+        '''
+        Base.metadata.create_all()
+        newData = SalesOrderItem(**data)
+        self.insertData(newData)
 
     def insertDiscount(self, data: dict):
         '''
@@ -86,7 +127,7 @@ class OrderManagerModule(AbstractModule):
         newData = DiscountDic(**data)
         self.insertData(newData)
 
-    def searchallDiscountDic(self): 
+    def searchallDiscountDic(self):
         '''
         查找所有折扣字典
         '''
@@ -120,19 +161,19 @@ class OrderManagerModule(AbstractModule):
         newData = SalesOrderItem(**data)
         self.insertData(newData)
 
-    def searchInquiry(self, id='',customerId='',warehouseId='',POcode='',PODate='',effectiveDate='',expirationDate=''):
+    def searchInquiry(self, id='', customerId='', warehouseId='', POcode='', PODate='', effectiveDate='', expirationDate=''):
         '''
         按条件查找询价单
         '''
-        res=[]
+        res = []
 
-        for idata in self.session.query(Inquiry).filter(or_(Inquiry.id==id,id==''))\
-            .filter(or_(Inquiry.customerId==customerId,customerId==''))\
-                .filter(or_(Inquiry.warehouseId==warehouseId,warehouseId==''))\
-                    .filter(or_(Inquiry.POcode==POcode,POcode==''))\
-                        .filter(or_(Inquiry.PODate==PODate,PODate==''))\
-                            .filter(or_(Inquiry.effectiveDate==effectiveDate,effectiveDate==''))\
-                                .filter(or_(Inquiry.expirationDate==expirationDate,expirationDate=='')).all():
+        for idata in self.session.query(Inquiry).filter(or_(Inquiry.id == id, id == ''))\
+            .filter(or_(Inquiry.customerId == customerId, customerId == ''))\
+                .filter(or_(Inquiry.warehouseId == warehouseId, warehouseId == ''))\
+            .filter(or_(Inquiry.POcode == POcode, POcode == ''))\
+            .filter(or_(Inquiry.PODate == PODate, PODate == ''))\
+            .filter(or_(Inquiry.effectiveDate == effectiveDate, effectiveDate == ''))\
+                .filter(or_(Inquiry.expirationDate == expirationDate, expirationDate == '')).all():
             res.append(self.to_dict(idata))
 
         return res
@@ -141,109 +182,123 @@ class OrderManagerModule(AbstractModule):
         '''
         根据给定询价单号查找询价单物料项，并加入price
         '''
-        res=[]
+        res = []
 
         for idata in self.session.query(InquiryItem).filter(InquiryItem.inquiryId == inquiryId).all():
             a = self.to_dict(idata)
-            a['price'] = self.to_dict(self.session.query(MaterialDic).filter(MaterialDic.id == a['material']).all()[0])['price']
+            a['price'] = self.to_dict(self.session.query(MaterialDic).filter(
+                MaterialDic.id == a['material']).all()[0])['price']
             res.append(a)
 
         return res
-    
-    def searchQuotation(self, id='',customerId='',warehouseId='',POcode='',PODate='',effectiveDate='',expirationDate='',requestedDeliveryDate=''):
+
+    def searchQuotation(self, id='', customerId='', warehouseId='', POcode='', PODate='', effectiveDate='', expirationDate='', requestedDeliveryDate=''):
         '''
         按条件查找报价单
         '''
-        res=[]
+        res = []
 
-        for idata in self.session.query(Quotation).filter(or_(Quotation.id==id,id==''))\
-            .filter(or_(Quotation.customerId==customerId,customerId==''))\
-                .filter(or_(Quotation.warehouseId==warehouseId,warehouseId==''))\
-                    .filter(or_(Quotation.POcode==POcode,POcode==''))\
-                        .filter(or_(Quotation.PODate==PODate,PODate==''))\
-                            .filter(or_(Quotation.effectiveDate==effectiveDate,effectiveDate==''))\
-                                .filter(or_(Quotation.requestedDeliveryDate==requestedDeliveryDate,requestedDeliveryDate==''))\
-                                    .filter(or_(Quotation.expirationDate==expirationDate,expirationDate=='')).all():
+        for idata in self.session.query(Quotation).filter(or_(Quotation.id == id, id == ''))\
+            .filter(or_(Quotation.customerId == customerId, customerId == ''))\
+                .filter(or_(Quotation.warehouseId == warehouseId, warehouseId == ''))\
+            .filter(or_(Quotation.POcode == POcode, POcode == ''))\
+            .filter(or_(Quotation.PODate == PODate, PODate == ''))\
+            .filter(or_(Quotation.effectiveDate == effectiveDate, effectiveDate == ''))\
+            .filter(or_(Quotation.requestedDeliveryDate == requestedDeliveryDate, requestedDeliveryDate == ''))\
+                .filter(or_(Quotation.expirationDate == expirationDate, expirationDate == '')).all():
             res.append(self.to_dict(idata))
 
         return res
-    
+
     def searchQuotationItem(self, quotationId):
         '''
         根据给定报价单号查找报价单物料项，并加入price
         '''
-        res=[]
+        res = []
 
         for idata in self.session.query(QuotationItem).filter(QuotationItem.quotationId == quotationId).all():
             a = self.to_dict(idata)
-            a['price'] = self.to_dict(self.session.query(MaterialDic).filter(MaterialDic.id == a['material']).all()[0])['price']
+            a['price'] = self.to_dict(self.session.query(MaterialDic).filter(
+                MaterialDic.id == a['material']).all()[0])['price']
             res.append(a)
 
         return res
-    
-    def searchSalesOrder(self, id='',customerId='',warehouseId='',POcode='',PODate='',effectiveDate='',expirationDate=''):
+
+    def searchAllSalesOrder(self):
+        res = []
+        for idata in self.session.query(SalesOrder).all():
+            res.append(self.to_dict(idata))
+        return res
+
+    def searchSalesOrder(self, id='', customerId='', warehouseId='', POcode='', PODate='', effectiveDate='', expirationDate=''):
         '''
         按条件查找销售订单
         '''
-        res=[]
+        res = []
 
-        for idata in self.session.query(SalesOrder).filter(or_(SalesOrder.id==id,id==''))\
-            .filter(or_(SalesOrder.customerId==customerId,customerId==''))\
-                .filter(or_(SalesOrder.warehouseId==warehouseId,warehouseId==''))\
-                    .filter(or_(SalesOrder.POcode==POcode,POcode==''))\
-                        .filter(or_(SalesOrder.PODate==PODate,PODate==''))\
-                            .filter(or_(SalesOrder.effectiveDate==effectiveDate,effectiveDate==''))\
-                                .filter(or_(SalesOrder.expirationDate==expirationDate,expirationDate=='')).all():
+        for idata in self.session.query(SalesOrder).filter(or_(SalesOrder.id == id, id == ''))\
+            .filter(or_(SalesOrder.customerId == customerId, customerId == ''))\
+                .filter(or_(SalesOrder.warehouseId == warehouseId, warehouseId == ''))\
+            .filter(or_(SalesOrder.POcode == POcode, POcode == ''))\
+            .filter(or_(SalesOrder.PODate == PODate, PODate == ''))\
+            .filter(or_(SalesOrder.effectiveDate == effectiveDate, effectiveDate == ''))\
+                .filter(or_(SalesOrder.expirationDate == expirationDate, expirationDate == '')).all():
             res.append(self.to_dict(idata))
 
         return res
-    
+
     def searchSalesOrderItem(self, salesOrderId):
         '''
         根据给定销售订单号查找销售订单物料项，并加入price
         '''
-        res=[]
+        res = []
 
         for idata in self.session.query(SalesOrderItem).filter(SalesOrderItem.salesOrderId == salesOrderId).all():
             a = self.to_dict(idata)
-            a['price'] = self.to_dict(self.session.query(MaterialDic).filter(MaterialDic.id == a['material']).all()[0])['price']
+            a['price'] = self.to_dict(self.session.query(MaterialDic).filter(
+                MaterialDic.id == a['material']).all()[0])['price']
             res.append(a)
 
         return res
 
-    def changeInquiry(self,id, data :dict):
+    def changeInquiry(self, id, data: dict):
         '''
         修改询价单，并清空该询价单下的物料项
         '''
         try:
-            self.session.query(Inquiry).filter(Inquiry.id==id).update(data)
-            self.session.query(InquiryItem).filter(InquiryItem.inquiryId == id).delete()
+            self.session.query(Inquiry).filter(Inquiry.id == id).update(data)
+            self.session.query(InquiryItem).filter(
+                InquiryItem.inquiryId == id).delete()
             self.session.commit()
         except Exception as e:
             self.logging.info('请重新检查数据修改')
             self.logging.error(e)
             self.session.rollback()
 
-    def changeQuotation(self,id, data :dict):
+    def changeQuotation(self, id, data: dict):
         '''
         修改报价单，并清空该报价单下的物料项
         '''
         try:
-            self.session.query(Quotation).filter(Quotation.id==id).update(data)
-            self.session.query(QuotationItem).filter(QuotationItem.quotationId == id).delete()
+            self.session.query(Quotation).filter(
+                Quotation.id == id).update(data)
+            self.session.query(QuotationItem).filter(
+                QuotationItem.quotationId == id).delete()
             self.session.commit()
         except Exception as e:
             self.logging.info('请重新检查数据修改')
             self.logging.error(e)
             self.session.rollback()
-    
-    def changeSalesOrder(self,id, data :dict):
+
+    def changeSalesOrder(self, id, data: dict):
         '''
         修改销售订单，并清空该销售订单下的物料项
         '''
         try:
-            self.session.query(SalesOrder).filter(SalesOrder.id==id).update(data)
-            self.session.query(SalesOrderItem).filter(SalesOrderItem.salesOrderId == id).delete()
+            self.session.query(SalesOrder).filter(
+                SalesOrder.id == id).update(data)
+            self.session.query(SalesOrderItem).filter(
+                SalesOrderItem.salesOrderId == id).delete()
             self.session.commit()
         except Exception as e:
             self.logging.info('请重新检查数据修改')

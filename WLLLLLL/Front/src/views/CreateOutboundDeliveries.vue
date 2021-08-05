@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header>Create Outbound Deliveries</el-header>
-       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini">
+       <el-form ref="form" :inline="true"  :model="form"  label-width="200px" size="mini">
         <el-row style="height: auto;text-align: right" >
           <el-col :span="24">
             <el-form-item>
@@ -19,37 +19,36 @@
         <el-row :gutter="50" style="margin-top:20px">
           <el-col :span="42">
             <el-form-item label="Sold-To Party:" prop="customerId">
-              <el-input style="width:110px;" v-model.number="form.customerId">
+              <el-input style="width:110px;" v-model="salesOrderSearchForm.customerId">
                 <!--带搜索按钮的输入框-->
                 <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
               <!-- 第一层查询 -->
               <el-form ref="salesOrderForm"
                        style="text-align: center"
                        :inline="true"
-                       :rules="salesOrderFormRules"
                        :model="salesOrderForm"
                        label-width="200px"
                        size="mini">
                 <el-dialog title="Customers(General)" :visible.sync="Visible1" @close="dialogClosed1">
                   <!-- 查询表单-->
-                  <el-form :model="dialogForm1" :rules="dialogForm1rules" ref="dialogForm1">
-                    <el-form-item label="Search Term:" prop="POcode" :label-width="formLabelWidth">
+                  <el-form :model="dialogForm1"  ref="dialogForm1">
+                    <el-form-item label="Search Term:" prop="POcode" :label-width=formLabelWidth>
                       <el-input v-model="dialogForm1.POcode"  size="mini"  autocomplete="off"></el-input>
                     </el-form-item>
                     <p></p>
-                    <el-form-item label="City:" prop="city" :label-width="formLabelWidth">
+                    <el-form-item label="City:" prop="city" :label-width=formLabelWidth>
                       <el-input v-model="dialogForm1.city"  size="mini" autocomplete="off"></el-input>
                     </el-form-item>
                     <p></p>
-                    <el-form-item label="Country:" prop="country" :label-width="formLabelWidth">
+                    <el-form-item label="Country:" prop="country" :label-width=formLabelWidth>
                       <el-input v-model="dialogForm1.country"  size="mini" autocomplete="off"></el-input>
                     </el-form-item>
                     <p></p>
-                    <el-form-item label="Postal Code:" prop="postcode" :label-width="formLabelWidth">
+                    <el-form-item label="Postal Code:" prop="postcode" :label-width=formLabelWidth>
                       <el-input v-model="dialogForm1.postcode"  size="mini" autocomplete="off"></el-input>
                     </el-form-item>
                     <p></p>
-                    <el-form-item label="Name:" prop="name" :label-width="formLabelWidth">
+                    <el-form-item label="Name:" prop="name" :label-width=formLabelWidth>
                       <el-input v-model="dialogForm1.name"  size="mini" autocomplete="off"></el-input>
                     </el-form-item>
                   </el-form>
@@ -128,7 +127,7 @@
             <el-form-item label="Planned Creation Date:" label-width="250px">
                     <el-date-picker
                         size=mini
-                        v-model="value2"
+                        v-model="plannedCreationDate"
                         type="date"
                         placeholder="选择日期"
                         :picker-options="pickerOptions"
@@ -146,7 +145,6 @@
               <el-form ref="salesOrderForm"
                        style="text-align: center"
                        :inline="true"
-                       :rules="salesOrderFormRules"
                        :model="salesOrderForm"
                        label-width="200px"
                        size="mini">
@@ -162,31 +160,32 @@
                              label-width="200px"
                              :inline="true"
                              size="mini">
-                      <el-form-item label="Sold-To Party:" prop="customerId" :label-width="formLabelWidth1" style="margin-right: 40px">
+                      <el-form-item label="Sold-To Party:" prop="customerId" :label-width=formLabelWidth1 style="margin-right: 40px">
                         <el-input style="width: 160px;margin-left: 40px" v-model="salesOrderSearchForm.customerId" size="mini">
                           <!--带搜索按钮的输入框-->
-                          <el-button type="text" icon="el-icon-search" slot="suffix"  @click="VisibleForsalesOrderButton1"></el-button></el-input>
+                          <el-button type="text" icon="el-icon-search" slot="suffix"  @click="VisibleForsalesOrderButton1"></el-button>
+                        </el-input>
                         <!-- 第一层查询 -->
                         <el-dialog title="Customers(General)" :visible.sync="Visible1ForsalesOrder" append-to-body>
                           <!-- 查询表单-->
                           <el-form :model="dialogForm1ForsalesOrder" ref="dialogForm1ForsalesOrder">
-                            <el-form-item label="Search Term:" prop="POcode" :label-width="formLabelWidth">
+                            <el-form-item label="Search Term:" prop="POcode" :label-width=formLabelWidth>
                               <el-input v-model="dialogForm1ForsalesOrder.POcode"  size="mini"  autocomplete="off"></el-input>
                             </el-form-item>
                             <p></p>
-                            <el-form-item label="City:" prop="city" :label-width="formLabelWidth">
+                            <el-form-item label="City:" prop="city" :label-width=formLabelWidth>
                               <el-input v-model="dialogForm1ForsalesOrder.city"  size="mini" autocomplete="off"></el-input>
                             </el-form-item>
                             <p></p>
-                            <el-form-item label="Country:" prop="country" :label-width="formLabelWidth">
+                            <el-form-item label="Country:" prop="country" :label-width=formLabelWidth>
                               <el-input v-model="dialogForm1ForsalesOrder.country"  size="mini" autocomplete="off"></el-input>
                             </el-form-item>
                             <p></p>
-                            <el-form-item label="Postal Code:" prop="postcode" :label-width="formLabelWidth">
+                            <el-form-item label="Postal Code:" prop="postcode" :label-width=formLabelWidth>
                               <el-input v-model="dialogForm1ForsalesOrder.postcode"  size="mini" autocomplete="off"></el-input>
                             </el-form-item>
                             <p></p>
-                            <el-form-item label="Name:" prop="name" :label-width="formLabelWidth">
+                            <el-form-item label="Name:" prop="name" :label-width=formLabelWidth>
                               <el-input v-model="dialogForm1ForsalesOrder.name"  size="mini" autocomplete="off"></el-input>
                             </el-form-item>
                           </el-form>
@@ -228,7 +227,7 @@
                                   label="Name"
                                   width="120">
                               </el-table-column>
-                              <el-table-column
+                              <el-table-column>
                                   property="id"
                                   label="Customer"
                                   width="120">
@@ -242,7 +241,7 @@
                           </div>
                         </el-dialog>
                       </el-form-item>
-                      <el-form-item label="Plant:" prop="warehouseId" :label-width="formLabelWidth1" style="margin-right: 40px">
+                      <el-form-item label="Plant:" prop="warehouseId" :label-width=formLabelWidth1 style="margin-right: 40px">
                         <el-input style="width: 160px;margin-left: 40px" v-model.number="salesOrderSearchForm.warehouseId" size="mini">
                           <el-button type="text" icon="el-icon-search" slot="suffix"  @click="plantSearchClickForsalesOrder"></el-button>
                         </el-input>
@@ -271,19 +270,19 @@
                           </el-table>
                         </el-dialog>
                       </el-form-item>
-                      <el-form-item label="Cust.Reference:" prop="POcode" :label-width="formLabelWidth1" style="margin-right: 40px">
+                      <el-form-item label="Cust.Reference:" prop="POcode" :label-width=formLabelWidth1 style="margin-right: 40px">
                         <el-input v-model.number="salesOrderSearchForm.POcode"
                                   size="mini"  autocomplete="off" style="width: 160px;margin-left: 40px"></el-input>
                       </el-form-item>
-                      <el-form-item label="Cust.Ref.Date:" prop="PODate" :label-width="formLabelWidth1" style="margin-right: 40px">
+                      <el-form-item label="Cust.Ref.Date:" prop="PODate" :label-width=formLabelWidth1 style="margin-right: 40px">
                         <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="salesOrderSearchForm.PODate"
                                         style="width: 160px;margin-left: 40px" size="mini"></el-date-picker>
                       </el-form-item>
-                      <el-form-item label="Valid From:" prop="effectiveDate" :label-width="formLabelWidth1" style="margin-right: 40px">
+                      <el-form-item label="Valid From:" prop="effectiveDate" :label-width=formLabelWidth1 style="margin-right: 40px">
                         <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="salesOrderSearchForm.effectiveDate"
                                         style="width: 160px;margin-left: 40px" size="mini"></el-date-picker>
                       </el-form-item>
-                      <el-form-item label="Valid To:" prop="expirationDate" :label-width="formLabelWidth1" style="margin-right: 40px" >
+                      <el-form-item label="Valid To:" prop="expirationDate" :label-width=formLabelWidth1 style="margin-right: 40px" >
                         <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="salesOrderSearchForm.expirationDate"
                                         style="width: 160px;margin-left: 40px" size="mini"></el-date-picker>
                       </el-form-item>
@@ -421,8 +420,31 @@
 // import axios from 'axios'
 
 export default {
+
+  created () {
+    this.axios.post('http://127.0.0.1:5000/CreateOutboundDeliveries',
+      {
+        warehouse: true
+      }
+    ).then(response => {
+      console.log(response.data.data)
+      this.options1 = []
+      for (var i = 0; i < response.data.data.length; i++) {
+        var tdata = {
+          label: response.data.data[i],
+          value: response.data.data[i]
+        }
+        console.log(tdata)
+        this.options1 = this.options1.concat([tdata])
+      }
+      console.log(this.salesOrderIdTableData)
+    }).catch(error => {
+      console.log(error)
+    })
+  },
   data: function () {
     return {
+      dialogForm1rules: {},
       Visible1: false, // 第一层查询
       Visible2: false, // 第二层表格
       Visible1ForsalesOrder: false, // soldToParty第一层查询
@@ -478,6 +500,7 @@ export default {
       }],
       value5: '',
       value6: '',
+      formLabelWidth1: '120px',
       // <!--Planned Creation Date 选择日期-->
       pickerOptions: {
         disabledDate (time) {
@@ -504,18 +527,11 @@ export default {
           }
         }]
       },
-      value1: '',
-      value2: '',
+
+      plannedCreationDate: '',
       shippingPointData: [],
-      value4: [],
-      // salesOrderId
       Visible3: false, // 查询获取salesOrderId
       Visible4: false,
-      saleorderform: {
-        salesorderId: '',
-        customerId: '',
-        warehouseId: ''
-      },
       form1LabelWidth: '120px',
       salesOrderIdTableData: [],
       currentRow1: null,
@@ -677,82 +693,24 @@ export default {
       this.saleorderform.customerId = ''
       this.saleorderform.warehouseId = ''
     },
-    salesorderfind () {
-      this.Visible4 = true
-      this.axios.post('http://127.0.0.1:5000/CreateOutboundDeliveries',
-        {
-          seachsalesorders: true,
-          customerId: this.saleorderform.customerId,
-          warehouseId: this.saleorderform.warehouseId
-        }
-      ).then(response => {
-        console.log(response.data.data)
-        this.salesOrderIdTableData = []
-        for (var i = 0; i < response.data.data.length; i++) {
-          var tdata = {
-            salesOrderId: response.data.data[i].id,
-            customerId: response.data.data[i].customerId,
-            // SearchTerm: response.data.data[i].POcode,
-            warehouseId: response.data.data[i].warehouseId,
-            documentDate: response.data.data[i].effectiveDate
-          }
-          console.log(tdata)
-          this.salesOrderIdTableData = this.salesOrderIdTableData.concat([tdata])
-        }
-        console.log(this.salesOrderIdTableData)
-      }).catch(error => {
-        console.log(error)
-      })
-    },
-    shippartysearch () {
-      this.Visible1 = true
-      this.form.searchTerm = ''
-      this.form.city = ''
-    },
-    shipppartyfind () {
-      this.Visible2 = true
-      // axios.get()
-      // console.log(this.form)
 
-      this.axios.post('http://127.0.0.1:5000/CreateOutboundDeliveries'
-        , {
-          seachcustomers: true,
-          pocode: this.form.searchTerm
-        }
-      ).then(response => {
-        console.log(response.data.data)
-        this.soldToPartyTableData = []
-        for (var i = 0; i < response.data.data.length; i++) {
-          console.log(response.data.data[i].city)
-          console.log(response.data.data[i].name)
-          var tdata = {
-            City: response.data.data[i].city,
-            Name: response.data.data[i].name,
-            SearchTerm: response.data.data[i].POcode,
-            PostalCode: response.data.data[i].postcode,
-            Country: response.data.data[i].country,
-            Customer: response.data.data[i].id
-          }
-          console.log(tdata)
-          this.soldToPartyTableData = this.soldToPartyTableData.concat([tdata])
-        }
-        console.log(this.soldToPartyTableData)
-      }).catch(error => {
-        console.log(error)
-      })
-    },
     letsgo () {
+      console.log(this.shippingPointData)
       // 向后端传递销售订单号和客户号码
       var cusIdAndOrId = {
-        customerId: this.form.soldToParty,
-        saleorderId: this.saleorderform.salesOrderId
+        customerId: this.salesOrderSearchForm.customerId,
+        saleorderId: this.salesOrderForm.id,
+        date: this.plannedCreationDate,
+        shippingpoints: this.shippingPointData
       }
       console.log(cusIdAndOrId)
       this.axios.post('http://127.0.0.1:5000/CreateOutboundDeliveries'
         , {
           go: true,
-          customerId: this.form.soldToParty,
-          saleorderId: this.saleorderform.salesOrderId
+          customerId: this.salesOrderSearchForm.customerId,
+          saleorderId: this.salesOrderForm.id,
+          date: this.plannedCreationDate,
+          shippingpoints: this.shippingPointData
         }
       ).then(response => {
         console.log(response.data.data)
@@ -774,12 +732,12 @@ export default {
         console.log(error)
       })
       this.form.soldToParty = ''
-      this.saleorderform.salesOrderId = ''
+      // this.saleorderform.salesOrderId = ''
     },
     textclick (row) { // 对应Sold-To Party
       this.Visible1 = false
       this.Visible2 = false
-      this.form.customerId = parseInt(row.id)
+      this.salesOrderSearchForm.customerId = row.id
     },
     soldToPartyFind (formName) { // 按输入内容，检索Customer表
       const _this = this
