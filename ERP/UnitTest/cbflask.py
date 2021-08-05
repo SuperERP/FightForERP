@@ -17,8 +17,8 @@ from ERP.Modules.SuperErp import *
 newCustomer = CustomerManagerModule(session, ErpLogger)
 
 newDelivery = DeliveryManagerModule(session, ErpLogger)
-newOrder = OrderManagerModule(session, ErpLogger)
-newware = WareHouseDataManager(session, ErpLogger)
+newOrderManager = OrderManagerModule(session, ErpLogger)
+newWarehouseManager = WareHouseDataManager(session, ErpLogger)
 
 # 实例化产生一个Flask对象
 
@@ -32,9 +32,9 @@ def CreateOutboundDeliveries():
     ret = {}
     if 'go' in data.keys():
         if 'saleorderId' in data.keys() and data['saleorderId'] != '':
-            ret['data'] = [newOrder.searchOrders(saleorderId=data['saleorderId'])]
+            ret['data'] = [newOrderManager.searchOrders(saleorderId=data['saleorderId'])]
         else:
-            ret['data'] = newOrder.searchOrders(customerId=data['customerId'])
+            ret['data'] = newOrderManager.searchOrders(customerId=data['customerId'])
         return jsonify(ret)
     if 'create' in data.keys():
         '''
@@ -46,7 +46,7 @@ def CreateOutboundDeliveries():
             '''
             saleOrderId = item['salesOrderId']
             plannedGIDate = item['plannedGIDate']
-            salesOrder = newOrder.searchOrders(saleorderId=saleOrderId)
+            salesOrder = newOrderManager.searchOrders(saleorderId=saleOrderId)
             warehouseId = salesOrder['warehouseId']
             deliveryOrder = {
                 'plannedDeliveryTime': parser.parse(plannedGIDate),
@@ -57,7 +57,7 @@ def CreateOutboundDeliveries():
             }
             deliveryOrderId = newDelivery.insertDeliveryOrder(deliveryOrder)
 
-            salesOrderItems = newOrder.searchAllSalesOrderItems(saleOrderId=saleOrderId)
+            salesOrderItems = newOrderManager.searchAllSalesOrderItems(saleOrderId=saleOrderId)
             for item in salesOrderItems:
                 '''
                 创建发货单物料项 
@@ -75,7 +75,7 @@ def CreateOutboundDeliveries():
                 '''
                 处理库存的问题
                 '''
-                flag = newware.createDelivery(materialId=item.material, warehouseId=warehouseId, count=item.amount)
+                flag = newWarehouseManager.createDelivery(materialId=item.material, warehouseId=warehouseId, count=item.amount)
                 if flag is False:
                     '''
                     失败则返回有问题
@@ -99,7 +99,7 @@ def CreateOutboundDeliveries():
         搜索所有的销售订单
         '''
 
-        ret['data'] = newOrder.searchOrders(customerId=data['customerId'], warehouseId=data['warehouseId'])
+        ret['data'] = newOrderManager.searchOrders(customerId=data['customerId'], warehouseId=data['warehouseId'])
         return jsonify(ret)
     return jsonify(ret)
 
@@ -137,7 +137,7 @@ def PickingOutboundDelivery():
             print(deliveryItem)
 
             saleOrderId = deliveryItem['salesOrderId']
-            saleOrderItem = newOrder.searchOrders(saleorderId=saleOrderId)
+            saleOrderItem = newOrderManager.searchOrders(saleorderId=saleOrderId)
 
             # 字典拼接
             tDict = {k: v for k, v in deliveryItem.items()}
@@ -163,7 +163,7 @@ def PickingOutboundDelivery():
 
         newDelivery.deliveryOrder2to3(data['id'], datestr)
 
-        newware.deliveryOrder2to3()
+        newWarehouseManager.deliveryOrder2to3()
 
         return jsonify(ret)
 

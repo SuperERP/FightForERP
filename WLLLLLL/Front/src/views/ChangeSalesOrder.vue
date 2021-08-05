@@ -1,7 +1,9 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Change Standard Order: {{ this.$route.params.id }}
+      <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>Change Standard Order: {{ this.$route.params.id }}
       </el-header>
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
         <!--      sold to party搜索功能-->
@@ -613,6 +615,9 @@ export default {
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         warehouseId: [
+          { required: true, message: 'Please enter...', trigger: 'blur' }
+        ],
+        requestedDeliveryDate: [
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },

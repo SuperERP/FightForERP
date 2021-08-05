@@ -1,7 +1,9 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Create New Customer: Overview
+      <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>Create New Customer: Overview
       </el-header>
 
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
@@ -153,7 +155,7 @@ export default {
               })
             } else {
               _this.$message({
-                message: 'submit!' + resp.data,
+                message: 'submit! id:' + resp.data,
                 type: 'success'
               })
             }

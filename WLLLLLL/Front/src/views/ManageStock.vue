@@ -2,7 +2,9 @@
   <div>
     <el-container>
       <!--顶部搜索按钮-->
-      <el-header>
+      <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>
         Manage Stock
       </el-header>
       <el-form ref="form" :inline="true" :rules="rules" :model="formInline" class="demo-form-inline" label-width="200px" size="mini">

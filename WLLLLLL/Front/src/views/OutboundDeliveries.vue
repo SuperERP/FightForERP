@@ -2,7 +2,9 @@
   <div>
     <el-container>
       <!--顶部搜索按钮-->
-      <el-header>
+      <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>
         Outbound Deliveries
       </el-header>
       <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline" label-width="200px" size="mini">
@@ -11,7 +13,7 @@
             <el-form-item>
               <el-row style="text-align: right">
                 <el-col :span="24"><div class="grid-content bg-purple-dark"></div>
-                  <el-button style="margin-right: 15px" type="primary"
+                  <el-button style="margin-right: 15px" type="primary" plain
                              icon="el-icon-search" size="mini" @click="getAllDeliveryOrders"
                   >Go</el-button></el-col>
               </el-row>
@@ -52,14 +54,14 @@
                 <i class="el-icon-copy-document" v-show="scope.row.GIStatus===0" style="color: dodgerblue;font-size: 16px;">
                   未启动发货 </i>
                 <i class="el-icon-s-data" v-show="scope.row.GIStatus===1" style="color: dodgerblue;font-size: 16px;">
-已启动发货
+                  已启动发货
                 </i>
                 <i class="el-icon-finished" v-show="scope.row.GIStatus===2" style="color: dodgerblue;font-size: 16px;">
-完成拣配
+                  完成拣配
                 </i>
-<!--                <i class="el-icon-medal-1" v-show="scope.row.GIStatus===3" style="color: dodgerblue;font-size: 16px;">-->
-<!--完成PostGI-->
-<!--                </i>-->
+                <!--                <i class="el-icon-medal-1" v-show="scope.row.GIStatus===3" style="color: dodgerblue;font-size: 16px;">-->
+                <!--完成PostGI-->
+                <!--                </i>-->
               </template>
             </el-table-column>
             <el-table-column>
@@ -70,12 +72,12 @@
         <el-footer>
           <el-row >
             <el-col :span="18">
-&nbsp;
+              &nbsp;
             </el-col>
             <el-col :span="6"  >
               <el-form-item style="margin-top:20px;">
                 <!--跳转至拣配或发货界面-->
-                <el-button type="primary" @click="goToLink">
+                <el-button type="primary" plain @click="goToLink">
                   Picking & Post GI</el-button>
                 <!--退出按钮，回到主界面-->
                 <el-button type="text" style="color:white">Cancel</el-button>
@@ -136,11 +138,11 @@ export default {
   },
   methods: {
 
-    searchDeliveryId (){
+    searchDeliveryId () {
       this.axios.post('http://127.0.0.1:5000/OutboundDeliveries/searchdelivery',
-          {
-            search:true
-          }
+        {
+          search: true
+        }
       ).then(response => {
         console.log(response.data.data)
         this.deliveryList = []
@@ -156,7 +158,6 @@ export default {
       }).catch(error => {
         console.log(error)
       })
-
     },
 
     select (selection, row) {
@@ -200,8 +201,7 @@ export default {
         this.tableData = []
 
         for (var i = 0; i < response.data.data.length; i++) {
-          if(response.data.data[i].deliveryPhase===3)
-            continue
+          if (response.data.data[i].deliveryPhase === 3) { continue }
           var tdata = {
             deliveryOrderId: response.data.data[i].id,
             GIStatus: response.data.data[i].deliveryPhase,
@@ -228,27 +228,24 @@ export default {
     goToLink () {
       // Display Log指定跳转地址
       console.log(this.selectData)
-      if(this.selectData.length===0)
-      {
-
+      if (this.selectData.length === 0) {
         this.$alert('没有选中数据', '错误操作', {
           confirmButtonText: '确定',
           callback: action => {
             this.$message({
               type: 'error',
-              message: `操作有误`
-            });
+              message: '操作有误'
+            })
           }
-        });
-      }else{
-
-      this.$router.push({
-        name: 'PickingOutboundDelivery1', // 这个是通过路由跳转页面，跳转到：在router.js里的name为详情的页面
-        params: {
-          data: this.selectData[0].deliveryOrderId // key随便起名，下边对应就行
-        }
-      })
-    }
+        })
+      } else {
+        this.$router.push({
+          name: 'PickingOutboundDelivery1', // 这个是通过路由跳转页面，跳转到：在router.js里的name为详情的页面
+          params: {
+            data: this.selectData[0].deliveryOrderId // key随便起名，下边对应就行
+          }
+        })
+      }
     }
   }
 }

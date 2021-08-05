@@ -67,8 +67,8 @@ class DeliveryManagerModule(AbstractModule):
         完成发货单物料项的拣配工作
         '''
         try:
-            self.session.query(DeliveryItem).filter(
-                DeliveryItem.deliveryOrderId == deliveryOrderId and DeliveryItem.materialId == materialId). \
+            self.session.query(DeliveryItem).filter(and_(
+                DeliveryItem.deliveryOrderId == deliveryOrderId , DeliveryItem.materialId == materialId)). \
                 update({'pickingStatus': 1})
             self.session.commit()
         except Exception as e:

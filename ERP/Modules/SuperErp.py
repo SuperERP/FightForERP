@@ -3,6 +3,7 @@ from .OrderManagerModule import *
 from .DeliveryManagerModule import *
 from .OrmData.WareHouse import *
 from .WarehouseManager import *
+from .UesrManageModule import *
 
 class SuperErp:
     '''

@@ -1,7 +1,9 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Manage SD Document: Overview
+      <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>Manage SD Document: Overview
       </el-header>
 
       <el-form ref="form" style="text-align: center" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >

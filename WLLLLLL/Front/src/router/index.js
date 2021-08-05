@@ -21,33 +21,34 @@ import DisplayQuotation from '../views/DisplayQuotation'
 import ChangeInquiry from '../views/ChangeInquiry'
 import ChangeQuotation from '../views/ChangeQuotation'
 import ShellHome from '../views/ShellHome'
+import Logon from '../views/Logon'
+import ChangePassword from '../views/ChangePassword'
 import CreateOutboundDeliveries from '../views/CreateOutboundDeliveries'
 import OutboundDeliveries from '../views/OutboundDeliveries'
 import PickingOutboundDelivery from '../views/PickingOutboundDelivery'
 // import test1 from '../views/test1'
 // import test from '../views/test'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
-
-import CreateOutboundDeliveries from '../views/CreateOutboundDeliveries'
-import OutboundDeliveries from '../views/OutboundDeliveries'
-
-import PickingOutboundDelivery1 from '../views/PickingOutboundDelivery1'
-import Plugin from 'v-fit-columns';
-
-Vue.use(Plugin);
-
+import ManageStock from '../views/ManageStock'
 Vue.use(elTableInfiniteScroll)
 Vue.use(VueRouter)
 
 const routes = [
-
-  // {
-  //   path: '/AnalyzeDeliveryLog',
-  //   name: 'AnalyzeDeliveryLog',
-  //   component: AnalyzeDeliveryLog
-  //
-  // },
-
+  {
+    path: '/ChangePassword',
+    name: 'ChangePassword',
+    component: ChangePassword
+  },
+  {
+    path: '/Logon',
+    name: 'Logon',
+    component: Logon
+  },
+  {
+    path: '/ManageStock',
+    name: 'ManageStock',
+    component: ManageStock
+  },
   {
     path: '/CreateOutboundDeliveries',
     name: 'CreateOutboundDeliveries',
@@ -59,9 +60,14 @@ const routes = [
     component: OutboundDeliveries
   },
   {
-    path: '/PickingOutboundDelivery1',
-    name: 'PickingOutboundDelivery1',
-    component: PickingOutboundDelivery1
+    path: '/PickingOutboundDelivery',
+    name: 'PickingOutboundDelivery',
+    component: PickingOutboundDelivery
+  },
+  {
+    path: '/ShellHome',
+    name: '概览',
+    component: ShellHome
   },
   {
     path: '/CreateInquiry',

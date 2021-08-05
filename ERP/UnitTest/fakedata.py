@@ -5,14 +5,14 @@ import sys
 
 from sqlalchemy.sql.functions import random
 
-new_path = "/".join(sys.path[0].split('/')[:-2])
+new_path = "/".join(sys.path[0].split('/')[:-1])
 sys.path.append(new_path)
 
-from ERP.Modules.SuperErp import *
+from Modules.SuperErp import *
 import time
 import os
 from datetime import date
-from ERP.Modules.WarehouseManager import WareHouseDataManager
+from Modules.WarehouseManager import WareHouseDataManager
 
 newCustomer = CustomerManagerModule(session, ErpLogger)
 
@@ -191,7 +191,7 @@ newDeliveryItems = [
 for idata in session.query(SalesOrder).all():
     for idata1 in session.query(MaterialDic).all():
         item = {
-            'saleOrderId': idata.id,
+            'salesOrderId': idata.id,
             'material': idata1.id,
             'itemDescription': '22232323',
             'orderQuantity': 'dfsdf',

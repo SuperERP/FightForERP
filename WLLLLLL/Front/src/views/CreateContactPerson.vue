@@ -1,7 +1,9 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header>Create Contact Person: Overview
+      <el-header><router-link to="/ShellHome">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>Create Contact Person: Overview
       </el-header>
 
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
@@ -114,9 +116,14 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) { // 前后端交互，提交按钮
           axios.post('http://127.0.0.1:5000/createContactPerson', this.form).then(function (resp) {
-            if (resp.data === 'success') {
+            if (resp.data === 'fault') {
               _this.$message({
-                message: 'submit!',
+                message: 'fail!',
+                type: 'fail'
+              })
+            } else {
+              _this.$message({
+                message: 'submit! id:' + resp.data,
                 type: 'success'
               })
             }
