@@ -33,3 +33,13 @@ class UserManagerModule(AbstractModule):
             self.session.rollback()
             return "fault"
         return "success"
+
+    def judgePower(self, id, content):
+        level = self.session.query(User).filter(User.id==id).all()[0].power
+        powerList = []
+        for idata in self.session.query(Power).filter(Power.level<=level).all():
+            powerList.append(idata.content)
+        if content in powerList:
+            return "success"
+        else:
+            return "fault"

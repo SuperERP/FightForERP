@@ -217,7 +217,7 @@ export default {
       var text = el.children[0].innerText
       text = text.replace('\n', '')
       text = text.replace(' ', '')
-      axios.post('link', this.user).then(function (resp) {
+      axios.post('http://127.0.0.1:5000/judgePower', [this.user, text]).then(function (resp) {
         if (resp.equals('success')) {
           this.$router.push({
             path: '/' + text

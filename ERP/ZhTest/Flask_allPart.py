@@ -589,5 +589,12 @@ def changePasswd():
     res = newUser.changePasswd(id=data['id'], password=data["password"], newPassword=data["newPassword"])
     return res
 
+@app.route('/judgePower', methods=['post'])  # 判断权限
+def judgePower():
+    id = request.get_json()[0]
+    content = request.get_json()[1]
+    res = newUser.judgePower(id=id, content=content)
+    return res
+
 if __name__ == '__main__':
     app.run()

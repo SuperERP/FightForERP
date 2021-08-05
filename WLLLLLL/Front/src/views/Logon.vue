@@ -109,13 +109,7 @@ export default {
                 message: 'Log On',
                 type: 'success'
               })
-              this.$router.push({
-                path: '/DisplayInquiry',
-                name: '显示询价单',
-                params: {
-                  id: this.user.id
-                }
-              })
+              _this.jumpToSH()
             }
           })
         } else {
@@ -128,6 +122,15 @@ export default {
       this.$router.push({
         path: '/ChangePassword',
         name: 'ChangePassword'
+      })
+    },
+    jumpToSH () {
+      this.$router.push({
+        path: '/ShellHome',
+        name: 'ShellHome',
+        params: {
+          id: this.user.id
+        }
       })
     }
   }
