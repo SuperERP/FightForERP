@@ -66,7 +66,7 @@ const routes = [
   },
   {
     path: '/ShellHome',
-    name: '概览',
+    name: 'ShellHome',
     component: ShellHome
   },
   {
