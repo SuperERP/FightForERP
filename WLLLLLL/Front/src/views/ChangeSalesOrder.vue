@@ -789,6 +789,10 @@ export default {
       this.editMaterialForm.price = row.price
     },
     submitForm (formName) {
+      this.$message({
+        message: 'Alert: This Operation Makes No Change to Delivery!',
+        type: 'warning'
+      })
       const _this = this
       this.form.PODate = this.dateTransfer(this.form.PODate)
       this.form.effectiveDate = this.dateTransfer(this.form.effectiveDate)

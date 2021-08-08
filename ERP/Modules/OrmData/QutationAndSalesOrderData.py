@@ -140,5 +140,3 @@ class SalesOrderItem(Base):
         self.cnty = kwargs['cnty']
         self.amount = kwargs['amount']
 
-    def __repr__(self):
-        return '<SaleOrderItem saleOrder=%r>' % (self.saleOrderId)

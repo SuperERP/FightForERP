@@ -19,7 +19,7 @@ DROP TABLE Customer;
 -- INSERT INTO Quotationitem VALUES ('QU000', 'sb102', 'mat2', 1, 'EA', 'K004', 10);
 -- DROP TABLE DeliveryOrder;
 SELECT * FROM SalesOrder;
--- SELECT * FROM SalesOrderItem;
+SELECT * FROM SalesOrderItem;
 SELECT * FROM Inventory;
 -- INSERT INTO Inventory VALUES ('lz102', 'sb104', 1, 10, 10);
 -- SELECT * FROM DeliveryOrderItem;

@@ -1,5 +1,14 @@
-success insert data <>
-success insert data <DeliveryOrder(id='OD20210808184111113437',plannedDeliveryTime=datetime.date(2021, 8, 17),actualDeliveryTime=None,salesOrderId='SO20210808184111105578',warehouse='lz101',deliveryPhase=0)>
-请重新检查数据插入
-'SalesOrderItem' object has no attribute 'saleOrderId'
-success insert data 我还没写
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a618bbe0>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4438>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4e48>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a6559128>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4da0>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4e48>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4b38>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a6559160>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a6559160>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4dd8>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a6563e80>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a6563e80>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4b38>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4b38>
