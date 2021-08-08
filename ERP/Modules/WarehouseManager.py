@@ -150,3 +150,18 @@ class WareHouseDataManager(AbstractModule):
             self.logging.info('请重新检查数据修改')
             self.logging.error(e)
             self.session.rollback()
+
+    def toSale(self, warehouseId, materialDicId, amount):
+        '''
+        检查并根据销售订单修改库存
+        '''
+        volume = self.session.query(Inventory).filter(Inventory.warehouseId == warehouseId).filter(
+                Inventory.materialDicId == materialDicId).all()[0].volume
+        requestVolume = self.session.query(Inventory).filter(Inventory.warehouseId == warehouseId).filter(
+                Inventory.materialDicId == materialDicId).all()[0].requestVolume
+        if volume >= amount:
+            self.session.query(Inventory).filter(Inventory.warehouseId == warehouseId).filter(
+                Inventory.materialDicId == materialDicId).update({'volume':volume-amount, 'requestVolume':amount+requestVolume})
+        else:
+            return "fault"
+        return "success"

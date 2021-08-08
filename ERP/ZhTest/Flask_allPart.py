@@ -181,14 +181,25 @@ def createSalesOrder():
         a['requestedDeliveryDate'], '%Y-%m-%d')
     if 'id' in a:
         del a['id']
+
+    for item in b:
+        result_toSale = newWarehouseManager.toSale(warehouseId=a['warehouseId'], materialDicId=item['material'], amount=item['orderQuantity'])
+        if result_toSale == 'fault':
+            return 'fault'
+
     try:
         id = newOrderManager.createSalesOrder(a)
+        c = {'plannedDeliveryTime':a['requestedDeliveryDate'], 'salesOrderId':id, 'warehouseId':a['warehouseId'], 'deliveryPhase':0, 'actualDeliveryTime': None}
+        DOid = newDelivery.insertDeliveryOrder(c)
         for item in b:
             item['salesOrderId'] = id  # 把销售订单编号加进销售订单物料项的词条
             if 'price' in item:
                 del item['price']
             newOrderManager.insertSalesOrderItem(item)
+            d = {'deliveryOrderId':DOid, 'materialId':item['material'], 'description':item['itemDescription'], 'amount':item['orderQuantity'], 'unit':item['salesUnit'], 'pickingStatus':0, 'pickingAmount':0, 'materialState':0}
+            newDelivery.insertDeliveryItem(d)
     except Exception as e:
+        print(e)
         return("fault")
     return(id)
 

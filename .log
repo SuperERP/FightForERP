@@ -1,0 +1,5 @@
+success insert data <>
+success insert data <DeliveryOrder(id='OD20210808184111113437',plannedDeliveryTime=datetime.date(2021, 8, 17),actualDeliveryTime=None,salesOrderId='SO20210808184111105578',warehouse='lz101',deliveryPhase=0)>
+请重新检查数据插入
+'SalesOrderItem' object has no attribute 'saleOrderId'
+success insert data 我还没写
