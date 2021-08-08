@@ -123,7 +123,7 @@ export default {
     jump () {
       this.$router.push({
         path: '/ChangeCustomer',
-        name: '修改客户',
+        name: 'ChangeCustomer',
         params: {
           id: this.$route.params.id
         }

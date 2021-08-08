@@ -1077,7 +1077,7 @@ export default {
             if (valid) {
               this.$router.push({
                 path: '/DisplayInquiry',
-                name: '显示询价单',
+                name: 'DisplayInquiry',
                 params: {
                   id: this.inquiryForm.id
                 }
@@ -1094,7 +1094,7 @@ export default {
             if (valid) {
               this.$router.push({
                 path: '/DisplayQuotation',
-                name: '显示报价单',
+                name: 'DisplayQuotation',
                 params: {
                   id: this.quotForm.id
                 }
@@ -1111,7 +1111,7 @@ export default {
             if (valid) {
               this.$router.push({
                 path: '/DisplaySalesOrder',
-                name: '显示销售订单',
+                name: 'DisplaySalesOrder',
                 params: {
                   id: this.salesOrderForm.id
                 }

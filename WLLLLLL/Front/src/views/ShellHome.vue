@@ -8,7 +8,7 @@
         <el-menu-item index="2"><a href="#OrderManagement" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Order Management</a></el-menu-item>
         <el-menu-item index="3"><a href="#DeliveryManagement" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Delivery Management</a></el-menu-item>
         <el-menu-item index="4"><a href="#WarehouseManagement" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Warehouse Management</a></el-menu-item>
-        <el-menu-item index="5" style="float: right; font-size: 15px">Log Out</el-menu-item>
+        <el-menu-item index="5" style="float: right; font-size: 15px"><a href="Logon" style="display:inline-block; width: 100%; font-size: 15px;">Log Out</a></el-menu-item>
         <el-menu-item disabled index="6" class="userID" v-text="user.id" style="float: right; text-decoration: underline; color: #583333"></el-menu-item>
         <el-menu-item disabled index="7" class="userID" style="float: right; text-align: right; color: #583333">Welcome,</el-menu-item>
       </el-menu>
@@ -223,11 +223,23 @@ export default {
       axios.post('http://127.0.0.1:5000/judgePower', [this.user, text]).then(function (resp) {
         if (resp.data === 'success') {
           _this.$router.push({
-            path: '/' + text
+            path: '/' + text,
+            name: text,
+            params: {
+              userID: _this.user.id
+            }
           })
         }
       })
     }
+    // jumpTest () {
+    //   this.$router.push({
+    //     path: '/CreateCustomer',
+    //     params: {
+    //       userID: this.user.id
+    //     }
+    //   })
+    // }
   }
 }
 </script>

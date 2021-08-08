@@ -83,102 +83,102 @@ const routes = [
   },
   {
     path: '/CreateInquiry',
-    name: '创建询价单',
+    name: 'CreateInquiry',
     component: CreateInquiry
   },
   {
     path: '/CreateQuotation',
-    name: '创建报价单',
+    name: 'CreateQuotation',
     component: CreateQuotation
   },
   {
     path: '/CreateSalesOrder',
-    name: '创建销售订单',
+    name: 'CreateSalesOrder',
     component: CreateSalesOrder
   },
   {
     path: '/DisplaySalesOrder',
-    name: '显示销售订单',
+    name: 'DisplaySalesOrder',
     component: DisplaySalesOrder
   },
   {
     path: '/ChangeSalesOrder',
-    name: '修改销售订单',
+    name: 'ChangeSalesOrder',
     component: ChangeSalesOrder
   },
   {
     path: '/CreateCustomer',
-    name: '创建新客户',
+    name: 'CreateCustomer',
     component: CreateCustomer
   },
   {
     path: '/CreateContactPerson',
-    name: '创建联系人',
+    name: 'CreateContactPerson',
     component: CreateContactPerson
   },
   {
     path: '/CreateBPRelationship',
-    name: '创建BP关系',
+    name: 'CreateBPRelationship',
     component: CreateBPRelationship
   },
   {
     path: '/ManageSDDocument',
-    name: '管理SD模块',
+    name: 'ManageSDDocument',
     component: ManageSDDocument
   },
   {
     path: '/ManageBusinessPartner',
-    name: '管理商业伙伴',
+    name: 'ManageBusinessPartner',
     component: ManageBusinessPartner
   },
   {
     path: '/DisplayCustomer',
-    name: '显示客户',
+    name: 'DisplayCustomer',
     component: DisplayCustomer
   },
   {
     path: '/ChangeCustomer',
-    name: '修改客户',
+    name: 'ChangeCustomer',
     component: ChangeCustomer
   },
   {
     path: '/DisplayContactPerson',
-    name: '显示联系人',
+    name: 'DisplayContactPerson',
     component: DisplayContactPerson
   },
   {
     path: '/ChangeContactPerson',
-    name: '修改联系人',
+    name: 'ChangeContactPerson',
     component: ChangeContactPerson
   },
   {
     path: '/DisplayBPRelationship',
-    name: '显示BP关系',
+    name: 'DisplayBPRelationship',
     component: DisplayBPRelationship
   },
   {
     path: '/DisplayInquiry',
-    name: '显示询价单',
+    name: 'DisplayInquiry',
     component: DisplayInquiry
   },
   {
     path: '/DisplayQuotation',
-    name: '显示报价单',
+    name: 'DisplayQuotation',
     component: DisplayQuotation
   },
   {
     path: '/ChangeQuotation',
-    name: '修改报价单',
+    name: 'ChangeQuotation',
     component: ChangeQuotation
   },
   {
     path: '/ChangeInquiry',
-    name: '修改询价单',
+    name: 'ChangeInquiry',
     component: ChangeInquiry
   },
   {
     path: '/ChangeBPRelationship',
-    name: '修改BP关系',
+    name: 'ChangeBPRelationship',
     component: ChangeBPRelationship
   }
   // {

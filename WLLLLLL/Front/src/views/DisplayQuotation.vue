@@ -152,7 +152,7 @@ export default {
     jump () {
       this.$router.push({
         path: '/ChangeQuotation',
-        name: '修改报价单',
+        name: 'ChangeQuotation',
         params: {
           id: this.$route.params.id
         }

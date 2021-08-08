@@ -113,7 +113,7 @@ export default {
     jump () {
       this.$router.push({
         path: '/ChangeContactPerson',
-        name: '修改联系人',
+        name: 'ChangeContactPerson',
         params: {
           id: this.$route.params.id
         }

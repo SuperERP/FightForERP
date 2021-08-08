@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header><router-link to="/ShellHome">
+      <el-header><router-link to="{path: '/ShellHome'}">
   <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
   </el-button></router-link>Change Customer: {{ this.$route.params.id }}
       </el-header>

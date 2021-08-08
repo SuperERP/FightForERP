@@ -540,7 +540,7 @@ export default {
             if (valid) {
               this.$router.push({
                 path: '/DisplayCustomer',
-                name: '显示客户',
+                name: 'DisplayCustomer',
                 params: {
                   id: this.customerForm.id
                 }
@@ -557,7 +557,7 @@ export default {
             if (valid) {
               this.$router.push({
                 path: '/DisplayContactPerson',
-                name: '显示联系人',
+                name: 'DisplayContactPerson',
                 params: {
                   id: this.contactPersonForm.id
                 }
@@ -574,7 +574,7 @@ export default {
             if (valid) {
               this.$router.push({
                 path: '/DisplayBPRelationship',
-                name: '显示BP关系',
+                name: 'DisplayBPRelationship',
                 params: {
                   id: this.bpRelationshipForm.id
                 }

@@ -4,6 +4,8 @@
       <el-header><router-link to="/ShellHome">
   <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
   </el-button></router-link>Create New Customer: Overview
+        <el-button style="float:right;font-size:30px;color:#333333 " type="text" v-text="this.user.id">
+        </el-button>
       </el-header>
 
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
@@ -109,6 +111,9 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      user: {
+        id: this.$route.params.userID
+      },
       form: {
         name: '',
         POcode: '',
@@ -144,6 +149,7 @@ export default {
   },
   methods: {
     submitForm (formName) {
+      console.log(this.user.id)
       const _this = this
       this.$refs[formName].validate((valid) => {
         if (valid) { // 前后端交互，提交按钮

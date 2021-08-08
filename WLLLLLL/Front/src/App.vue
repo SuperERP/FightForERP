@@ -5,6 +5,7 @@
 </template>
 
 <style>
+body {margin:0px;padding:0px;}
 .el-header {
   background-color: #B3C0D1;
   color: #333;

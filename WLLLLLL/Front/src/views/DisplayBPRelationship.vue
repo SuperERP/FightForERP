@@ -93,7 +93,7 @@ export default {
     jump () {
       this.$router.push({
         path: '/ChangeBPRelationship',
-        name: '修改BP关系',
+        name: 'ChangeBPRelationship',
         params: {
           id: this.$route.params.id
         }

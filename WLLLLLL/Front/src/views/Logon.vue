@@ -12,7 +12,7 @@
         <el-row>
           <el-col>
             <el-form-item prop="password">
-              <el-input v-model="user.password" placeholder="Password">
+              <el-input v-model="user.password" placeholder="Password" show-password>
               </el-input>
             </el-form-item></el-col>
         </el-row>
