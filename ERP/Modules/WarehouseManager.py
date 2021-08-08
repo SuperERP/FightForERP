@@ -20,29 +20,46 @@ class WareHouseDataManager(AbstractModule):
         '''
 
         try:
-            print(materialId,warehouseId)
+            print(materialId, warehouseId)
             amount = self.session.query(Inventory).filter(
-                and_(Inventory.warehouseId == warehouseId,Inventory.materialDicId==materialId)).all()[0].volume
-            print('amount',amount)
+                and_(Inventory.warehouseId == warehouseId, Inventory.materialDicId == materialId)).all()[0].volume
+            print('amount', amount)
             print(count)
             if (amount < count):
                 return False
             else:
-                self.session.query(Inventory).filter(and_(Inventory.warehouseId == warehouseId,Inventory.materialDicId==materialId)).update(
+                self.session.query(Inventory).filter(and_(Inventory.warehouseId == warehouseId, Inventory.materialDicId == materialId)).update(
                     {
                         Inventory.volume: Inventory.volume - count,
                         Inventory.onOrderStock: Inventory.onOrderStock + count
                     }
                 )
                 self.session.commit()
-                name = self.session.query(MaterialDic).filter(
-                    MaterialDic.id == materialId).all()[0].name
+                
 
-        except Exception :
+        except Exception:
             self.logging.error(e)
             self.logging.info('发生问题')
 
             return False
+
+    def delivery1to2(self, deliveryOrderId=None, materialId=None):
+        try:
+            warehouseId = self.session.query(DeliveryOrder).filter(
+                DeliveryOrder.id == deliveryOrderId).all()[0].warehouseId
+
+            deliveryItemAmount = self.session.query(DeliveryItem).filter(and_(
+                DeliveryItem.deliveryOrderId == deliveryOrderId, DeliveryItem.materialId == materialId)).all()[0].amount
+            self.session.query(Inventory).filter(and_(Inventory.warehouseId == warehouseId, Inventory.materialDicId == materialId)).update(
+                {
+                    Inventory.requestVolume: Inventory.requestVolume-deliveryItemAmount,
+                    Inventory.onOrderStock: Inventory.onOrderStock+deliveryItemAmount
+                }
+            )
+            self.session.commit()
+        except Exception as e:
+            self.session.error(e)
+        self.logging.info('1t02 finished')
 
     def deliveryOrder2to3(self, deliverOrderId=None):
         '''
@@ -59,7 +76,6 @@ class WareHouseDataManager(AbstractModule):
                 self.session.query(Inventory).filter(Inventory.warehouseId == item.materialDicId).update(
                     {
                         Inventory.onOrderStock: Inventory.onOrderStock - count,
-                        Inventory.requestVolume: Inventory.requestVolume + count
                     }
                 )
                 self.session.commit()
@@ -156,12 +172,12 @@ class WareHouseDataManager(AbstractModule):
         检查并根据销售订单修改库存
         '''
         volume = self.session.query(Inventory).filter(Inventory.warehouseId == warehouseId).filter(
-                Inventory.materialDicId == materialDicId).all()[0].volume
+            Inventory.materialDicId == materialDicId).all()[0].volume
         requestVolume = self.session.query(Inventory).filter(Inventory.warehouseId == warehouseId).filter(
-                Inventory.materialDicId == materialDicId).all()[0].requestVolume
+            Inventory.materialDicId == materialDicId).all()[0].requestVolume
         if volume >= amount:
             self.session.query(Inventory).filter(Inventory.warehouseId == warehouseId).filter(
-                Inventory.materialDicId == materialDicId).update({'volume':volume-amount, 'requestVolume':amount+requestVolume})
+                Inventory.materialDicId == materialDicId).update({'volume': volume-amount, 'requestVolume': amount+requestVolume})
         else:
             return "fault"
         return "success"

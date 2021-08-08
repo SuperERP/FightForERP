@@ -1,3 +1,5 @@
+import re
+from Modules.OrmData.QutationAndSalesOrderData import SalesOrder
 from .AbstractModule import *
 from .OrmData.DeliveryData import *
 
@@ -94,6 +96,37 @@ class DeliveryManagerModule(AbstractModule):
 
         return ret
 
+    def getDelivery(self, customerId='', shippingpoint='', date='',salesdOrderId=''):
+        ret = []
+
+        if customerId != '':
+            salesOrders = self.session.query(SalesOrder).filter(
+                SalesOrder.customerId == customerId).all()
+            salesOrdersData=[]
+            for item in salesOrders:
+                salesOrdersData.append(item.id)
+
+        if len(shippingpoint) == 0:
+            datalist = self.session.query(DeliveryOrder).filter(or_(DeliveryOrder.plannedDeliveryTime == date, date == '')).filter(
+                or_(DeliveryOrder.salesOrderId == salesdOrderId, salesdOrderId == '')).all()
+
+        else:
+            datalist = self.session.query(DeliveryOrder).filter(or_(DeliveryOrder.plannedDeliveryTime == date, date == '')).filter(
+                or_(DeliveryOrder.salesOrderId == salesdOrderId, salesdOrderId == ''))
+            filter(DeliveryOrder.warehouseId.in_(tuple(shippingpoint))).all()
+
+        if customerId != '':
+            for item in datalist:
+                print(item)
+                break
+                if item.salesOrderId in salesOrdersData:
+                    ret.append(self.to_dict(item))
+        else:
+            for item in datalist:
+                ret.append(self.to_dict(item))
+
+        return ret
+
     def searchallDelivery(self):
         res = []
         for item in self.session.query(DeliveryOrder).all():
@@ -125,6 +158,17 @@ class DeliveryManagerModule(AbstractModule):
         res = self.session.query(DeliveryOrder).filter(
             DeliveryOrder.id == id).all()[0]
         return self.to_dict(res)
+
+    def change0to1(self,salesOrderId):
+        try:
+            self.session.query(DeliveryOrder).filter(DeliveryOrder.salesOrderId==salesOrderId).update(
+            { 'deliveryPhase':1})
+            self.session.commit()
+        except Exception as e:
+            self.logging.erro(e)
+            return 
+        self.logging.info('0to1状态修改成功')
+        
 
     def getDeliveryItem(self, deliveryOrderId, materialId):
         return self.to_dict(self.session.query(DeliveryItem).filter(and_(DeliveryItem.materialId == materialId, DeliveryItem.deliveryOrderId == deliveryOrderId)).all()[0])

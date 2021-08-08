@@ -387,16 +387,12 @@
                 <i class="el-icon-finished" v-show="scope.row.GIStatus===2" style="color: dodgerblue;font-size: 16px;">
                   完成拣配
                 </i>
-                <!--                <i class="el-icon-medal-1" v-show="scope.row.GIStatus===3" style="color: dodgerblue;font-size: 16px;">-->
-                <!--完成PostGI-->
-                <!--                </i>-->
+                                <i class="el-icon-medal-1" v-show="scope.row.GIStatus===3" style="color: dodgerblue;font-size: 16px;">
+                已完成PostGI
+                                </i>
               </template>
             </el-table-column>
-            <el-table-column>
-              <el-link icon="el-icon-arrow-right" href="http://localhostparams: {
-          materialId: this.row.materialId
-        }:8080/PickingOutboundDelivery">
-              </el-link></el-table-column>
+
           </el-table>
         </el-main>
         <el-footer>
@@ -661,27 +657,6 @@ export default {
       this.salesOrderSearchForm.customerId = row.id
     },
     // 以上对应搜索框中方法
-    searchDeliveryId () {
-      this.axios.post('http://127.0.0.1:5000/OutboundDeliveries/searchdelivery',
-        {
-          search: true
-        }
-      ).then(response => {
-        console.log(response.data.data)
-        this.deliveryList = []
-
-        for (var i = 0; i < response.data.data.length; i++) {
-          var tdata = {
-            deliveryOrderId: response.data.data[i].id,
-            GIStatus: response.data.data[i].deliveryPhase,
-            PickingDate: response.data.data[i].plannedDeliveryTime
-          }
-          this.tableData = this.tableData.concat([tdata])
-        }
-      }).catch(error => {
-        console.log(error)
-      })
-    },
 
     select (selection, row) {
       // 清除 所有勾选项
@@ -715,16 +690,18 @@ export default {
     },
     getAllDeliveryOrders () {
       console.log('2222')
-      this.axios.post('http://127.0.0.1:5000/OutboundDeliveries/searchdelivery',
-        {
-          id: 'nothing'
-        }
+      this.axios.post('http://127.0.0.1:5000/CreateOutboundDeliveries', {
+        go: true,
+        customerId: this.salesOrderSearchForm.customerId,
+        salesorderId: this.salesOrderForm.id,
+        date: this.plannedCreationDate,
+        shippingpoints: this.shippingPointData
+      }
       ).then(response => {
         console.log(response.data.data)
         this.tableData = []
-
         for (var i = 0; i < response.data.data.length; i++) {
-          if (response.data.data[i].deliveryPhase === 3 || response.data.data[i].deliveryPhase === 0) { continue }
+          if (response.data.data[i].deliveryPhase === 0) { continue }
           var tdata = {
             deliveryOrderId: response.data.data[i].id,
             GIStatus: response.data.data[i].deliveryPhase,
@@ -790,6 +767,20 @@ export default {
           }
         })
       } else {
+        for (var i = 0; i < this.selectData.length; i++) {
+          if (this.selectData[i].GIStatus === 3) {
+            this.$alert('不能重复发货', '错误操作', {
+              confirmButtonText: '确定',
+              callback: action => {
+                this.$message({
+                  type: 'error',
+                  message: '操作有误'
+                })
+              }
+            })
+            return
+          }
+        }
         this.$router.push({
           name: 'PickingOutboundDelivery', // 这个是通过路由跳转页面，跳转到：在router.js里的name为详情的页面
           params: {

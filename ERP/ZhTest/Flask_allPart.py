@@ -1,14 +1,15 @@
+
 import sys
 new_path = "/".join(sys.path[0].split('/')[:-1])
 sys.path.append(new_path)
-from flask_cors import CORS
-from dateutil import parser
-from flask import Flask, json, request
-from flask import jsonify
-from datetime import *
-import os
-import time
 from Modules.SuperErp import *
+import time
+import os
+from datetime import *
+from flask import jsonify
+from flask import Flask, json, request
+from dateutil import parser
+from flask_cors import CORS
 
 
 
@@ -183,20 +184,23 @@ def createSalesOrder():
         del a['id']
 
     for item in b:
-        result_toSale = newWarehouseManager.toSale(warehouseId=a['warehouseId'], materialDicId=item['material'], amount=item['orderQuantity'])
+        result_toSale = newWarehouseManager.toSale(
+            warehouseId=a['warehouseId'], materialDicId=item['material'], amount=item['orderQuantity'])
         if result_toSale == 'fault':
             return 'fault'
 
     try:
         id = newOrderManager.createSalesOrder(a)
-        c = {'plannedDeliveryTime':a['requestedDeliveryDate'], 'salesOrderId':id, 'warehouseId':a['warehouseId'], 'deliveryPhase':0, 'actualDeliveryTime': None}
+        c = {'plannedDeliveryTime': a['requestedDeliveryDate'], 'salesOrderId': id,
+             'warehouseId': a['warehouseId'], 'deliveryPhase': 0, 'actualDeliveryTime': None}
         DOid = newDelivery.insertDeliveryOrder(c)
         for item in b:
             item['salesOrderId'] = id  # 把销售订单编号加进销售订单物料项的词条
             if 'price' in item:
                 del item['price']
             newOrderManager.insertSalesOrderItem(item)
-            d = {'deliveryOrderId':DOid, 'materialId':item['material'], 'description':item['itemDescription'], 'amount':item['orderQuantity'], 'unit':item['salesUnit'], 'pickingStatus':0, 'pickingAmount':0, 'materialState':0}
+            d = {'deliveryOrderId': DOid, 'materialId': item['material'], 'description': item['itemDescription'],
+                 'amount': item['orderQuantity'], 'unit': item['salesUnit'], 'pickingStatus': 0, 'pickingAmount': 0, 'materialState': 0}
             newDelivery.insertDeliveryItem(d)
     except Exception as e:
         print(e)
@@ -442,12 +446,10 @@ def CreateOutboundDeliveries():
         return jsonify(ret)
 
     if 'go' in data.keys():
-        if len(data['shippingpoints']) == 0:
-            ret['data'] = newOrderManager.searchOrders(
-                customerId=data['customerId'], salesorderId=data['salesorderId'], effectiveDate=data['date'])
-        else:
-            ret['data'] = newOrderManager.searchOrders(
-                customerId=data['customerId'], salesorderId=data['salesorderId'], effectiveDate=data['date'], warehouseId=data['shippingpoints'], flag=True)
+        print(data)
+        ret['data'] = newDelivery.getDelivery(customerId=data['customerId'], date=data['date'],
+                                              shippingpoint=data['shippingpoints'], salesdOrderId=data['salesorderId'])
+
         return jsonify(ret)
 
     if 'create' in data.keys():
@@ -459,46 +461,7 @@ def CreateOutboundDeliveries():
             前端传来的销售订单数据
             '''
             salesOrderId = item['salesOrderId']
-            plannedGIDate = item['plannedGIDate']
-            salesOrder = newOrderManager.searchOrders(salesorderId=salesOrderId)
-            warehouseId = salesOrder['warehouseId']
-            deliveryOrder = {
-                'plannedDeliveryTime': parser.parse(plannedGIDate),
-                'deliveryPhase': 1,
-                'salesOrderId': salesOrderId,
-                'warehouseId': warehouseId,
-                'actualDeliveryTime': None
-            }
-            deliveryOrderId = newDelivery.insertDeliveryOrder(deliveryOrder)
-
-            salesOrderItems = newOrderManager.searchAllSalesOrderItems(
-                salesOrderId=salesOrderId)
-            for item in salesOrderItems:
-                '''
-                创建发货单物料项 
-                '''
-                newDeliveryItem = {
-                    'deliveryOrderId': deliveryOrderId,
-                    'materialId': item.material,
-                    'description': item.itemDescription,
-                    'amount': item.amount,
-                    'unit': item.salesUnit,
-                    'pickingAmount': 0,
-                    'pickingStatus': 0,
-                    'materialState': 0,
-                }
-                '''
-                处理库存的问题
-                '''
-                flag = newWarehouseManager.createDelivery(
-                    materialId=item.material, warehouseId=warehouseId, count=item.amount)
-                if flag is False:
-                    '''
-                    失败则返回有问题
-                    '''
-                    ret['flag'] = False
-                    return jsonify(ret)
-                newDelivery.insertDeliveryItem(newDeliveryItem)
+            newDelivery.change0to1(salesOrderId=salesOrderId)
 
         ret['flag'] = True
         return jsonify(ret)
@@ -530,7 +493,8 @@ def finddelivery():
     print(ret)
     return jsonify(ret)
 
-@app.route('/DisplayOutboundDeliveries', methods=['post']) #copy from cb
+
+@app.route('/DisplayOutboundDeliveries', methods=['post'])  # copy from cb
 def DisplayOutboundDelivery():
     data = request.get_json(silent=True)
     ret = {}
@@ -549,7 +513,7 @@ def DisplayOutboundDelivery():
     return jsonify(ret)
 
 
-@app.route('/DisplayDeliveryItem', methods=['post']) #copy from cb
+@app.route('/DisplayDeliveryItem', methods=['post'])  # copy from cb
 def DisplayDeliveryItem():
     data = request.get_json(silent=True)
     ret = {}
@@ -561,14 +525,15 @@ def DisplayDeliveryItem():
 
     deliverItemData = newDelivery.getDeliveryItem(
         deliveryOrderId=deliveryOrderid, materialId=materialId)
-    
-    ret['description']=deliverItemData['description']
-    ret['amount']=deliverItemData['amount']
-    ret['pickingStatus']=deliverItemData['pickingStatus']
-    ret['pickingAmount']=deliverItemData['pickingAmount']
-    ret['materialState']=deliverItemData['materialState']
-    ret['unit']=deliverItemData['unit']    
+
+    ret['description'] = deliverItemData['description']
+    ret['amount'] = deliverItemData['amount']
+    ret['pickingStatus'] = deliverItemData['pickingStatus']
+    ret['pickingAmount'] = deliverItemData['pickingAmount']
+    ret['materialState'] = deliverItemData['materialState']
+    ret['unit'] = deliverItemData['unit']
     return jsonify(ret)
+
 
 @app.route('/PickingOutboundDelivery', methods=['post'])
 def PickingOutboundDelivery():
@@ -605,9 +570,14 @@ def PickingOutboundDelivery():
         return jsonify(ret)
 
     if 'picking' in data.keys():
+        
         for item in data['pickingitems']:
             newDelivery.pickingDeliveryItems(
-                materialId=item['MaterialId'], deliveryOrderId=item['DeliveryOrder'])
+                materialId=item['materialId'], deliveryOrderId=item['DeliveryOrder'])
+            newWarehouseManager.delivery1to2(deliveryOrderId=item['DeliveryOrder'],materialId=item['materialId'])
+            
+
+            
         ret['data'] = newDelivery.searchDeliveryItems(data['id'])
 
         return jsonify(ret)
@@ -627,17 +597,21 @@ def PickingOutboundDelivery():
 
     return jsonify(ret)
 
+
 @app.route('/login', methods=['post'])  # 登录
 def login():
     data = request.get_json()
     res = newUser.login(id=data['id'], password=data["password"])
     return res
 
+
 @app.route('/changePasswd', methods=['post'])  # 更改密码
 def changePasswd():
     data = request.get_json()
-    res = newUser.changePasswd(id=data['id'], password=data["password"], newPassword=data["newPassword"])
+    res = newUser.changePasswd(
+        id=data['id'], password=data["password"], newPassword=data["newPassword"])
     return res
+
 
 @app.route('/judgePower', methods=['post'])  # 判断权限
 def judgePower():
@@ -646,5 +620,8 @@ def judgePower():
     res = newUser.judgePower(id=id['id'], content=content)
     return res
 
+
 if __name__ == '__main__':
     app.run()
+
+    # print(len(newOrderManager.searchSalesOrder()))

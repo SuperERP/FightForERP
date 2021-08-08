@@ -1,13 +1,13 @@
-  <template>
+<template>
   <el-container>
-      <el-header><router-link to="/ShellHome">
-  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
-  </el-button></router-link>
-        Pick Outbound Delivery
-      </el-header>
+    <el-header><router-link to="/ShellHome">
+      <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+      </el-button></router-link>
+      Pick Outbound Delivery
+    </el-header>
     <!--查询对话框-->
     <!-- 查询Delivery ，如果是在3.2界面点击“>”转进来，应该直接查询相应Delivery的信息-->
-<!--      表Picking&GI-->
+    <!--      表Picking&GI-->
     <el-tabs type="border-card">
       <!--picking-->
       <el-tab-pane>
@@ -25,7 +25,7 @@
           <!--                      onkeyup="value=value.replace(/[^\d]/g,'')"-->
           <el-table-column label="DeliveryOrder" prop="DeliveryOrder">
           </el-table-column>
-          <el-table-column label="ItemId" prop="Item">
+          <el-table-column label="ItemId" prop="materialId">
           </el-table-column>
           <el-table-column label="Item Description" prop="ItemDescription">
           </el-table-column>
@@ -33,12 +33,12 @@
           </el-table-column>
           <el-table-column label="Picking Quantity" prop="PickingQuantity">
             <template slot-scope="scope">
-            <el-input v-model="scope.row.PickingQuantity" style="width: 100px"
-                      type="text"
-                      onkeyup="value=value.replace(/[^\d]/g,'')"
-                      @change="scope.row.PickingQuantity=scope.row.DeliveryQuantity"
-                      placeholder="请输入数字"
-            ></el-input>
+              <el-input v-model="scope.row.PickingQuantity" style="width: 100px"
+                        type="text"
+                        onkeyup="value=value.replace(/[^\d]/g,'')"
+                        @change="scope.row.PickingQuantity=scope.row.DeliveryQuantity"
+                        placeholder="请输入数字"
+              ></el-input>
             </template>
           </el-table-column>
           <el-table-column label="Picking Status" prop="PickingStatus">
@@ -48,63 +48,40 @@
             </template>
           </el-table-column>
         </el-table>
-<!--        picking界面table-->
+        <!--        picking界面table-->
         <el-col :span="11"><div class="grid-content"></div></el-col>
         <el-row style="text-align: right;margin-top: 15px">
-            <!--点击Picking此按钮，相应的self.onOrderStock由1改为2
-          Delivery Quantity=Picking Quantity则可更改，不等于则提示错误
-          -->
-            <el-button type="primary" plain @click="picking">Picking</el-button>
+          <!--点击Picking此按钮，相应的self.onOrderStock由1改为2
+        Delivery Quantity=Picking Quantity则可更改，不等于则提示错误
+        -->
+          <el-button type="primary" plain @click="picking">Picking</el-button>
         </el-row>
-<!--       picking 按钮-->
+        <!--       picking 按钮-->
         <el-col :span="11"><div class="grid-content"></div></el-col>
       </el-tab-pane>
       <el-tab-pane>
-      <span slot="label"><i class="el-icon-truck"></i> GI Ready</span>
-        <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
-        <el-row :gutter="50" style="margin-top: 20px" >
-          <el-col :span="8">
-            <el-form-item label="Planned GI Date:" prop="plannedDeliveryTime">
-              <el-input style="width:110px;" v-model="form.plannedDeliveryTime">
+        <span slot="label"><i class="el-icon-truck"></i> GI Ready</span>
+        <el-form ref="form" :inline="true"  :model="form"  label-width="200px" size="mini" >
+          <el-row :gutter="50" style="margin-top: 20px" >
+            <el-col :span="8">
+              <el-form-item label="Planned GI Date:" prop="plannedDeliveryTime">
+                <el-input style="width:110px;" v-model="form.plannedDeliveryTime">
+                </el-input>
+              </el-form-item></el-col>
+            <el-col :span="12"><el-form-item label="Volume:" prop="volume">
+              <el-input style="width:110px;" v-model="form.volume">
               </el-input>
             </el-form-item></el-col>
-          <el-col :span="12"><el-form-item label="Volume:" prop="volume">
-            <el-input style="width:110px;" v-model="form.volume">
-            </el-input>
-          </el-form-item></el-col>
-          <el-col :span="8"><el-form-item label="Ship-To Party:" prop="materialId">
-            <el-input style="width:110px;" v-model="form.materialId">
-            </el-input>
-          </el-form-item></el-col>
-          <el-col :span="12"><el-form-item label="Description:" prop="description">
-            <el-input style="width:auto" v-model="form.description">
-            </el-input>
-          </el-form-item></el-col>
-        </el-row>
+            <el-col :span="8"><el-form-item label="Ship-To Party:" prop="materialId">
+              <el-input style="width:110px;" v-model="form.materialId">
+              </el-input>
+            </el-form-item></el-col>
+            <el-col :span="12"><el-form-item label="Description:" prop="description">
+              <el-input style="width:auto" v-model="form.description">
+              </el-input>
+            </el-form-item></el-col>
+          </el-row>
         </el-form>
-        <!--将查询的已经拣配但是没有发货的订单显示以下内容（self.onOrderStock为2的订单）-->
-<!--        <p>Status：Ready to Post GI</p>-->
-<!--        <el-row>-->
-<!--          <el-col :span="8"><div class="grid-content">-->
-<!--            <p>Planned GI Date：20.07.2021</p>-->
-<!--          </div></el-col>-->
-<!--          <el-col :span="8"><div class="grid-content">-->
-<!--            <p>Volume: 0</p>-->
-<!--          </div></el-col>-->
-<!--          <el-col :span="8"><div class="grid-content">-->
-<!--            <p>Priority: Normal item</p>-->
-<!--          </div></el-col>-->
-<!--        </el-row>-->
-<!--        <el-row>-->
-<!--          <el-col :span="8"><div class="grid-content">-->
-<!--            <p>Ship-To Party: The Bike Zone (25031)</p>-->
-<!--          </div></el-col>-->
-<!--          <el-col :span="8"><div class="grid-content">-->
-<!--            <p>Address: 2144 N Orange Ave, Orlando FL 32804, USA</p>-->
-<!--          </div></el-col>-->
-<!--          <el-col :span="6"><div class="grid-content"></div></el-col>-->
-<!--        </el-row>-->
-        <!--点击Post GI此按钮，相应的self.onOrderStock由2改为3-->
         <el-row style="text-align: right">
           <el-button type="primary" plain @click="showdialog">Post GI</el-button>
           <el-dialog
@@ -130,43 +107,37 @@
         </el-row>
       </el-tab-pane>
     </el-tabs>
-      <el-button type="primary" plain @click="goToLink1">Return</el-button>
+    <el-button type="primary" plain @click="goToLink1">Return</el-button>
   </el-container>
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   created () {
     console.log('sdf', this.$route.params)
-    if (this.$route.params.isEmpty === false) {
-      this.deliveryOrderId = this.$route.params.data
-      this.visible = true
-      this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery',
-        {
-          jump: true,
-          id: this.deliveryOrderId
+
+    this.deliveryOrderId = this.$route.params.data
+    this.visible = true
+    this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery',
+      {
+        jump: true,
+        id: this.deliveryOrderId
+      }
+    ).then(response => {
+      console.log(response.data.data)
+      this.PickingData = []
+      for (var i = 0; i < response.data.data.length; i++) {
+        var tdata = {
+          materialId: response.data.data[i].materialId,
+          ItemDescription: response.data.data[i].description,
+          DeliveryQuantity: response.data.data[i].amount,
+          PickingStatus: response.data.data[i].pickingStatus,
+          DeliveryOrder: response.data.data[i].deliveryOrderId
         }
-      ).then(response => {
-        console.log(response.data.data)
-        this.PickingData = []
-        for (var i = 0; i < response.data.data.length; i++) {
-          var tdata = {
-            Item: response.data.data[i].materialId,
-            ItemDescription: response.data.data[i].description,
-            DeliveryQuantity: response.data.data[i].amount,
-            PickingStatus: response.data.data[i].pickingStatus,
-            DeliveryOrder: response.data.data[i].deliveryOrderId
-          }
-          this.PickingData = this.PickingData.concat([tdata])
-        }
-      }).catch(error => {
-        console.log(error)
-      })
-    }
-    const _this = this
-    axios.post('link', this.$route.params.id).then(function (resp) { // 传入id，传出salesOrder表和salesOrderItem表的信息
-      _this.form = resp.data
+        this.PickingData = this.PickingData.concat([tdata])
+      }
+    }).catch(error => {
+      console.log(error)
     })
   },
   data () {
@@ -196,31 +167,6 @@ export default {
     }
   },
   methods: {
-    getDeliveryItems () {
-      this.deliveryOrderId = this.$route.params.data
-      this.visible = true
-      this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery',
-        {
-          jump: true,
-          id: this.deliveryOrderId
-        }
-      ).then(response => {
-        console.log(response.data.data)
-        this.PickingData = []
-        for (var i = 0; i < response.data.data.length; i++) {
-          var tdata = {
-            Item: response.data.data[i].materialId,
-            ItemDescription: response.data.data[i].description,
-            DeliveryQuantity: response.data.data[i].amount,
-            PickingStatus: response.data.data[i].pickingStatus,
-            DeliveryOrder: response.data.data[i].deliveryOrderId
-          }
-          this.PickingData = this.PickingData.concat([tdata])
-        }
-      }).catch(error => {
-        console.log(error)
-      })
-    },
     showdialog () {
       if (this.PickingData.length === 0) {
         this.$alert('没有数据，无法发货', '错误操作', {
@@ -287,7 +233,6 @@ export default {
       this.multipleSelection = val
     },
     textClick1 (row) {
-      this.findDeliveryVisibleDialog = false
       this.deliveryOrderId = row.deliveryId
       this.visible = true
       this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery',
@@ -300,7 +245,7 @@ export default {
         this.PickingData = []
         for (var i = 0; i < response.data.data.length; i++) {
           var tdata = {
-            Item: response.data.data[i].materialId,
+            materialId: response.data.data[i].materialId,
             ItemDescription: response.data.data[i].description,
             DeliveryQuantity: response.data.data[i].amount,
             PickingStatus: response.data.data[i].pickingStatus,
@@ -320,7 +265,6 @@ export default {
         })
         .catch(_ => {})
     },
-    // picking按钮，如果Delivery Quantity=Picking Quantity则相应的self.onOrderStock由1改为2，不等于则提示错误
     picking () {
       if (this.multipleSelection.length === 0) {
         this.$alert('没有选中数据', '错误操作', {
@@ -345,7 +289,7 @@ export default {
           this.PickingData = []
           for (var i = 0; i < response.data.data.length; i++) {
             var tdata = {
-              Item: response.data.data[i].materialId,
+              materialId: response.data.data[i].materialId,
               ItemDescription: response.data.data[i].description,
               DeliveryQuantity: response.data.data[i].amount,
               PickingStatus: response.data.data[i].pickingStatus,
@@ -365,19 +309,19 @@ export default {
   }
 }
 </script>
-  <style scoped="scoped">
-  .el-header {
-    text-align: center;
-  }
-  .el-main{
-    background: #ffffff;
-    border-top: 2px solid #d1e0ee;
-  }
-  .el-container{
-    background: #eff4f9;
-    height:100%;
-  }
-  .el-footer{
-    background: #414e59;
-  }
-  </style>
+<style scoped="scoped">
+.el-header {
+  text-align: center;
+}
+.el-main{
+  background: #ffffff;
+  border-top: 2px solid #d1e0ee;
+}
+.el-container{
+  background: #eff4f9;
+  height:100%;
+}
+.el-footer{
+  background: #414e59;
+}
+</style>

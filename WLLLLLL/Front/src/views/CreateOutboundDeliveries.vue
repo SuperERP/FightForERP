@@ -367,8 +367,8 @@
                 width="55">
             </el-table-column>
             <el-table-column
-                prop="plannedCreationDate"
-                label="Planned Creation Date"
+                prop="id"
+                label="Delivery Order Id"
                 width="230">
             </el-table-column>
             <el-table-column
@@ -387,31 +387,25 @@
                 width="230">
             </el-table-column>
             <el-table-column
-                prop="customerId"
-                label="Customer Id"
-            >
+                prop="phase"
+                label="Delivery Phase"
+                width="230">
+              <!--底部框架-->
+              <i class="el-icon-more-outline" style="color: dodgerblue;font-size: 16px;">
+                未发货
+              </i>
             </el-table-column>
-            <!--      <el-table-column-->
-            <!--          prop="status"-->
-            <!--          label="Status"-->
-            <!--          width="180">-->
-
-            <!--        <i class="el-icon-circle-close"  style="color: dodgerblue;font-size: 16px;">-->
-            <!--          未创建发货单 </i>-->
-
-            <!--      </el-table-column>-->
-          </el-table>
-        </el-main>
-         <el-footer>
-           <el-row style="text-align: right ">
-             <el-col>
-               <el-form-item style="margin-top:20px">
-                 <el-button @click="createDelivery" type="text" style="color: white">CreateDeliveries</el-button>
-               </el-form-item>
-             </el-col>
-           </el-row>
-         </el-footer>
-         <!--底部框架-->
+        </el-table>
+      </el-main>
+       <el-footer>
+         <el-row style="text-align: right ">
+           <el-col>
+             <el-form-item style="margin-top:20px">
+               <el-button @click="createDelivery" type="text" style="color: white">CreateDeliveries</el-button>
+             </el-form-item>
+           </el-col>
+         </el-row>
+       </el-footer>
       </el-form>
     </el-container>
   </div>
@@ -690,10 +684,7 @@ export default {
       this.$refs.salesOrderSearchForm.resetFields()
     },
     createDelivery () {
-      if (
-        this.multipleSelection.length === 0 ||
-        this.multipleSelection.length > 1
-      ) {
+      if (this.multipleSelection.length === 0) {
         this.$alert('选中数据数量有误', '错误操作', {
           confirmButtonText: '确定',
           callback: (action) => {
@@ -710,27 +701,15 @@ export default {
             data: this.multipleSelection
           })
           .then((response) => {
-            if (response.data.flag === false) {
-              this.$alert('库存数量不够', '错误操作', {
-                confirmButtonText: '确定',
-                callback: (action) => {
-                  this.$message({
-                    type: 'error',
-                    message: '请确定库存数量之后重新操作'
-                  })
-                }
-              })
-            } else {
-              this.$alert('发货单创建成功', '操作正常', {
-                confirmButtonText: '确定',
-                callback: (action) => {
-                  this.$message({
-                    type: 'success',
-                    message: '成功创建'
-                  })
-                }
-              })
-            }
+            this.$alert('发货单创建成功', '操作正常', {
+              confirmButtonText: '确定',
+              callback: (action) => {
+                this.$message({
+                  type: 'success',
+                  message: '成功创建'
+                })
+              }
+            })
           })
           .catch((error) => {
             console.log(error)
@@ -744,7 +723,7 @@ export default {
     },
 
     letsgo () {
-      console.log(this.shippingPointData)
+      // console.log(this.shippingPointData)
       // 向后端传递销售订单号和客户号码
       var cusIdAndOrId = {
         customerId: this.salesOrderSearchForm.customerId,
@@ -766,14 +745,15 @@ export default {
           this.tableData = []
 
           for (var i = 0; i < response.data.data.length; i++) {
-            console.log(response.data.data[i].city)
-            console.log(response.data.data[i].name)
+            // console.log(response.data.data[i].city)
+            // console.log(response.data.data[i].name)
+            if (response.data.data[i].deliveryPhase !== 0) continue
             var tdata = {
-              plannedCreationDate: response.data.data[i].effectiveDate,
-              plannedGIDate: response.data.data[i].requestedDeliveryDate,
-              salesOrderId: response.data.data[i].id,
-              shippingPointName: response.data.data[i].warehouseName,
-              customerId: response.data.data[i].customerId
+              plannedGIDate: response.data.data[i].plannedDeliveryTime,
+              id: response.data.data[i].id,
+              phase: response.data.data[i].deliveryPhase,
+              salesOrderId: response.data.data[i].salesOrderId,
+              shippingPointName: response.data.data[i].warehouseId
             }
             this.tableData = this.tableData.concat([tdata])
           }
