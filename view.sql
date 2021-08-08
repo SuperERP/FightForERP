@@ -1,5 +1,5 @@
 -- SELECT * from Customer;
--- DROP TABLE Customer;
+DROP TABLE Customer;
 -- SELECT * FROM ContactPerson;
 -- DROP TABLE ContactPerson;
 -- SELECT * FROM InquiryItem;
@@ -21,8 +21,12 @@
 -- SELECT * FROM SalesOrder;
 -- SELECT * FROM SalesOrderItem;
 -- SELECT * FROM Inventory;
--- INSERT INTO Inventory VALUES ('lz102', 'sb103', 1, 10, 10);
+-- INSERT INTO Inventory VALUES ('lz102', 'sb104', 1, 10, 10);
 -- SELECT * FROM DeliveryOrderItem;
-INSERT INTO User VALUES ('zhtest','qweqwe',1);
-SELECT * FROM User;
-DROP TABLE User;
+INSERT INTO Power VALUES (3,'PickingOutboundDelivery');
+INSERT INTO Power VALUES (1,'ManageStock');
+INSERT INTO Power VALUES (2,'ManageStock');
+INSERT INTO Power VALUES (3,'ManageStock');
+SELECT * FROM DeliveryOrder;
+DROP TABLE DeliveryOrder;
+INSERT INTO User VALUES ('s', '1', 10);

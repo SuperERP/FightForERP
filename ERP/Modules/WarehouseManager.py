@@ -20,23 +20,25 @@ class WareHouseDataManager(AbstractModule):
         '''
 
         try:
-            amount = self.session.query(Inventory).filter(Inventory.warehouseId == warehouseId).filter(
-                Inventory.materialDicId == materialId).all()[0].volume
+            print(materialId,warehouseId)
+            amount = self.session.query(Inventory).filter(
+                and_(Inventory.warehouseId == warehouseId,Inventory.materialDicId==materialId)).all()[0].volume
+            print('amount',amount)
+            print(count)
             if (amount < count):
                 return False
             else:
-                self.session.query(Inventory).filter(Inventory.warehouseId == warehouseId).filter(
-                    Inventory.materialDicId == materialId).update(
+                self.session.query(Inventory).filter(and_(Inventory.warehouseId == warehouseId,Inventory.materialDicId==materialId)).update(
                     {
                         Inventory.volume: Inventory.volume - count,
                         Inventory.onOrderStock: Inventory.onOrderStock + count
                     }
                 )
                 self.session.commit()
-                name = self.session.query(MaterialDic).filter(MaterialDic.id == materialId).all()[0].name
+                name = self.session.query(MaterialDic).filter(
+                    MaterialDic.id == materialId).all()[0].name
 
-                self.logging('修改了货物%r的容量,大小为%r' % (name, count))
-        except Exception as e:
+        except Exception :
             self.logging.error(e)
             self.logging.info('发生问题')
 
@@ -93,7 +95,7 @@ class WareHouseDataManager(AbstractModule):
         newData = MaterialDic(**data)
         self.insertData(newData)
 
-    def searchallWarehouse(self): 
+    def searchallWarehouse(self):
         '''
         查找所有仓库信息
         '''
@@ -101,8 +103,8 @@ class WareHouseDataManager(AbstractModule):
         for item in self.session.query(Warehouse).all():
             res.append(self.to_dict(item))
         return res
-    
-    def searchallMaterialDic(self): 
+
+    def searchallMaterialDic(self):
         '''
         查询所有物料词条并添加相同单位EA
         '''
@@ -117,7 +119,7 @@ class WareHouseDataManager(AbstractModule):
         '''
         查询给定id的物料的价格
         '''
-        res=[]
+        res = []
 
         for idata in self.session.query(MaterialDic).filter(MaterialDic.id == id).all():
             res.append(self.to_dict(idata))
@@ -128,23 +130,23 @@ class WareHouseDataManager(AbstractModule):
         '''
         根据条件查询库存
         '''
-        res=[]
+        res = []
 
-        for idata in self.session.query(Inventory).filter(or_(Inventory.materialDicId==materialDicId,materialDicId==''))\
-                .filter(or_(Inventory.warehouseId==warehouseId,warehouseId=='')).all():
+        for idata in self.session.query(Inventory).filter(or_(Inventory.materialDicId == materialDicId, materialDicId == ''))\
+                .filter(or_(Inventory.warehouseId == warehouseId, warehouseId == '')).all():
             res.append(self.to_dict(idata))
 
         return res
-    
-    def changeInventory(self,warehouseId, materialDicId, data :dict):
+
+    def changeInventory(self, warehouseId, materialDicId, data: dict):
         '''
         修改库存信息
         '''
         try:
-            self.session.query(Inventory).filter(Inventory.warehouseId==warehouseId).filter(Inventory.materialDicId==materialDicId).update(data)
+            self.session.query(Inventory).filter(Inventory.warehouseId == warehouseId).filter(
+                Inventory.materialDicId == materialDicId).update(data)
             self.session.commit()
         except Exception as e:
             self.logging.info('请重新检查数据修改')
             self.logging.error(e)
             self.session.rollback()
-    

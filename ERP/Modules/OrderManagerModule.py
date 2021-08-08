@@ -56,19 +56,19 @@ class OrderManagerModule(AbstractModule):
         newData = QuotationItem(**data)
         self.insertData(newData)
 
-    def searchAllSalesOrderItems(self, saleOrderId):
+    def searchAllSalesOrderItems(self, salesOrderId):
         '''
         寻找所有的销售订单物料项
         @return :注意这里返回的是类的列表
         '''
         data = self.session.query(SalesOrderItem).filter(
-            SalesOrderItem.saleOrderId == saleOrderId).all()
+            SalesOrderItem.salesOrderId == salesOrderId).all()
 
         return data
 
     def searchOrders(self, id='', customerId='', warehouseId='', POcode='', PODate='', effectiveDate='',
                      expirationDate='',
-                     saleorderId=None, flag=False):
+                     salesorderId=None, flag=False):
         def getSaleOrders(data):
             '''
             获得销售订单关联的warehouse的名字
@@ -83,8 +83,8 @@ class OrderManagerModule(AbstractModule):
                 Customer).filter(Customer.id == cusId).all()[0].name
             return data
 
-        if saleorderId !='':
-            return getSaleOrders(self.to_dict(self.session.query(SalesOrder).filter(SalesOrder.id == saleorderId).all()[0]))
+        if salesorderId !='':
+            return getSaleOrders(self.to_dict(self.session.query(SalesOrder).filter(SalesOrder.id == salesorderId).all()[0]))
 
         res = []
         if flag == True:

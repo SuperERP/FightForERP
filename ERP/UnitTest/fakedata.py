@@ -194,12 +194,46 @@ for idata in session.query(SalesOrder).all():
             'salesOrderId': idata.id,
             'material': idata1.id,
             'itemDescription': '22232323',
-            'orderQuantity': 'dfsdf',
+            'orderQuantity': 100,
             'salesUnit': '00000',
             'cnty': '12312',
-            'amount': 12312
+            'amount': 123
         }
         newOrder.insertSalesOrderItem(item)
 
 for idata in newDeliveryItems:
     newDelivery.insertDeliveryItem(idata)
+
+
+inventorys=[
+    {
+        'warehouseId':'lz101',
+        'materialDicId':'sb101',
+        'volume':500000,
+        'requestVolume':0,
+        'onOrderStock':0
+    },
+     {
+        'warehouseId':'lz101',
+        'materialDicId':'sb102',
+        'volume':500000,
+        'requestVolume':0,
+        'onOrderStock':0
+    },
+     {
+        'warehouseId':'lz101',
+        'materialDicId':'sb103',
+        'volume':500000,
+        'requestVolume':0,
+        'onOrderStock':0
+    },
+     {
+        'warehouseId':'lz101',
+        'materialDicId':'sb104',
+        'volume':500000,
+        'requestVolume':0,
+        'onOrderStock':0
+    },
+]
+for item in inventorys:
+    newware.insertInventory(item)

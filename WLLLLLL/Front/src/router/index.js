@@ -26,6 +26,8 @@ import ChangePassword from '../views/ChangePassword'
 import CreateOutboundDeliveries from '../views/CreateOutboundDeliveries'
 import OutboundDeliveries from '../views/OutboundDeliveries'
 import PickingOutboundDelivery from '../views/PickingOutboundDelivery'
+import DisplayOutboundDeliveries from '../views/DisplayOutboundDeliveries'
+import DisplayDeliveryItem from '../views/DisplayDeliveryItem'
 // import test1 from '../views/test1'
 // import test from '../views/test'
 import elTableInfiniteScroll from 'el-table-infinite-scroll'
@@ -34,6 +36,16 @@ Vue.use(elTableInfiniteScroll)
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/DisplayDeliveryItem',
+    name: 'DisplayDeliveryItem',
+    component: DisplayDeliveryItem
+  },
+  {
+    path: '/DisplayOutboundDeliveries',
+    name: 'DisplayOutboundDeliveries',
+    component: DisplayOutboundDeliveries
+  },
   {
     path: '/ChangePassword',
     name: 'ChangePassword',

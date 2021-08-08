@@ -56,7 +56,6 @@ class DeliveryManagerModule(AbstractModule):
 
             self.session.commit()
 
-
         except Exception as e:
             self.logging.error(e)
             return
@@ -68,7 +67,7 @@ class DeliveryManagerModule(AbstractModule):
         '''
         try:
             self.session.query(DeliveryItem).filter(and_(
-                DeliveryItem.deliveryOrderId == deliveryOrderId , DeliveryItem.materialId == materialId)). \
+                DeliveryItem.deliveryOrderId == deliveryOrderId, DeliveryItem.materialId == materialId)). \
                 update({'pickingStatus': 1})
             self.session.commit()
         except Exception as e:
@@ -121,3 +120,11 @@ class DeliveryManagerModule(AbstractModule):
         '''
         newData = DeliveryItem(**data)
         self.insertData(newData)
+
+    def getDeliveryOrder(self, id=None):
+        res = self.session.query(DeliveryOrder).filter(
+            DeliveryOrder.id == id).all()[0]
+        return self.to_dict(res)
+
+    def getDeliveryItem(self, deliveryOrderId, materialId):
+        return self.to_dict(self.session.query(DeliveryItem).filter(and_(DeliveryItem.materialId == materialId, DeliveryItem.deliveryOrderId == deliveryOrderId)).all()[0])

@@ -433,10 +433,10 @@ def CreateOutboundDeliveries():
     if 'go' in data.keys():
         if len(data['shippingpoints']) == 0:
             ret['data'] = newOrderManager.searchOrders(
-                customerId=data['customerId'], saleorderId=data['saleorderId'], effectiveDate=data['date'])
+                customerId=data['customerId'], salesorderId=data['salesorderId'], effectiveDate=data['date'])
         else:
             ret['data'] = newOrderManager.searchOrders(
-                customerId=data['customerId'], saleorderId=data['saleorderId'], effectiveDate=data['date'], warehouseId=data['shippingpoints'], flag=True)
+                customerId=data['customerId'], salesorderId=data['salesorderId'], effectiveDate=data['date'], warehouseId=data['shippingpoints'], flag=True)
         return jsonify(ret)
 
     if 'create' in data.keys():
@@ -447,21 +447,21 @@ def CreateOutboundDeliveries():
             '''
             前端传来的销售订单数据
             '''
-            saleOrderId = item['salesOrderId']
+            salesOrderId = item['salesOrderId']
             plannedGIDate = item['plannedGIDate']
-            salesOrder = newOrderManager.searchOrders(saleorderId=saleOrderId)
+            salesOrder = newOrderManager.searchOrders(salesorderId=salesOrderId)
             warehouseId = salesOrder['warehouseId']
             deliveryOrder = {
                 'plannedDeliveryTime': parser.parse(plannedGIDate),
-                'deliveryPhase': 0,
-                'salesOrderId': saleOrderId,
+                'deliveryPhase': 1,
+                'salesOrderId': salesOrderId,
                 'warehouseId': warehouseId,
                 'actualDeliveryTime': None
             }
             deliveryOrderId = newDelivery.insertDeliveryOrder(deliveryOrder)
 
             salesOrderItems = newOrderManager.searchAllSalesOrderItems(
-                saleOrderId=saleOrderId)
+                salesOrderId=salesOrderId)
             for item in salesOrderItems:
                 '''
                 创建发货单物料项 
@@ -519,6 +519,45 @@ def finddelivery():
     print(ret)
     return jsonify(ret)
 
+@app.route('/DisplayOutboundDeliveries', methods=['post']) #copy from cb
+def DisplayOutboundDelivery():
+    data = request.get_json(silent=True)
+    ret = {}
+    print(data)
+    id = data['id']
+    deliveryData = newDelivery.getDeliveryOrder(id=id)
+    ret['form'] = {}
+    ret['form']['id'] = id
+    ret['form']['salesOrderId'] = deliveryData['salesOrderId']
+    ret['form']['warehouseId'] = deliveryData['warehouseId']
+    ret['form']['deliveryPhase'] = deliveryData['deliveryPhase']
+    ret['form']['actualDeliveryTime'] = deliveryData['actualDeliveryTime']
+    ret['form']['plannedDeliveryTime'] = deliveryData['plannedDeliveryTime']
+
+    ret['materialList'] = newDelivery.searchDeliveryItems(deliveryId=id)
+    return jsonify(ret)
+
+
+@app.route('/DisplayDeliveryItem', methods=['post']) #copy from cb
+def DisplayDeliveryItem():
+    data = request.get_json(silent=True)
+    ret = {}
+    print(data)
+    deliveryOrderid = data['deliveryOrderId']
+    materialId = data['materialId']
+    ret['deliveryOrderId'] = deliveryOrderid
+    ret['materialId'] = materialId
+
+    deliverItemData = newDelivery.getDeliveryItem(
+        deliveryOrderId=deliveryOrderid, materialId=materialId)
+    
+    ret['description']=deliverItemData['description']
+    ret['amount']=deliverItemData['amount']
+    ret['pickingStatus']=deliverItemData['pickingStatus']
+    ret['pickingAmount']=deliverItemData['pickingAmount']
+    ret['materialState']=deliverItemData['materialState']
+    ret['unit']=deliverItemData['unit']    
+    return jsonify(ret)
 
 @app.route('/PickingOutboundDelivery', methods=['post'])
 def PickingOutboundDelivery():
@@ -542,9 +581,9 @@ def PickingOutboundDelivery():
         for deliveryItem in deliveryOrders:
             print(deliveryItem)
 
-            saleOrderId = deliveryItem['salesOrderId']
+            salesOrderId = deliveryItem['salesOrderId']
             saleOrderItem = newOrderManager.searchOrders(
-                saleorderId=saleOrderId)
+                salesorderId=salesOrderId)
 
             # 字典拼接
             tDict = {k: v for k, v in deliveryItem.items()}
@@ -593,7 +632,7 @@ def changePasswd():
 def judgePower():
     id = request.get_json()[0]
     content = request.get_json()[1]
-    res = newUser.judgePower(id=id, content=content)
+    res = newUser.judgePower(id=id['id'], content=content)
     return res
 
 if __name__ == '__main__':

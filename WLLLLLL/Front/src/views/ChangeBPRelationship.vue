@@ -359,7 +359,7 @@ export default {
     textclick1 (row) {
       this.Visible3 = false
       this.Visible4 = false
-      this.form.contactId = parseInt(row.id)
+      this.form.contactId = row.id
     },
     textclick2 (row) {
       this.Visible8 = false

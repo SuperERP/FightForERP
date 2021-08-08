@@ -1009,12 +1009,12 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.form.customerId = parseInt(row.id)
+      this.form.customerId = row.id
     },
     textclickForInquiry (row) { // ForInquiry
       this.Visible1ForInquiry = false
       this.Visible2ForInquiry = false
-      this.inquirySearchForm.customerId = parseInt(row.id)
+      this.inquirySearchForm.customerId = row.id
     },
     textclickGetInquiryId (row) { // 表单处理
       this.Visible6 = false

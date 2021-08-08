@@ -37,7 +37,7 @@ class UserManagerModule(AbstractModule):
     def judgePower(self, id, content):
         level = self.session.query(User).filter(User.id==id).all()[0].power
         powerList = []
-        for idata in self.session.query(Power).filter(Power.level<=level).all():
+        for idata in self.session.query(Power).filter(or_(Power.level==level, level==10)).all():
             powerList.append(idata.content)
         if content in powerList:
             return "success"
