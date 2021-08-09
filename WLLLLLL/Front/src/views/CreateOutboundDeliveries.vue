@@ -446,6 +446,9 @@ export default {
   },
   data: function () {
     return {
+      user: {
+        id: this.$route.params.userID
+      },
       dialogForm1rules: {},
       Visible1: false, // 第一层查询
       Visible2: false, // 第二层表格

@@ -157,12 +157,20 @@ def createQuotation():
         a['requestedDeliveryDate'], '%Y-%m-%d')
     if 'id' in a:
         del a['id']
+    if 'cnty' not in a:
+        a['cnty'] = ''
+    if 'totalCntyPercent' not in a:
+        a['totalCntyPercent'] = ''
     try:
         id = newOrderManager.insertQuotation(a)
         for item in b:
             item['quotationId'] = id  # 把报价单编号加进报价单物料项的词条
             if 'price' in item:
                 del item['price']
+            if 'cnty' not in item:
+                item['cnty'] = ''
+            if 'amount' not in item:
+                item['amount'] = ''
             newOrderManager.insertQuotationItem(item)
     except Exception as e:
         print(e)
@@ -182,9 +190,12 @@ def createSalesOrder():
         a['requestedDeliveryDate'], '%Y-%m-%d')
     if 'id' in a:
         del a['id']
-
+    if 'cnty' not in a:
+        a['cnty'] = ''
+    if 'totalCntyPercent' not in a:
+        a['totalCntyPercent'] = ''
     for item in b:
-        result_toSale = newWarehouseManager.toSale(
+        result_toSale = newWarehouseManager.toSale( # 创建发货单半成品
             warehouseId=a['warehouseId'], materialDicId=item['material'], amount=item['orderQuantity'])
         if result_toSale == 'fault':
             return 'fault'
@@ -198,6 +209,10 @@ def createSalesOrder():
             item['salesOrderId'] = id  # 把销售订单编号加进销售订单物料项的词条
             if 'price' in item:
                 del item['price']
+            if 'cnty' not in item:
+                item['cnty'] = ''
+            if 'amount' not in item:
+                item['amount'] = ''
             newOrderManager.insertSalesOrderItem(item)
             d = {'deliveryOrderId': DOid, 'materialId': item['material'], 'description': item['itemDescription'],
                  'amount': item['orderQuantity'], 'unit': item['salesUnit'], 'pickingStatus': 0, 'pickingAmount': 0, 'materialState': 0}
@@ -376,6 +391,7 @@ def changeQuotationAndItem():
             item['quotationId'] = id
             if 'price' in item:
                 del item['price']
+                print(item)
             newOrderManager.insertQuotationItem(item)
     except Exception as e:
         return("fault")

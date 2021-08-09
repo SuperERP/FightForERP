@@ -1,14 +1,65 @@
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a618bbe0>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4438>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4e48>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a6559128>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4da0>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4e48>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4b38>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a6559160>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a6559160>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4dd8>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a6563e80>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a6563e80>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4b38>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fc6a64a4b38>
+success insert data <Modules.OrmData.InquiryData.Inquiry object at 0x7fb96f2a8c88>
+请重新检查数据插入
+__str__ returned non-string (type NoneType)
+success insert data <Modules.OrmData.QutationAndSalesOrderData.Quotation object at 0x7fb972617dd8>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.QuotationItem object at 0x7fb972475630>
+success insert data <>
+success insert data <DeliveryOrder(id='OD20210809134801021999',plannedDeliveryTime=datetime.date(2021, 8, 5),actualDeliveryTime=None,salesOrderId='SO20210809134801012669',warehouse='lz101',deliveryPhase=0)>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fb972230e48>
+success insert data 我还没写
+0to1状态修改成功
+查询所有物料项[{'deliveryOrderId': 'OD20210809134801021999', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 0, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809134801021999', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 0, 'pickingAmount': 0, 'materialState': '0'}]
+发生拣配工作
+完成0个订单从状态一到状态二的更新工作
+1t02 finished
+查询所有物料项[{'deliveryOrderId': 'OD20210809134801021999', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809134801021999', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+发生拣配工作
+完成0个订单从状态一到状态二的更新工作
+1t02 finished
+查询所有物料项[{'deliveryOrderId': 'OD20210809134801021999', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+发生拣配工作
+完成0个订单从状态一到状态二的更新工作
+1t02 finished
+查询所有物料项[{'deliveryOrderId': 'OD20210809134801021999', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+发生拣配工作
+完成0个订单从状态一到状态二的更新工作
+1t02 finished
+查询所有物料项[{'deliveryOrderId': 'OD20210809134801021999', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+发货单从状态2转到状态3
+查询所有物料项[{'deliveryOrderId': 'OD20210809134801021999', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809134801021999', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809134801021999', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+success insert data <>
+success insert data <DeliveryOrder(id='OD20210809140230689017',plannedDeliveryTime=datetime.date(2021, 8, 5),actualDeliveryTime=None,salesOrderId='SO20210809140230678125',warehouse='lz101',deliveryPhase=0)>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fb97269def0>
+success insert data 我还没写
+0to1状态修改成功
+查询所有物料项[{'deliveryOrderId': 'OD20210809140230689017', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 0, 'pickingAmount': 0, 'materialState': '0'}]
+发生拣配工作
+完成0个订单从状态一到状态二的更新工作
+1t02 finished
+查询所有物料项[{'deliveryOrderId': 'OD20210809140230689017', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809140230689017', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+发货单从状态2转到状态3
+查询所有物料项[{'deliveryOrderId': 'OD20210809140230689017', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+success insert data <>
+success insert data <DeliveryOrder(id='OD20210809141217671726',plannedDeliveryTime=datetime.date(2021, 8, 5),actualDeliveryTime=None,salesOrderId='SO20210809141217665556',warehouse='lz101',deliveryPhase=0)>
+success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7fb9726f5b00>
+success insert data 我还没写
+0to1状态修改成功
+查询所有物料项[{'deliveryOrderId': 'OD20210809141217671726', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 0, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809141217671726', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 0, 'pickingAmount': 0, 'materialState': '0'}]
+发生拣配工作
+完成0个订单从状态一到状态二的更新工作
+1t02 finished
+查询所有物料项[{'deliveryOrderId': 'OD20210809141217671726', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809141217671726', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809141217671726', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809141217671726', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809141217671726', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809141217671726', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809141217671726', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809141217671726', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]
+查询所有物料项[{'deliveryOrderId': 'OD20210809141217671726', 'materialId': 'sb101', 'description': 'mat1', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 0, 'materialState': '0'}]

@@ -1,9 +1,15 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header><router-link to="/ShellHome">
-        <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
-        </el-button></router-link>Display OutboundDeliveries {{ this.$route.params.id }}
+      <el-header><router-link :to = "{
+        path: '/ShellHome',
+        name: 'ShellHome',
+        params: {
+          id: this.user.id
+        }
+      }">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>Display OutboundDeliveries {{ this.$route.params.id }}
       <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
         </el-button>
       </el-header>
@@ -144,7 +150,13 @@ export default {
 
     goToLink1 () {
       // Return指定跳转地址
-      this.$router.replace('/OutboundDeliveries')
+      // this.$router.replace('/OutboundDeliveries')
+      this.$router.push({
+        name: 'OutboundDeliveries',
+        params: {
+          userID: this.user.id
+        }
+      })
     },
     jumpToDDI (row) {
       console.log(row.materialId)

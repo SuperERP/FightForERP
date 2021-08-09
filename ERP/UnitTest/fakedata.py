@@ -22,22 +22,22 @@ newware = WareHouseDataManager(session, ErpLogger)
 
 # os.remove('/home/supercb/PycharmProjects/NewErp/ERP/UnitTest/tutorial.db')
 
-nc = {}
-nc['name'] = 'zht'
-nc['street'] = "sp"
-nc['postcode'] = "111"
-nc['country'] = "CN"
-nc['language'] = "CH"
-nc['accountantId'] = "185324"
-nc['paycode'] = "1853245"
-nc['distribution_channel'] = "00"
-nc['distribution_area'] = "CN00"
-nc['sales_channel_number'] = "0"
-nc['city'] = 'dsafdsfs'
-nc['POcode'] = "123"
-nc['region'] = 'sdfsd'
+# nc = {}
+# nc['name'] = 'zht'
+# nc['street'] = "sp"
+# nc['postcode'] = "111"
+# nc['country'] = "CN"
+# nc['language'] = "CH"
+# nc['accountantId'] = "185324"
+# nc['paycode'] = "1853245"
+# nc['distribution_channel'] = "00"
+# nc['distribution_area'] = "CN00"
+# nc['sales_channel_number'] = "0"
+# nc['city'] = 'dsafdsfs'
+# nc['POcode'] = "123"
+# nc['region'] = 'sdfsd'
 
-newCustomer.insertCustomer(nc)
+# newCustomer.insertCustomer(nc)
 
 pocode = '036'
 ttime = time.localtime()
@@ -51,10 +51,10 @@ materialList = [
 ]
 
 discountList = [
-    {'id': 'zk101', 'name': 'zk1', 'discountCalcu': 'A'},
-    {'id': 'zk102', 'name': 'zk2', 'discountCalcu': 'A'},
-    {'id': 'zk103', 'name': 'zk3', 'discountCalcu': 'B'},
-    {'id': 'zk104', 'name': 'zk4', 'discountCalcu': 'B'},
+    {'id': 'zk101', 'name': 'K004', 'discountCalcu': 'A'},
+    {'id': 'zk102', 'name': 'K004', 'discountCalcu': 'A'},
+    {'id': 'zk103', 'name': 'K004', 'discountCalcu': 'B'},
+    {'id': 'zk104', 'name': 'K004', 'discountCalcu': 'B'},
 
 ]
 # warehouse.insetData()
@@ -72,137 +72,137 @@ warehouse = [
 ]
 for idata in warehouse:
     newware.insertWarehouse(idata)
-salesOrders = [
-    {
-        'customerId': '0001000000',
-        'warehouseId': 'lz101',
-        'POcode': pocode,
-        'PODate': date1,
-        'effectiveDate': date1,
-        'expirationDate': date1,
-        'requestedDeliveryDate': date1,
-        'discountId': 'zk101',
-        'totalDiscountNum': 10,
-        'cnty': '12312',
-        'totalCntyPercent': '2312'
+# salesOrders = [
+#     {
+#         'customerId': '0001000000',
+#         'warehouseId': 'lz101',
+#         'POcode': pocode,
+#         'PODate': date1,
+#         'effectiveDate': date1,
+#         'expirationDate': date1,
+#         'requestedDeliveryDate': date1,
+#         'discountId': 'zk101',
+#         'totalDiscountNum': 10,
+#         'cnty': '12312',
+#         'totalCntyPercent': '2312'
 
-    }, {
-        'customerId': '0001000000',
-        'warehouseId': 'lz101',
-        'POcode': pocode,
-        'PODate': date1,
-        'effectiveDate': date1,
-        'expirationDate': date1,
-        'requestedDeliveryDate': date1,
-        'discountId': 'zk101',
-        'totalDiscountNum': 10,
-        'cnty': '12312',
-        'totalCntyPercent': '2312'
+#     }, {
+#         'customerId': '0001000000',
+#         'warehouseId': 'lz101',
+#         'POcode': pocode,
+#         'PODate': date1,
+#         'effectiveDate': date1,
+#         'expirationDate': date1,
+#         'requestedDeliveryDate': date1,
+#         'discountId': 'zk101',
+#         'totalDiscountNum': 10,
+#         'cnty': '12312',
+#         'totalCntyPercent': '2312'
 
-    }, {
-        'customerId': '0001000000',
-        'warehouseId': 'lz101',
-        'POcode': pocode,
-        'PODate': date1,
-        'effectiveDate': date1,
-        'expirationDate': date1,
-        'requestedDeliveryDate': date1,
-        'discountId': 'zk101',
-        'totalDiscountNum': 10,
-        'cnty': '12312',
-        'totalCntyPercent': '2312'
+#     }, {
+#         'customerId': '0001000000',
+#         'warehouseId': 'lz101',
+#         'POcode': pocode,
+#         'PODate': date1,
+#         'effectiveDate': date1,
+#         'expirationDate': date1,
+#         'requestedDeliveryDate': date1,
+#         'discountId': 'zk101',
+#         'totalDiscountNum': 10,
+#         'cnty': '12312',
+#         'totalCntyPercent': '2312'
 
-    }, {
-        'customerId': '0001000000',
-        'warehouseId': 'lz101',
-        'POcode': pocode,
-        'PODate': date1,
-        'effectiveDate': date1,
-        'expirationDate': date1,
-        'requestedDeliveryDate': date1,
-        'discountId': 'zk101',
-        'totalDiscountNum': 10,
-        'cnty': '12312',
-        'totalCntyPercent': '2312'
-    }
-]
-for idata in salesOrders:
-    newOrder.createSalesOrder(idata)
+#     }, {
+#         'customerId': '0001000000',
+#         'warehouseId': 'lz101',
+#         'POcode': pocode,
+#         'PODate': date1,
+#         'effectiveDate': date1,
+#         'expirationDate': date1,
+#         'requestedDeliveryDate': date1,
+#         'discountId': 'zk101',
+#         'totalDiscountNum': 10,
+#         'cnty': '12312',
+#         'totalCntyPercent': '2312'
+#     }
+# ]
+# for idata in salesOrders:
+#     newOrder.createSalesOrder(idata)
 
-deliverys = []
-import random
+# deliverys = []
+# import random
 
-for item in session.query(SalesOrder).all():
-    id = item.id
-    tdata = {}
-    tdata['salesOrderId'] = id
-    tdata['plannedDeliveryTime'] = date1
-    tdata['actualDeliveryTime'] = None
-    tdata['warehouseId'] = 'lz101'
-    tdata['deliveryPhase'] = 1
-    deliverys.append(tdata)
+# for item in session.query(SalesOrder).all():
+#     id = item.id
+#     tdata = {}
+#     tdata['salesOrderId'] = id
+#     tdata['plannedDeliveryTime'] = date1
+#     tdata['actualDeliveryTime'] = None
+#     tdata['warehouseId'] = 'lz101'
+#     tdata['deliveryPhase'] = 1
+#     deliverys.append(tdata)
 
-for idata in deliverys:
-    newDelivery.insertDeliveryOrder(idata)
-print(type(newDelivery.searchallDelivery()[0]))
-delid = session.query(DeliveryOrder).all()[0].id
-newDeliveryItems = [
-    {
-        'deliveryOrderId': delid,
-        'materialId': 'sb101',
-        'description': 'sdfsdfasd',
-        'amount': 10,
-        'unit': '3213123'
-        , 'pickingStatus': 0,
-        'pickingAmount': 210,
-        'materialState': 'sadfsd'
-    },
-    {
-        'deliveryOrderId': delid,
-        'materialId': 'sb102',
-        'description': 'sdfsdfasd',
-        'amount': 10,
-        'unit': '3213123'
-        , 'pickingStatus': 1,
-        'pickingAmount': 111,
-        'materialState': 'sadfsd'
-    }, {
-        'deliveryOrderId': delid,
-        'materialId': 'sb103',
-        'description': 'sdfsdfasd',
-        'amount': 10,
-        'unit': '3213123'
-        , 'pickingStatus': 1,
-        'pickingAmount': 101,
-        'materialState': 'sadfsd'
-    },
-    {
-        'deliveryOrderId': delid,
-        'materialId': 'sb104',
-        'description': 'sdfsdfasd',
-        'amount': 10,
-        'unit': '3213123',
-        'pickingStatus': 0,
-        'pickingAmount': 110,
-        'materialState': 'sadfsd'
-    }
-]
+# for idata in deliverys:
+#     newDelivery.insertDeliveryOrder(idata)
+# print(type(newDelivery.searchallDelivery()[0]))
+# delid = session.query(DeliveryOrder).all()[0].id
+# newDeliveryItems = [
+#     {
+#         'deliveryOrderId': delid,
+#         'materialId': 'sb101',
+#         'description': 'sdfsdfasd',
+#         'amount': 10,
+#         'unit': '3213123'
+#         , 'pickingStatus': 0,
+#         'pickingAmount': 210,
+#         'materialState': 'sadfsd'
+#     },
+#     {
+#         'deliveryOrderId': delid,
+#         'materialId': 'sb102',
+#         'description': 'sdfsdfasd',
+#         'amount': 10,
+#         'unit': '3213123'
+#         , 'pickingStatus': 1,
+#         'pickingAmount': 111,
+#         'materialState': 'sadfsd'
+#     }, {
+#         'deliveryOrderId': delid,
+#         'materialId': 'sb103',
+#         'description': 'sdfsdfasd',
+#         'amount': 10,
+#         'unit': '3213123'
+#         , 'pickingStatus': 1,
+#         'pickingAmount': 101,
+#         'materialState': 'sadfsd'
+#     },
+#     {
+#         'deliveryOrderId': delid,
+#         'materialId': 'sb104',
+#         'description': 'sdfsdfasd',
+#         'amount': 10,
+#         'unit': '3213123',
+#         'pickingStatus': 0,
+#         'pickingAmount': 110,
+#         'materialState': 'sadfsd'
+#     }
+# ]
 
-for idata in session.query(SalesOrder).all():
-    for idata1 in session.query(MaterialDic).all():
-        item = {
-            'salesOrderId': idata.id,
-            'material': idata1.id,
-            'itemDescription': '22232323',
-            'orderQuantity': 100,
-            'salesUnit': '00000',
-            'cnty': '12312',
-            'amount': 123
-        }
-        newOrder.insertSalesOrderItem(item)
+# for idata in session.query(SalesOrder).all():
+#     for idata1 in session.query(MaterialDic).all():
+#         item = {
+#             'salesOrderId': idata.id,
+#             'material': idata1.id,
+#             'itemDescription': '22232323',
+#             'orderQuantity': 100,
+#             'salesUnit': '00000',
+#             'cnty': '12312',
+#             'amount': 123
+#         }
+#         newOrder.insertSalesOrderItem(item)
 
-for idata in newDeliveryItems:
-    newDelivery.insertDeliveryItem(idata)
+# for idata in newDeliveryItems:
+#     newDelivery.insertDeliveryItem(idata)
 
 
 inventorys=[

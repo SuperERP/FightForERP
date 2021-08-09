@@ -315,7 +315,13 @@ export default {
     },
     goToLink1 () {
       // Return指定跳转地址
-      this.$router.replace('/OutboundDeliveries')
+      // this.$router.replace('/OutboundDeliveries')
+      this.$router.push({
+        name: 'OutboundDeliveries',
+        params: {
+          userID: this.user.id
+        }
+      })
     }
   }
 }
