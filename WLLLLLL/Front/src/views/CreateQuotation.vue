@@ -817,13 +817,7 @@ export default {
         inquiryNum: ''
       },
       // material假数据，对接InquiryItem
-      materialList: [{
-        material: 'DXTR',
-        itemDescription: 'Deluxe Touring Bike(black)',
-        salesUnit: 'EA',
-        price: '20',
-        orderQuantity: '2'
-      }],
+      materialList: [],
       plantList: [{
         id: 'MI00',
         name: 'Miami Plant'

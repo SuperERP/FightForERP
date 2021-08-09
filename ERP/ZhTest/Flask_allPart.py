@@ -607,7 +607,7 @@ def PickingOutboundDelivery():
 
         newDelivery.deliveryOrder2to3(data['id'], datestr)
 
-        newWarehouseManager.deliveryOrder2to3()
+        newWarehouseManager.deliveryOrder2to3(deliverOrderId=data['id'])
 
         return jsonify(ret)
 

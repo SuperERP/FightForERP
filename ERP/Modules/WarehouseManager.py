@@ -71,7 +71,7 @@ class WareHouseDataManager(AbstractModule):
             '''
             data = self.session.query(DeliveryItem).filter(DeliveryItem.deliveryOrderId == deliverOrderId).filter(
                 DeliveryItem.pickingStatus == 1).all()
-
+            print(data)
             warehouseId=self.session.query(DeliveryOrder).filter(DeliveryOrder.id==deliverOrderId).all()[0].warehouseId
             for item in data:
                 count = item.amount
