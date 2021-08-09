@@ -17,7 +17,7 @@
       <!--       BusinessPartner-->
       <el-row :gutter="20">
         <el-col :span="5">
-          <el-button type="text" style="padding: 0;" @click="jumpTest ()">
+          <el-button type="text" style="padding: 0;" @click="clickButton($event)">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Create</div>
               <div class="CardText item">Customer</div>
