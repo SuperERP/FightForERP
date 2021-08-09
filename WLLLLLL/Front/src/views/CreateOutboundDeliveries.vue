@@ -138,6 +138,7 @@
                     <el-date-picker
                         size=mini
                         v-model="plannedCreationDate"
+                        value-format="yyyy-MM-dd"
                         type="date"
                         placeholder="选择日期"
                         :picker-options="pickerOptions"
