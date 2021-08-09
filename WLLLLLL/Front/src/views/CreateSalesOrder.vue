@@ -1193,8 +1193,28 @@ export default {
     },
     // 检查ExpectOrdVal是否大于0
     checkExpectOrdVal1 () {
-      var temp
-      temp = parseInt(this.addMaterialForm.orderQuantity) * this.addMaterialForm.price - parseInt(this.addMaterialForm.amount)
+      var temp = 0 // 代表该material的期望价格
+      var temp1 // 代表该material折扣数量
+      if (this.addMaterialForm.amount === '') {
+        temp1 = 0
+      } else {
+        temp1 = this.addMaterialForm.amount
+      }
+      switch (this.addMaterialForm.cnty) {
+        case 'K004' : { // 降价
+          temp = temp + this.addMaterialForm.orderQuantity * this.addMaterialForm.price - temp1
+          break
+        }
+        case 'RA00' : { // 打折
+          temp = temp + this.addMaterialForm.orderQuantity * this.addMaterialForm.price * (1 - temp1 / 100)
+          break
+        }
+        default : { // 无折扣
+          temp = temp + this.addMaterialForm.orderQuantity * this.addMaterialForm.price
+          break
+        }
+      }
+      console.log(temp)
       // if语句判断期望折扣是否小于0
       if (temp > 0) {
         return true
@@ -1211,8 +1231,20 @@ export default {
         } else {
           temp = row.amount
         }
-        // 计算
-        ExpectOrdVal += row.orderQuantity * row.price - temp
+        switch (row.cnty) {
+          case 'K004' : { // 降价
+            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price - temp
+            break
+          }
+          case 'RA00' : { // 打折
+            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price * (1 - temp / 100)
+            break
+          }
+          default : { // 无折扣
+            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price
+            break
+          }
+        }
       })
       // if语句判断期望折扣是否小于0
       if (ExpectOrdVal > 0) { return true } else { return false }
