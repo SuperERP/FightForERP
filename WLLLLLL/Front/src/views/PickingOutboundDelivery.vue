@@ -1,10 +1,18 @@
 <template>
   <el-container>
-    <el-header><router-link to="/ShellHome">
-      <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
-      </el-button></router-link>
+    <el-header><router-link :to = "{
+        path: '/ShellHome',
+        name: 'ShellHome',
+        params: {
+          id: this.user.id
+        }
+      }">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>
       Pick Outbound Delivery
-    </el-header>
+    <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
+        </el-button>
+      </el-header>
     <!--查询对话框-->
     <!-- 查询Delivery ，如果是在3.2界面点击“>”转进来，应该直接查询相应Delivery的信息-->
     <!--      表Picking&GI-->
@@ -142,6 +150,9 @@ export default {
   },
   data () {
     return {
+      user: {
+        id: this.$route.params.userID
+      },
       id: this.$route.params.id,
       form: { // 对应deliveryOrder和deliveryOrderItem
         plannedDeliveryTime: '2021-12-12',

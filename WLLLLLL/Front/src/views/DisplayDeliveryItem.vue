@@ -1,9 +1,17 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header><router-link to="/ShellHome">
-        <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
-        </el-button></router-link>Display DeliveryItem
+      <el-header><router-link :to = "{
+        path: '/ShellHome',
+        name: 'ShellHome',
+        params: {
+          id: this.user.id
+        }
+      }">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>Display DeliveryItem
+      <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
+        </el-button>
       </el-header>
       <el-form ref="form" :inline="true" :model="form"  label-width="200px" size="mini" >
         <el-row :gutter="50" style="margin-top:10px">
@@ -93,6 +101,9 @@ export default {
   },
   data () {
     return {
+      user: {
+        id: this.$route.params.userID
+      },
       form: { // 对应DeliveryOrderItem
         deliveryOrderId: this.$route.params.deliveryOrderId,
         materialId: '',

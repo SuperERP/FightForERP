@@ -2,7 +2,7 @@
   <div>
     <el-container style="overflow-x:hidden">
         <el-header>Home
-        </el-header>
+      </el-header>
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" style="background-color: #eff4f9;" @select="handleSelect">
         <el-menu-item index="1"><a href="#BusinessPartner" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Business Partner</a></el-menu-item>
         <el-menu-item index="2"><a href="#OrderManagement" style="display:inline-block; width: 100%;text-decoration:none; font-size: 15px;">Order Management</a></el-menu-item>
@@ -17,7 +17,7 @@
       <!--       BusinessPartner-->
       <el-row :gutter="20">
         <el-col :span="5">
-          <el-button type="text" style="padding: 0;" @click="clickButton($event)">
+          <el-button type="text" style="padding: 0;" @click="jumpTest ()">
             <el-card class="box-card" shadow="hover">
               <div class="CardText item">Create</div>
               <div class="CardText item">Customer</div>
@@ -208,7 +208,7 @@ export default {
     }
   },
   created () {
-    this.user.id = 's'
+    // this.user.id = 's'
   },
   methods: {
     handleSelect (key, keyPath) {
@@ -231,15 +231,16 @@ export default {
           })
         }
       })
+    },
+    jumpTest () {
+      this.$router.push({
+        path: '/CreateCustomer',
+        name: 'CreateCustomer',
+        params: {
+          userID: this.user.id
+        }
+      })
     }
-    // jumpTest () {
-    //   this.$router.push({
-    //     path: '/CreateCustomer',
-    //     params: {
-    //       userID: this.user.id
-    //     }
-    //   })
-    // }
   }
 }
 </script>

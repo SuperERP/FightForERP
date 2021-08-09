@@ -1,10 +1,16 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header><router-link to="/ShellHome">
+      <el-header><router-link :to = "{
+        path: '/ShellHome',
+        name: 'ShellHome',
+        params: {
+          id: this.user.id
+        }
+      }">
   <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
   </el-button></router-link>Create New Customer: Overview
-        <el-button style="float:right;font-size:30px;color:#333333 " type="text" v-text="this.user.id">
+        <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
         </el-button>
       </el-header>
 

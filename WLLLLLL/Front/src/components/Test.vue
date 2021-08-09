@@ -10,6 +10,9 @@ export default {
   name: 'Test',
   data () {
     return {
+      user: {
+        id: this.$route.params.userID
+      },
       msg: 'dfasd'
     }
   },

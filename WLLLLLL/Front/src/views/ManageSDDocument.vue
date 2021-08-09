@@ -1,9 +1,17 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header><router-link to="/ShellHome">
+      <el-header><router-link :to = "{
+        path: '/ShellHome',
+        name: 'ShellHome',
+        params: {
+          id: this.user.id
+        }
+      }">
   <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
   </el-button></router-link>Manage SD Document: Overview
+      <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
+        </el-button>
       </el-header>
 
       <el-form ref="form" style="text-align: center" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
@@ -615,6 +623,9 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      user: {
+        id: this.$route.params.userID
+      },
       Visible1: false, // bp1第一层查询
       Visible2: false, // bp2第二层表格
       Visible3: false, // bp1第一层查询
@@ -1079,7 +1090,8 @@ export default {
                 path: '/DisplayInquiry',
                 name: 'DisplayInquiry',
                 params: {
-                  id: this.inquiryForm.id
+                  id: this.inquiryForm.id,
+                  userID: this.user.id
                 }
               })
             } else {
@@ -1096,7 +1108,8 @@ export default {
                 path: '/DisplayQuotation',
                 name: 'DisplayQuotation',
                 params: {
-                  id: this.quotForm.id
+                  id: this.quotForm.id,
+                  userID: this.user.id
                 }
               })
             } else {
@@ -1113,7 +1126,8 @@ export default {
                 path: '/DisplaySalesOrder',
                 name: 'DisplaySalesOrder',
                 params: {
-                  id: this.salesOrderForm.id
+                  id: this.salesOrderForm.id,
+                  userID: this.user.id
                 }
               })
             } else {

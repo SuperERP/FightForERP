@@ -2,10 +2,18 @@
   <div>
     <el-container>
       <!--顶部搜索按钮-->
-      <el-header><router-link to="/ShellHome">
+      <el-header><router-link :to = "{
+        path: '/ShellHome',
+        name: 'ShellHome',
+        params: {
+          id: this.user.id
+        }
+      }">
   <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
   </el-button></router-link>
         Manage Stock
+      <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
+        </el-button>
       </el-header>
       <el-form ref="form" :inline="true" :rules="rules" :model="formInline" class="demo-form-inline" label-width="200px" size="mini">
           <el-row style="text-align: right;margin-right: 20px;margin-top: 0px">
@@ -178,6 +186,9 @@ export default {
   name: 'ManageStock',
   data () {
     return {
+      user: {
+        id: this.$route.params.userID
+      },
       Visible1: false, // 控制库存修改的对话框
       show: false, // 控制物料表是否可见，Go触发可见
       show1: false, // 控制材料检索框是否可见

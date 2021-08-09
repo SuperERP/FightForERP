@@ -1,10 +1,18 @@
 <template>
   <div>
     <el-container>
-      <el-header><router-link to="/ShellHome">
+      <el-header><router-link :to = "{
+        path: '/ShellHome',
+        name: 'ShellHome',
+        params: {
+          id: this.user.id
+        }
+      }">
   <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
   </el-button></router-link>
         Outbound Deliveries
+      <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
+        </el-button>
       </el-header>
       <el-form ref="form" :inline="true" :model="formInline" class="demo-form-inline" label-width="200px" size="mini">
         <el-row style="height: auto;text-align: right;margin-top: -15px">
@@ -428,6 +436,9 @@ export default {
 
   data () {
     return {
+      user: {
+        id: this.$route.params.userID
+      },
       formLabelWidth1: '120px',
       Visible1: false, // 第一层查询
       Visible2: false, // 第二层表格
@@ -730,7 +741,8 @@ export default {
         path: '/DisplayOutboundDeliveries',
         name: 'DisplayOutboundDeliveries',
         params: {
-          id: this.selectData[0].deliveryOrderId
+          id: this.selectData[0].deliveryOrderId,
+          userID: this.user.id
         }
       })
     },
@@ -785,7 +797,8 @@ export default {
           name: 'PickingOutboundDelivery', // 这个是通过路由跳转页面，跳转到：在router.js里的name为详情的页面
           params: {
             data: this.selectData[0].deliveryOrderId, // key随便起名，下边对应就行
-            id: this.selectData[0].deliveryOrderId
+            id: this.selectData[0].deliveryOrderId,
+            userID: this.user.id
           }
         })
       }

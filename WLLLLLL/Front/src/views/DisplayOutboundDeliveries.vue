@@ -4,6 +4,8 @@
       <el-header><router-link to="/ShellHome">
         <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
         </el-button></router-link>Display OutboundDeliveries {{ this.$route.params.id }}
+      <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
+        </el-button>
       </el-header>
       <el-form ref="form" :inline="true" :model="form"  label-width="200px" size="mini" >
         <el-row :gutter="50" style="margin-top:10px">
@@ -118,6 +120,9 @@ export default {
   },
   data () {
     return {
+      user: {
+        id: this.$route.params.userID
+      },
       form: { // 对应DeliveryOrder
         id: this.$route.params.id,
         salesOrderId: '',
@@ -149,7 +154,8 @@ export default {
         name: 'DisplayDeliveryItem',
         params: {
           materialId: row.materialId,
-          deliveryOrderId: _this.form.id
+          deliveryOrderId: _this.form.id,
+          userID: this.user.id
         }
       })
     }

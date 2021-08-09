@@ -1,11 +1,18 @@
 <template>
   <div>
     <el-container>
-      <el-header><router-link to="/ShellHome">
-          <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
-          </el-button>
-        </router-link>
-        Create Outbound Deliveries</el-header>
+      <el-header><router-link :to = "{
+        path: '/ShellHome',
+        name: 'ShellHome',
+        params: {
+          id: this.user.id
+        }
+      }">
+  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+  </el-button></router-link>
+        Create Outbound Deliveries<el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
+        </el-button>
+      </el-header>
        <el-form ref="form" :inline="true"  :model="form" class="demo-form-inline" label-width="200px" size="mini">
         <el-row style="height: auto;text-align: right;margin-top: 20px" >
           <el-col :span="24">

@@ -1,9 +1,17 @@
 <template>
   <div>
     <el-container style="overflow-x:hidden">
-      <el-header><router-link to="/ShellHome">
+      <el-header><router-link :to = "{
+        path: '/ShellHome',
+        name: 'ShellHome',
+        params: {
+          id: this.user.id
+        }
+      }">
   <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
   </el-button></router-link>Change Standard Order: {{ this.$route.params.id }}
+      <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
+        </el-button>
       </el-header>
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
         <!--      sold to party搜索功能-->
@@ -506,6 +514,9 @@ export default {
   },
   data () {
     return {
+      user: {
+        id: this.$route.params.userID
+      },
       Visible1: false, // soldToParty第一层查询
       Visible2: false, // soldToParty第二层表格
       Visible3: false, // 添加Material表单
