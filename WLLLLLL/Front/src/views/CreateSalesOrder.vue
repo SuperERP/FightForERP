@@ -1233,6 +1233,10 @@ export default {
             ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price * (1 - row.amount / 100)
             break
           }
+          default : { // 无折扣
+            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price
+            break
+          }
         }
       })
       this.netValueForm.netValue1 = netValue
@@ -1267,6 +1271,10 @@ export default {
               ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
               break
             }
+            default : { // 无折扣
+              ExpectOrdVal = temp
+              break
+            }
           }
           this.netValueForm.expectOrdVal = ExpectOrdVal
         }
@@ -1293,6 +1301,7 @@ export default {
       axios.post('http://127.0.0.1:5000/searchQuotationAndItem', this.createWithReferenceForm).then(function (resp) { // copy,注意需传两个值
         _this.form = resp.data[0]
         _this.materialList = resp.data[1]
+        _this.updateNetValue(_this.materialList)
       })
     }
   }

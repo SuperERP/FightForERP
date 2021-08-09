@@ -954,6 +954,10 @@ export default {
             ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price * (1 - row.amount / 100)
             break
           }
+          default : { // 无折扣
+            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price
+            break
+          }
         }
       })
       this.netValueForm.netValue1 = netValue
@@ -982,6 +986,10 @@ export default {
         }
         case 'RA00' : { // 打折
           ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
+          break
+        }
+        default : { // 无折扣
+          ExpectOrdVal = temp
           break
         }
       }
