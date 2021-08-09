@@ -69,8 +69,13 @@ class DeliveryManagerModule(AbstractModule):
         '''
         try:
             self.session.query(DeliveryItem).filter(and_(
-                DeliveryItem.deliveryOrderId == deliveryOrderId, DeliveryItem.materialId == materialId)). \
-                update({'pickingStatus': 1})
+                DeliveryItem.deliveryOrderId == deliveryOrderId, DeliveryItem.materialId == materialId)).\
+                update(
+                    {
+                        DeliveryItem.pickingStatus: 1,
+                        DeliveryItem.pickingAmount: DeliveryItem.amount
+                    })
+
             self.session.commit()
         except Exception as e:
             self.logging.info('请重新检查数据插入')
@@ -112,13 +117,11 @@ class DeliveryManagerModule(AbstractModule):
 
         else:
             datalist = self.session.query(DeliveryOrder).filter(or_(DeliveryOrder.plannedDeliveryTime == date, date == '')).filter(
-                or_(DeliveryOrder.salesOrderId == salesdOrderId, salesdOrderId == ''))
-            filter(DeliveryOrder.warehouseId.in_(tuple(shippingpoint))).all()
+                or_(DeliveryOrder.salesOrderId == salesdOrderId, salesdOrderId == '')).filter(DeliveryOrder.warehouseId.in_(tuple(shippingpoint))).all()
 
         if customerId != '':
             for item in datalist:
                 print(item)
-                break
                 if item.salesOrderId in salesOrdersData:
                     ret.append(self.to_dict(item))
         else:

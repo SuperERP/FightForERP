@@ -433,7 +433,28 @@ export default {
   directives: {
     'el-table-infinite-scroll': elTableInfiniteScroll
   },
-
+  created () {
+    this.axios
+      .post('http://127.0.0.1:5000/CreateOutboundDeliveries', {
+        warehouse: true
+      })
+      .then((response) => {
+        console.log(response.data.data)
+        this.options1 = []
+        for (var i = 0; i < response.data.data.length; i++) {
+          var tdata = {
+            label: response.data.data[i],
+            value: response.data.data[i]
+          }
+          console.log(tdata)
+          this.options1 = this.options1.concat([tdata])
+        }
+        console.log(this.salesOrderIdTableData)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
   data () {
     return {
       user: {
@@ -461,21 +482,6 @@ export default {
       options1: [{
         value: '选项1',
         label: 'HR00'
-      }, {
-        value: '选项2',
-        label: 'MI00'
-      }, {
-        value: '选项3',
-        label: 'MR00'
-      }, {
-        value: '选项4',
-        label: 'RH00'
-      }, {
-        value: '选项5',
-        label: 'SD00'
-      }, {
-        value: '选项6',
-        label: 'SR00'
       }],
       soldToPartyTableDataForsalesOrder: [{ // 对应Customer表
         POcode: '036',

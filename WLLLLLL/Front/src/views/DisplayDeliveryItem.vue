@@ -117,15 +117,12 @@ export default {
     }
   },
   methods: {
-    // 页面加载
-
     goToLink1 () {
-      // Return指定跳转地址
-      // this.$router.replace('/DisplayOutboundDeliveries')
       this.$router.push({
         name: 'DisplayOutboundDeliveries',
         params: {
-          userID: this.user.id
+          userID: this.user.id,
+          id: this.$route.params.deliveryOrderId
         }
       })
     }

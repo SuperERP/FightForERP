@@ -71,15 +71,17 @@ class WareHouseDataManager(AbstractModule):
             '''
             data = self.session.query(DeliveryItem).filter(DeliveryItem.deliveryOrderId == deliverOrderId).filter(
                 DeliveryItem.pickingStatus == 1).all()
+
+            warehouseId=self.session.query(DeliveryOrder).filter(DeliveryOrder.id==deliverOrderId).all()[0].warehouseId
             for item in data:
                 count = item.amount
-                self.session.query(Inventory).filter(Inventory.warehouseId == item.materialDicId).update(
+                self.session.query(Inventory).filter(and_(Inventory.materialDicId == item.materialId,Inventory.warehouseId==warehouseId)).update(
                     {
                         Inventory.onOrderStock: Inventory.onOrderStock - count,
                     }
                 )
-                self.session.commit()
-                self.logging('库存管理完成')
+            self.session.commit()
+            self.logging.info('库存管理完成')
         except Exception as e:
             self.logging.info('发生错误')
             self.logging.error(e)
