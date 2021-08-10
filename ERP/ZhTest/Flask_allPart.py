@@ -1,15 +1,14 @@
-
 import sys
 new_path = "/".join(sys.path[0].split('/')[:-1])
 sys.path.append(new_path)
-from Modules.SuperErp import *
-import time
-import os
-from datetime import *
-from flask import jsonify
-from flask import Flask, json, request
-from dateutil import parser
 from flask_cors import CORS
+from dateutil import parser
+from flask import Flask, json, request
+from flask import jsonify
+from datetime import *
+import os
+import time
+from Modules.SuperErp import *
 
 
 
@@ -195,7 +194,7 @@ def createSalesOrder():
     if 'totalCntyPercent' not in a:
         a['totalCntyPercent'] = ''
     for item in b:
-        result_toSale = newWarehouseManager.toSale( # 创建发货单半成品
+        result_toSale = newWarehouseManager.toSale(  # 创建发货单半成品
             warehouseId=a['warehouseId'], materialDicId=item['material'], amount=item['orderQuantity'])
         if result_toSale == 'fault':
             return 'fault'
@@ -551,6 +550,17 @@ def DisplayDeliveryItem():
     return jsonify(ret)
 
 
+@app.route('/getDeliveyOrder', methods=['post'])
+def getDeliveyOrder():
+    data = request.get_json(silent=True)
+    print(data)
+    resdata = newDelivery.getDeliveryOrder(id=data['id'])
+    del resdata['actualDeliveryTime']
+    del resdata['deliveryPhase']
+
+    return jsonify(resdata)
+
+
 @app.route('/PickingOutboundDelivery', methods=['post'])
 def PickingOutboundDelivery():
     '''
@@ -561,6 +571,12 @@ def PickingOutboundDelivery():
     print(data)
     if 'jump' in data.keys():
         ret['data'] = newDelivery.searchDeliveryItems(data['id'])
+        resdata = newDelivery.getDeliveryOrder(id=data['id'])
+        ret['form']={}
+        ret['form']['id']=resdata['id']
+        ret['form']['salesOrderId']=resdata['salesOrderId']
+        ret['form']['warehouseId']=resdata['warehouseId']
+        ret['form']['plannedDeliveryTime']=resdata['plannedDeliveryTime']
         return jsonify(ret)
 
     if 'search' in data.keys():
@@ -586,14 +602,13 @@ def PickingOutboundDelivery():
         return jsonify(ret)
 
     if 'picking' in data.keys():
-        
+
         for item in data['pickingitems']:
             newDelivery.pickingDeliveryItems(
                 materialId=item['materialId'], deliveryOrderId=item['DeliveryOrder'])
-            newWarehouseManager.delivery1to2(deliveryOrderId=item['DeliveryOrder'],materialId=item['materialId'])
-            
+            newWarehouseManager.delivery1to2(
+                deliveryOrderId=item['DeliveryOrder'], materialId=item['materialId'])
 
-            
         ret['data'] = newDelivery.searchDeliveryItems(data['id'])
 
         return jsonify(ret)

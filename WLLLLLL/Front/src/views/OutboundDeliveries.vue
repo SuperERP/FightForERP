@@ -803,7 +803,6 @@ export default {
         this.$router.push({
           name: 'PickingOutboundDelivery', // 这个是通过路由跳转页面，跳转到：在router.js里的name为详情的页面
           params: {
-            data: this.selectData[0].deliveryOrderId, // key随便起名，下边对应就行
             id: this.selectData[0].deliveryOrderId,
             userID: this.user.id
           }

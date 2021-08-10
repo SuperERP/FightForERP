@@ -112,11 +112,11 @@ class DeliveryManagerModule(AbstractModule):
                 salesOrdersData.append(item.id)
 
         if len(shippingpoint) == 0:
-            datalist = self.session.query(DeliveryOrder).filter(or_(DeliveryOrder.plannedDeliveryTime == date, date == '')).filter(
+            datalist = self.session.query(DeliveryOrder).filter(or_(DeliveryOrder.plannedDeliveryTime == date, date == '')).filter(\
                 or_(DeliveryOrder.salesOrderId == salesdOrderId, salesdOrderId == '')).all()
 
         else:
-            datalist = self.session.query(DeliveryOrder).filter(or_(DeliveryOrder.plannedDeliveryTime == date, date == '')).filter(
+            datalist = self.session.query(DeliveryOrder).filter(or_(DeliveryOrder.plannedDeliveryTime == date, date == '')).filter(\
                 or_(DeliveryOrder.salesOrderId == salesdOrderId, salesdOrderId == '')).filter(DeliveryOrder.warehouseId.in_(tuple(shippingpoint))).all()
 
         if customerId != '':
@@ -159,7 +159,7 @@ class DeliveryManagerModule(AbstractModule):
 
     def getDeliveryOrder(self, id=None):
         res = self.session.query(DeliveryOrder).filter(
-            DeliveryOrder.id == id).all()[0]
+            DeliveryOrder.id == id).first()
         return self.to_dict(res)
 
     def change0to1(self,salesOrderId):

@@ -127,12 +127,15 @@
 <script>
 export default {
   created () {
-    console.log('sdf', this.$route.params)
-    const _this = this
-    this.axios.post('link', _this.$route.params).then(function (resp) {
-      _this.form = resp.data
-    }) // 传入id，传出GI Ready所涉及form的信息
-    this.deliveryOrderId = this.$route.params.data
+    // const _this = this
+    // this.axios.post('http://127.0.0.1:5000/getDeliveyOrder',
+    //   {
+    //     getDeliveyOrder: true,
+    //     id: _this.$route.params.id
+    //   }).then(function (resp) {
+    //   _this.form = resp.data
+    // }) // 传入id，传出GI Ready所涉及form的信息
+    this.deliveryOrderId = this.$route.params.id
     this.visible = true
     this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery',
       {
@@ -140,7 +143,8 @@ export default {
         id: this.deliveryOrderId
       }
     ).then(response => {
-      console.log(response.data.data)
+      console.log(response.data)
+      this.form = response.data.form
       this.PickingData = []
       for (var i = 0; i < response.data.data.length; i++) {
         var tdata = {
