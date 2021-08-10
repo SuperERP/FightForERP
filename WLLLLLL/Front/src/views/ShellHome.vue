@@ -115,15 +115,6 @@
             </el-card>
           </el-button>
         </el-col>
-        <el-col :span="5">
-          <el-button type="text" style="padding: 0;" @click="clickButton($event)">
-            <el-card class="box-card" shadow="hover">
-              <div class="CardText item">Picking</div>
-              <div class="CardText item">Outbound Delivery</div>
-              <div class="el-icon-s-goods" style="color:#8fb4d3; font-size: 30px; position: absolute; bottom: 20px; right: 20px;"></div>
-            </el-card>
-          </el-button>
-        </el-col>
       </el-row>
       <!--       WarehouseManagement-->
       <a name="WarehouseManagement"><el-divider content-position="left">Warehouse Management</el-divider></a>
