@@ -44,23 +44,18 @@
 
         <!--      下半部分-->
         <el-main style="overflow-x:hidden">
+
           <el-row :gutter="50" >
-            <el-col :offset='8' :span="12">
+            <el-col  :span="8">
+            <el-form-item label="PickingAmount:" prop="pickingAmount" style="margin-left: -20px">
+              <el-input style="width:110px;" size='mini' v-model="form.pickingAmount" :disabled="true"></el-input>
+            </el-form-item></el-col>
+            <el-col :span="12">
               <el-form-item label="PickingStatus:">
                 <i class="el-icon-success" v-show="form.pickingStatus===1" style="color:#67c23A;font-size: 16px;"></i>
                 <i class="el-icon-error" v-show="form.pickingStatus===0" style="color: crimson;font-size: 16px;"></i>
               </el-form-item></el-col></el-row>
           <!---->
-          <el-row :gutter="50">
-            <el-col  :span="8">
-              <el-form-item label="PickingAmount:" prop="pickingAmount" style="margin-left: -20px">
-                <el-input style="width:110px;" size='mini' v-model="form.pickingAmount" :disabled="true"></el-input>
-              </el-form-item></el-col>
-            <el-col  :span="8">
-              <el-form-item label="MaterialState:" prop="materialState">
-                <el-input style="width:110px;" size='mini' v-model="form.materialState" :disabled="true"></el-input>
-              </el-form-item></el-col>
-          </el-row>
         </el-main>
       </el-form>
       <el-button type="primary" plain @click="goToLink1">Return</el-button>

@@ -70,24 +70,28 @@
       <el-tab-pane>
         <span slot="label"><i class="el-icon-truck"></i> GI Ready</span>
         <el-form ref="form" :inline="true"  :model="form"  label-width="200px" size="mini" >
-          <el-row :gutter="50" style="margin-top: 20px" >
+          <el-row :gutter="50" style="margin-top:10px">
             <el-col :span="8">
-              <el-form-item label="Planned GI Date:" prop="plannedDeliveryTime">
-                <el-input style="width:110px;" v-model="form.plannedDeliveryTime">
+              <el-form-item label="Delivery Order:" prop="id" >
+                <el-input style="width:110px;" v-model="form.id" :disabled="true">
                 </el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="salesOrderId:">
+                <el-input style="width:110px;" size='mini' v-model="form.salesOrderId" :disabled="true"></el-input>
+              </el-form-item>
+            </el-col></el-row>
+          <el-row :gutter="50" >
+            <el-col :span="8">
+              <el-form-item label="warehouseId:" prop="warehouseId">
+                <el-input style="width:110px;" v-model="form.warehouseId" :disabled="true"></el-input>
               </el-form-item></el-col>
-            <el-col :span="12"><el-form-item label="Volume:" prop="volume">
-              <el-input style="width:110px;" v-model="form.volume">
-              </el-input>
-            </el-form-item></el-col>
-            <el-col :span="8"><el-form-item label="Ship-To Party:" prop="materialId">
-              <el-input style="width:110px;" v-model="form.materialId">
-              </el-input>
-            </el-form-item></el-col>
-            <el-col :span="12"><el-form-item label="Description:" prop="description">
-              <el-input style="width:auto" v-model="form.description">
-              </el-input>
-            </el-form-item></el-col>
+            <el-col :span="12"><el-form-item label="PlannedDeliveryTime:" prop="plannedDeliveryTime">
+              <el-date-picker type="date" value-format="yyyy-MM-dd" v-model="form.plannedDeliveryTime" style="width: 130px;"
+                              :disabled="true"></el-date-picker>
+            </el-form-item>
+            </el-col>
           </el-row>
         </el-form>
         <el-row style="text-align: right">
@@ -95,9 +99,10 @@
           <el-dialog
               title="Goods Issue"
               :visible.sync="dialogVisible"
-              width="30%"
+              center
+              width="23%"
               :before-close="handleClose">
-            <p>Enter actual GI date for the 1 selected deliveries</p>
+            <p>Enter actual GI date for the 1 selected deliveries:</p>
             <div class="block">
               <span class="demonstration"></span>
               <el-date-picker
@@ -123,7 +128,10 @@
 export default {
   created () {
     console.log('sdf', this.$route.params)
-
+    const _this = this
+    this.axios.post('link', _this.$route.params).then(function (resp) {
+      _this.form = resp.data
+    }) // 传入id，传出GI Ready所涉及form的信息
     this.deliveryOrderId = this.$route.params.data
     this.visible = true
     this.axios.post('http://127.0.0.1:5000/PickingOutboundDelivery',
@@ -155,10 +163,10 @@ export default {
       },
       id: this.$route.params.id,
       form: { // 对应deliveryOrder和deliveryOrderItem
-        plannedDeliveryTime: '2021-12-12',
-        volume: '0',
-        materialId: 'NXTR',
-        description: 'BIKE'
+        id: this.$route.params.id,
+        salesOrderId: '',
+        warehouseId: '',
+        plannedDeliveryTime: '2021-12-12'
       },
       multipleSelection: [],
       tableData: [],
