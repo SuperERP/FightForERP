@@ -9,7 +9,7 @@
         }
       }">
   <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
-  </el-button></router-link>Change Standard Order: {{ this.$route.params.id }}
+  </el-button></router-link>Change Quotation: {{ this.$route.params.id }}
       <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
         </el-button>
       </el-header>
@@ -17,10 +17,10 @@
         <!--      sold to party搜索功能-->
         <el-row :gutter="50" style="margin-top:10px">
           <el-col :span="8">
-            <el-form-item label="Standard Order:" prop="id" >
-            <el-input style="width:110px;" v-model="form.id" :disabled="true">
-            </el-input>
-          </el-form-item>
+            <el-form-item label="Quotation:" prop="id" >
+              <el-input style="width:110px;" v-model="form.id" :disabled="true">
+              </el-input>
+            </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="Net Value:">
@@ -214,7 +214,7 @@
               </el-form-item></el-col>
             <el-col  :span="8">
               <el-form-item label="Total Cnty Amount:" prop="totalCntyPercent">
-                <el-input style="width:110px;" size='mini' v-model="form.totalCntyPercent" @change="updateNetValue"></el-input>
+                <el-input style="width:110px;" size='mini' v-model="form.totalCntyPercent" @change="cntyActivate"></el-input>
               </el-form-item></el-col>
           </el-row>
           <h4 style="margin-left: 30px;margin-bottom:7px">All Items<el-button size="mini" style="margin-left:30px" type="primary" @click="totalAdd">Add Material</el-button></h4>
@@ -706,6 +706,9 @@ export default {
     }
   },
   methods: {
+    cntyActivate () {
+      this.updateNetValue(this.materialList)
+    },
     cntySearchClick () { // 对应DiscountDic表的全表查询（总体折扣）
       this.Visible8 = true
       const _this = this
@@ -800,10 +803,6 @@ export default {
       this.editMaterialForm.price = row.price
     },
     submitForm (formName) {
-      this.$message({
-        message: 'Alert: This Operation Makes No Change to Delivery!',
-        type: 'warning'
-      })
       const _this = this
       this.form.PODate = this.dateTransfer(this.form.PODate)
       this.form.effectiveDate = this.dateTransfer(this.form.effectiveDate)
@@ -811,7 +810,7 @@ export default {
       this.form.requestedDeliveryDate = this.dateTransfer(this.form.requestedDeliveryDate)
       this.$refs[formName].validate((valid) => {
         if (valid) { // 前后端交互，提交按钮
-          axios.post('http://127.0.0.1:5000/changeSalesOrderAndItem', [this.form, this.materialList]).then(function (resp) { // 修改salesOrder和salesOrderItem表内容
+          axios.post('http://127.0.0.1:5000/changeQuotationAndItem', [this.form, this.materialList]).then(function (resp) { // 修改quotation和quotationItem表内容
             if (resp.data === 'fault') {
               _this.$message({
                 message: 'fail!',
@@ -1007,7 +1006,6 @@ export default {
             break
           }
           default : { // 无折扣
-            ExpectOrdVal = ExpectOrdVal
             break
           }
         }
@@ -1043,7 +1041,7 @@ export default {
   // 页面加载
   created () {
     const _this = this
-    axios.post('http://127.0.0.1:5000/searchSalesOrderAndItem', this.$route.params.id).then(function (resp) { // 传入id，传出salesOrder表和salesOrderItem表的信息
+    axios.post('http://127.0.0.1:5000/searchQuotationAndItem2', this.$route.params.id).then(function (resp) { // 传入id，传出quotation表和quotationItem表的信息
       _this.form = resp.data[0]
       _this.materialList = resp.data[1]
       _this.updateNetValue(_this.materialList)

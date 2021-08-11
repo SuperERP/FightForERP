@@ -203,7 +203,6 @@ export default {
             break
           }
           default : { // 无折扣
-            ExpectOrdVal = ExpectOrdVal
             break
           }
         }

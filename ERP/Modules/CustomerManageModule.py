@@ -152,4 +152,14 @@ class CustomerManagerModule(AbstractModule):
             self.logging.error(e)
             self.session.rollback()
  
-    
+    def insertCustomer2(self, data: dict):
+        '''
+        向数据库中进行插入*****假数据专用*****
+        :param data:
+        :return:
+        '''
+        Base.metadata.create_all()
+        new_data = Customer(**data)
+        if self.insertData(new_data):
+            self.customerRecord += 1
+        return data['id']

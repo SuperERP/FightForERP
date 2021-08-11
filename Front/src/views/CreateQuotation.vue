@@ -399,7 +399,7 @@
               </el-form-item></el-col>
             <el-col  :span="8">
               <el-form-item label="Total Cnty Amount:" prop="totalCntyPercent">
-                <el-input style="width:110px;" size='mini' v-model="form.totalCntyPercent" @change="updateNetValue"></el-input>
+                <el-input style="width:110px;" size='mini' v-model="form.totalCntyPercent" @change="cntyActivate"></el-input>
               </el-form-item></el-col>
           </el-row>
           <h4 style="margin-left: 30px;margin-bottom:7px">All Items<el-button size="mini" style="margin-left:30px" type="primary" @click="totalAdd">Add Material</el-button></h4>
@@ -930,6 +930,9 @@ export default {
     }
   },
   methods: {
+    cntyActivate () {
+      this.updateNetValue(this.materialList)
+    },
     cntySearchClick () { // 对应DiscountDic表的全表查询（总体折扣）
       this.Visible8 = true
       const _this = this
@@ -1262,18 +1265,21 @@ export default {
           }
         }
       })
-      if (this.form.cnty !== '' && this.form.totalCntyPercent !== '') {
+      if ((this.form.cnty !== undefined || this.form.cnty !== '') && (this.form.totalCntyPercent !== undefined || this.form.totalCntyPercent !== undefined)) {
         switch (this.form.cnty) {
           case 'K004' : { // 降价
             ExpectOrdVal = ExpectOrdVal - this.form.totalCntyPercent
+            console.log(this.form.cnty)
             break
           }
           case 'RA00' : { // 打折
             ExpectOrdVal = ExpectOrdVal * (1 - this.form.totalCntyPercent / 100)
+            console.log(this.form.cnty)
             break
           }
           default : { // 无折扣
-            ExpectOrdVal = ExpectOrdVal
+            console.log('我是谁')
+            console.log(this.form.cnty)
             break
           }
         }

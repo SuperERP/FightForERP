@@ -2,12 +2,9 @@ import sys
 new_path = "/".join(sys.path[0].split('/')[:-1])
 sys.path.append(new_path)
 from flask_cors import CORS
-from dateutil import parser
-from flask import Flask, json, request
+from flask import Flask, request
 from flask import jsonify
 from datetime import *
-import os
-import time
 from Modules.SuperErp import *
 
 
@@ -146,21 +143,22 @@ def showDiscountDic():
 
 @app.route('/createQuotation', methods=['post'])  # 创建报价单及报价单物料项
 def createQuotation():
-    a = request.get_json()[0]
-    b = request.get_json()[1]
-    a['customerId'] = str(a['customerId']).zfill(10)
-    a['PODate'] = datetime.strptime(a['PODate'], '%Y-%m-%d')
-    a['effectiveDate'] = datetime.strptime(a['effectiveDate'], '%Y-%m-%d')
-    a['expirationDate'] = datetime.strptime(a['expirationDate'], '%Y-%m-%d')
-    a['requestedDeliveryDate'] = datetime.strptime(
-        a['requestedDeliveryDate'], '%Y-%m-%d')
-    if 'id' in a:
-        del a['id']
-    if 'cnty' not in a:
-        a['cnty'] = ''
-    if 'totalCntyPercent' not in a:
-        a['totalCntyPercent'] = ''
     try:
+        a = request.get_json()[0]
+        b = request.get_json()[1]
+        a['customerId'] = str(a['customerId']).zfill(10)
+        a['PODate'] = datetime.strptime(a['PODate'], '%Y-%m-%d')
+        a['effectiveDate'] = datetime.strptime(a['effectiveDate'], '%Y-%m-%d')
+        a['expirationDate'] = datetime.strptime(a['expirationDate'], '%Y-%m-%d')
+        a['requestedDeliveryDate'] = datetime.strptime(
+            a['requestedDeliveryDate'], '%Y-%m-%d')
+        if 'id' in a:
+            del a['id']
+        if 'cnty' not in a:
+            a['cnty'] = ''
+        if 'totalCntyPercent' not in a:
+            a['totalCntyPercent'] = ''
+    
         id = newOrderManager.insertQuotation(a)
         for item in b:
             item['quotationId'] = id  # 把报价单编号加进报价单物料项的词条
@@ -179,27 +177,27 @@ def createQuotation():
 
 @app.route('/createSalesOrder', methods=['post'])  # 创建销售订单及销售订单物料项
 def createSalesOrder():
-    a = request.get_json()[0]
-    b = request.get_json()[1]
-    a['customerId'] = str(a['customerId']).zfill(10)
-    a['PODate'] = datetime.strptime(a['PODate'], '%Y-%m-%d')
-    a['effectiveDate'] = datetime.strptime(a['effectiveDate'], '%Y-%m-%d')
-    a['expirationDate'] = datetime.strptime(a['expirationDate'], '%Y-%m-%d')
-    a['requestedDeliveryDate'] = datetime.strptime(
-        a['requestedDeliveryDate'], '%Y-%m-%d')
-    if 'id' in a:
-        del a['id']
-    if 'cnty' not in a:
-        a['cnty'] = ''
-    if 'totalCntyPercent' not in a:
-        a['totalCntyPercent'] = ''
-    for item in b:
-        result_toSale = newWarehouseManager.toSale(  # 创建发货单半成品
-            warehouseId=a['warehouseId'], materialDicId=item['material'], amount=item['orderQuantity'])
-        if result_toSale == 'fault':
-            return 'fault'
-
     try:
+        a = request.get_json()[0]
+        b = request.get_json()[1]
+        a['customerId'] = str(a['customerId']).zfill(10)
+        a['PODate'] = datetime.strptime(a['PODate'], '%Y-%m-%d')
+        a['effectiveDate'] = datetime.strptime(a['effectiveDate'], '%Y-%m-%d')
+        a['expirationDate'] = datetime.strptime(a['expirationDate'], '%Y-%m-%d')
+        a['requestedDeliveryDate'] = datetime.strptime(
+            a['requestedDeliveryDate'], '%Y-%m-%d')
+        if 'id' in a:
+            del a['id']
+        if 'cnty' not in a:
+            a['cnty'] = ''
+        if 'totalCntyPercent' not in a:
+            a['totalCntyPercent'] = ''
+        for item in b:
+            result_toSale = newWarehouseManager.toSale(  # 创建发货单半成品
+                warehouseId=a['warehouseId'], materialDicId=item['material'], amount=item['orderQuantity'])
+            if result_toSale == 'fault':
+                return 'fault'
+
         id = newOrderManager.createSalesOrder(a)
         c = {'plannedDeliveryTime': a['requestedDeliveryDate'], 'salesOrderId': id,
              'warehouseId': a['warehouseId'], 'deliveryPhase': 0, 'actualDeliveryTime': None}
@@ -654,5 +652,3 @@ def judgePower():
 
 if __name__ == '__main__':
     app.run()
-
-    # print(len(newOrderManager.searchSalesOrder()))
