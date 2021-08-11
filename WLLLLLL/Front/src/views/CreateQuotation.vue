@@ -8,9 +8,9 @@
           id: this.user.id
         }
       }">
-  <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
-  </el-button></router-link>Create Quotation: Overview
-      <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
+        <el-button style="float:left;font-size:30px;color:#333333 " type="text" class="el-icon-s-home">
+        </el-button></router-link>Create Quotation: Overview
+        <el-button style="float:right;font-size:16px;color:#333333;padding: 21px 20px" type="text" v-text="'User:'+user.id">
         </el-button>
       </el-header>
       <el-form ref="form" :inline="true" :rules="rules" :model="form"  label-width="200px" size="mini" >
@@ -1244,56 +1244,39 @@ export default {
     updateNetValue (materialList) {
       netValue = 0
       ExpectOrdVal = 0
-      // 如果已施加总体折扣
-      if (this.form.cnty !== '' && this.form.totalCntyPercent !== '') {
-        ExpectOrdVal = 0
-        var temp = 0
-        var temp1
-        this.materialList.forEach((row) => {
-          netValue = netValue + row.orderQuantity * row.price
-          // 如果折扣数量为空，则用0代替
-          if (row.amount === '') {
-            temp1 = 0
-          } else {
-            temp1 = row.amount
-          }
-          // 计算
-          temp += row.orderQuantity * row.price - temp1
-        })
+      materialList.forEach((row) => {
+        netValue = netValue + row.orderQuantity * row.price
         // 根据选择折扣方法的不同，施加不同折扣
-        switch (this.form.cnty) {
+        switch (row.cnty) {
           case 'K004' : { // 降价
-            ExpectOrdVal = temp - this.form.totalCntyPercent
+            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price - row.amount
             break
           }
           case 'RA00' : { // 打折
-            ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
+            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price * (1 - row.amount / 100)
             break
           }
           default : { // 无折扣
-            ExpectOrdVal = temp
+            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price
             break
           }
         }
-      } else { // 没有施加总体折扣
-        materialList.forEach((row) => {
-          netValue = netValue + row.orderQuantity * row.price
-          // 根据选择折扣方法的不同，施加不同折扣
-          switch (row.cnty) {
-            case 'K004' : { // 降价
-              ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price - row.amount
-              break
-            }
-            case 'RA00' : { // 打折
-              ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price * (1 - row.amount / 100)
-              break
-            }
-            default : { // 无折扣
-              ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price
-              break
-            }
+      })
+      if (this.form.cnty !== '' && this.form.totalCntyPercent !== '') {
+        switch (this.form.cnty) {
+          case 'K004' : { // 降价
+            ExpectOrdVal = ExpectOrdVal - this.form.totalCntyPercent
+            break
           }
-        })
+          case 'RA00' : { // 打折
+            ExpectOrdVal = ExpectOrdVal * (1 - this.form.totalCntyPercent / 100)
+            break
+          }
+          default : { // 无折扣
+            ExpectOrdVal = ExpectOrdVal
+            break
+          }
+        }
       }
       ExpectOrdVal = ExpectOrdVal.toFixed(2)
       this.netValueForm.netValue1 = netValue
