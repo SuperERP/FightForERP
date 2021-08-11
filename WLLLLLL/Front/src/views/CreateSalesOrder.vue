@@ -404,7 +404,7 @@
               </el-form-item></el-col>
             <el-col  :span="8">
               <el-form-item label="Total Cnty Amount:" prop="totalCntyPercent">
-                <el-input style="width:110px;" size='mini' v-model="form.totalCntyPercent" @change="cntyActivate"></el-input>
+                <el-input style="width:110px;" size='mini' v-model="form.totalCntyPercent" @change="updateNetValue"></el-input>
               </el-form-item></el-col>
           </el-row>
           <h4 style="margin-left: 30px;margin-bottom:7px">All Items<el-button size="mini" style="margin-left:30px" type="primary" @click="totalAdd">Add Material</el-button></h4>
@@ -1253,64 +1253,60 @@ export default {
     updateNetValue (materialList) {
       netValue = 0
       ExpectOrdVal = 0
-      materialList.forEach((row) => {
-        netValue = netValue + row.orderQuantity * row.price
+      // 如果已施加总体折扣
+      if (this.form.cnty !== '' && this.form.totalCntyPercent !== '') {
+        ExpectOrdVal = 0
+        var temp = 0
+        var temp1
+        this.materialList.forEach((row) => {
+          netValue = netValue + row.orderQuantity * row.price
+          // 如果折扣数量为空，则用0代替
+          if (row.amount === '') {
+            temp1 = 0
+          } else {
+            temp1 = row.amount
+          }
+          // 计算
+          temp += row.orderQuantity * row.price - temp1
+        })
         // 根据选择折扣方法的不同，施加不同折扣
-        switch (row.cnty) {
+        switch (this.form.cnty) {
           case 'K004' : { // 降价
-            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price - row.amount
+            ExpectOrdVal = temp - this.form.totalCntyPercent
             break
           }
           case 'RA00' : { // 打折
-            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price * (1 - row.amount / 100)
+            ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
             break
           }
           default : { // 无折扣
-            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price
+            ExpectOrdVal = temp
             break
           }
         }
-      })
-      this.netValueForm.netValue1 = netValue
-      this.netValueForm.expectOrdVal = ExpectOrdVal
-    },
-    // 激活整体折扣
-    cntyActivate () {
-      if (this.materialList.length === 0) {
-        this.$message.error('At least one material is required!')
-      } else {
-        if (this.form.cnty === '' | this.form.totalCntyPercent === '') { this.$message.error('Please Enter Total Cnty and Total Cnty Percent!') } else {
-          ExpectOrdVal = 0
-          var temp = 0
-          var temp1
-          this.materialList.forEach((row) => {
-            // 如果折扣数量为空，则用0代替
-            if (row.amount === '') {
-              temp1 = 0
-            } else {
-              temp1 = row.amount
-            }
-            // 计算
-            temp += row.orderQuantity * row.price - temp1
-          })
+      } else { // 没有施加总体折扣
+        materialList.forEach((row) => {
+          netValue = netValue + row.orderQuantity * row.price
           // 根据选择折扣方法的不同，施加不同折扣
-          switch (this.form.cnty) {
+          switch (row.cnty) {
             case 'K004' : { // 降价
-              ExpectOrdVal = temp - this.form.totalCntyPercent
+              ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price - row.amount
               break
             }
             case 'RA00' : { // 打折
-              ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
+              ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price * (1 - row.amount / 100)
               break
             }
             default : { // 无折扣
-              ExpectOrdVal = temp
+              ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price
               break
             }
           }
-          this.netValueForm.expectOrdVal = ExpectOrdVal
-        }
+        })
       }
+      ExpectOrdVal = ExpectOrdVal.toFixed(2)
+      this.netValueForm.netValue1 = netValue
+      this.netValueForm.expectOrdVal = ExpectOrdVal
     },
     // 日期格式转化
     dateTransfer (temp) {

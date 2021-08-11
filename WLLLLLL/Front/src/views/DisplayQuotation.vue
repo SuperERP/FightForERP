@@ -170,52 +170,62 @@ export default {
         }
       })
     },
-    // 激活整体折扣
-    cntyActivate () {
-      ExpectOrdVal = 0
-      var temp = 0
-      var temp1
-      this.materialList.forEach((row) => {
-        // 如果折扣数量为空，则用0代替
-        if (row.amount === '') {
-          temp1 = 0
-        } else {
-          temp1 = row.amount
-        }
-        // 计算
-        temp += row.orderQuantity * row.price - temp1
-      })
-      // 根据选择折扣方法的不同，施加不同折扣
-      switch (this.form.cnty) {
-        case 'K004' : { // 降价
-          ExpectOrdVal = temp - this.form.totalCntyPercent
-          break
-        }
-        case 'RA00' : { // 打折
-          ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
-          break
-        }
-      }
-      this.netValueForm.expectOrdVal = ExpectOrdVal
-    },
     // 更新合计价格信息
     updateNetValue (materialList) {
       netValue = 0
       ExpectOrdVal = 0
-      materialList.forEach((row) => {
-        netValue = netValue + row.orderQuantity * row.price
+      // 如果已施加总体折扣
+      if (this.form.cnty !== '' && this.form.totalCntyPercent !== '') {
+        ExpectOrdVal = 0
+        var temp = 0
+        var temp1
+        this.materialList.forEach((row) => {
+          netValue = netValue + row.orderQuantity * row.price
+          // 如果折扣数量为空，则用0代替
+          if (row.amount === '') {
+            temp1 = 0
+          } else {
+            temp1 = row.amount
+          }
+          // 计算
+          temp += row.orderQuantity * row.price - temp1
+        })
         // 根据选择折扣方法的不同，施加不同折扣
-        switch (row.cnty) {
+        switch (this.form.cnty) {
           case 'K004' : { // 降价
-            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price - row.amount
+            ExpectOrdVal = temp - this.form.totalCntyPercent
             break
           }
           case 'RA00' : { // 打折
-            ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price * (1 - row.amount / 100)
+            ExpectOrdVal = temp * (1 - this.form.totalCntyPercent / 100)
+            break
+          }
+          default : { // 无折扣
+            ExpectOrdVal = temp
             break
           }
         }
-      })
+      } else { // 没有施加总体折扣
+        materialList.forEach((row) => {
+          netValue = netValue + row.orderQuantity * row.price
+          // 根据选择折扣方法的不同，施加不同折扣
+          switch (row.cnty) {
+            case 'K004' : { // 降价
+              ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price - row.amount
+              break
+            }
+            case 'RA00' : { // 打折
+              ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price * (1 - row.amount / 100)
+              break
+            }
+            default : { // 无折扣
+              ExpectOrdVal = ExpectOrdVal + row.orderQuantity * row.price
+              break
+            }
+          }
+        })
+      }
+      ExpectOrdVal = ExpectOrdVal.toFixed(2)
       this.netValueForm.netValue1 = netValue
       this.netValueForm.expectOrdVal = ExpectOrdVal
     }
@@ -227,7 +237,6 @@ export default {
       _this.form = resp.data[0]
       _this.materialList = resp.data[1]
       _this.updateNetValue(_this.materialList)
-      _this.cntyActivate()
     })
   }
 }
