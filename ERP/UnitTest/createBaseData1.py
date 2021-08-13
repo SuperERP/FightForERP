@@ -4,8 +4,6 @@ new_path = "/".join(sys.path[0].split('/')[:-1])
 sys.path.append(new_path)
 
 from Modules.SuperErp import *
-import time
-from datetime import date
 from Modules.WarehouseManager import WareHouseDataManager
 
 newCustomer = CustomerManagerModule(session, ErpLogger)
