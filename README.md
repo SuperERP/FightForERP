@@ -31,7 +31,7 @@ cnpm run serve
 
    2.后端运行ERP/Zhtest文件夹中的Flask_allpart.py
 
-   3.在浏览器输入网址http://localhost:8080/Logon，跳转至登录界面，登录即可
+   3.在浏览器输入网址http://localhost:8080/Logon，跳转至登录界面，登录即可，后续操作请参考Report文件夹中系统设计报告“用户界面设计说明”。
 
 ​       可用用户如下（建议登录SuperManager，可使用所有功能模块）：
 
@@ -41,3 +41,6 @@ cnpm run serve
 | SalesMember     | salesmember     | 1     |
 | SalesManager    | salesmanager    | 2     |
 | WarehouseKeeper | warehousekeeper | 3     |
+
+
+
