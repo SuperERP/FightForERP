@@ -3,7 +3,7 @@
 1. 安装[node.js](https://cloud.tencent.com/developer/article/1631257)
 2. 安装[cnpm](https://www.cnblogs.com/uniapp/p/13115877.html)
 
-在项目的前端文件夹(Front)下运行以下语句就能够运行前端程序
+（1和2建议通过控制台安装在C盘）通过控制台进入项目的前端文件夹(Front)，运行以下语句就能够运行前端程序
 
 ```sh
 cnpm install
@@ -31,7 +31,9 @@ cnpm run serve
 
    2.后端运行ERP/Zhtest文件夹中的Flask_allpart.py
 
-   3.在浏览器输入网址http://localhost:8080/Logon，跳转至登录界面，登录即可，后续操作请参考Report文件夹中系统设计报告“用户界面设计说明”。
+   3.在浏览器输入网址http://localhost:8080/Logon
+
+​      进入登录界面，登录即可，后续操作请参考Report文件夹中系统设计报告“用户界面设计说明”。
 
 ​       可用用户如下（建议登录SuperManager，可使用所有功能模块）：
 
