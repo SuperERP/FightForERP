@@ -721,6 +721,7 @@ export default {
                 })
               }
             })
+            this.letsgo()
           })
           .catch((error) => {
             console.log(error)

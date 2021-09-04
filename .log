@@ -1,37 +1,27 @@
-success insert data <Customer(id='0001000000',name='George', street='13478657793',postcode='130031',country='CH',language='CN',paycode='ShangHai',distribution_channel='SD00',city='ShangHai',sregion='ShangHai',POcode='857')>
-success insert data <Customer(id='0001000001',name='George', street='13478657793',postcode='130031',country='CH',language='CN',paycode='ShangHai',distribution_channel='SD00',city='ShangHai',sregion='ShangHai',POcode='857')>
-success insert data <ContactPerson(id='CP20210811234058429694', prefixName='Mr',first_name='John',last_name='Smith',language='EN',country='US',POcode='431'
-success insert data <ContactPerson(id='CP20210811234117456858', prefixName='Mr',first_name='John',last_name='Smith',language='EN',country='US',POcode='431'
-success insert data <ContactPerson(id='CP20210811234125557092', prefixName='Mr',first_name='John',last_name='Smith',language='EN',country='US',POcode='431'
-success insert data <CustomerAndContactPerson(customerId=%r,)>
-success insert data <Modules.OrmData.InquiryData.Inquiry object at 0x7f8c815b6320>
+success insert data <MaterialDic(id='Material101',name='Mat1',price=60.0)>
+success insert data <MaterialDic(id='Material102',name='Mat2',price=70.0)>
+success insert data <MaterialDic(id='Material103',name='Mat3',price=80.0)>
+success insert data <MaterialDic(id='Material104',name='Mat4',price=90.0)>
+success insert data <DiscountDic(id='Discount101',name='K004',discountCalcu='Quantification')>
+success insert data <DiscountDic(id='Discount102',name='RA00',discountCalcu='Percentage')>
+success insert data <Warehouse()>
+success insert data <Warehouse()>
+success insert data <Warehouse()>
+success insert data <Warehouse()>
 请重新检查数据插入
-__str__ returned non-string (type NoneType)
+'Inventory' object has no attribute 'name'
 请重新检查数据插入
-__str__ returned non-string (type NoneType)
-success insert data <Modules.OrmData.QutationAndSalesOrderData.Quotation object at 0x7f8c81601470>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.QuotationItem object at 0x7f8c815deda0>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.QuotationItem object at 0x7f8c81601358>
-success insert data <>
-success insert data <DeliveryOrder(id='OD20210811235659314942',plannedDeliveryTime=datetime.date(2021, 8, 20),actualDeliveryTime=None,salesOrderId='SO20210811235659309247',warehouse='SH00',deliveryPhase=0)>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7f8c815cb240>
-success insert data 我还没写
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7f8c815cb240>
-success insert data 我还没写
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7f8c81648f60>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7f8c8161ddd8>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7f8c816645f8>
-success insert data <Modules.OrmData.QutationAndSalesOrderData.SalesOrderItem object at 0x7f8c8166b588>
-0to1状态修改成功
-查询所有物料项[{'deliveryOrderId': 'OD20210811235659314942', 'materialId': 'Material101', 'description': 'Mat1', 'amount': 12, 'unit': 'EA', 'pickingStatus': 0, 'pickingAmount': 0, 'materialState': '0'}, {'deliveryOrderId': 'OD20210811235659314942', 'materialId': 'Material103', 'description': 'Mat3', 'amount': 45, 'unit': 'EA', 'pickingStatus': 0, 'pickingAmount': 0, 'materialState': '0'}]
-查询所有物料项[{'deliveryOrderId': 'OD20210811235659314942', 'materialId': 'Material101', 'description': 'Mat1', 'amount': 12, 'unit': 'EA', 'pickingStatus': 0, 'pickingAmount': 0, 'materialState': '0'}, {'deliveryOrderId': 'OD20210811235659314942', 'materialId': 'Material103', 'description': 'Mat3', 'amount': 45, 'unit': 'EA', 'pickingStatus': 0, 'pickingAmount': 0, 'materialState': '0'}]
-发生拣配工作
-完成0个订单从状态一到状态二的更新工作
-1t02 finished
-发生拣配工作
-完成0个订单从状态一到状态二的更新工作
-1t02 finished
-查询所有物料项[{'deliveryOrderId': 'OD20210811235659314942', 'materialId': 'Material101', 'description': 'Mat1', 'amount': 12, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 12, 'materialState': '0'}, {'deliveryOrderId': 'OD20210811235659314942', 'materialId': 'Material103', 'description': 'Mat3', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 45, 'materialState': '0'}]
-查询所有物料项[{'deliveryOrderId': 'OD20210811235659314942', 'materialId': 'Material101', 'description': 'Mat1', 'amount': 12, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 12, 'materialState': '0'}, {'deliveryOrderId': 'OD20210811235659314942', 'materialId': 'Material103', 'description': 'Mat3', 'amount': 45, 'unit': 'EA', 'pickingStatus': 1, 'pickingAmount': 45, 'materialState': '0'}]
-发货单从状态2转到状态3
-库存管理完成
+'Inventory' object has no attribute 'name'
+请重新检查数据插入
+'Inventory' object has no attribute 'name'
+请重新检查数据插入
+'Inventory' object has no attribute 'name'
+请重新检查数据插入
+'Inventory' object has no attribute 'name'
+请重新检查数据插入
+'Inventory' object has no attribute 'name'
+success insert data <Customer(id='0001100000',name='CrazyDaff', street='SiPing',postcode='130031',country='CH',language='CN',paycode='ShangHai',distribution_channel='SD00',city='ShangHai',sregion='ShangHai',POcode='030')>
+success insert data <Customer(id='0001100001',name='CrazyDaff', street='SiPing',postcode='130031',country='CH',language='CN',paycode='ShangHai',distribution_channel='SD00',city='ShangHai',sregion='ShangHai',POcode='031')>
+success insert data <Customer(id='0001100002',name='CrazyDaff', street='SiPing',postcode='130031',country='CH',language='CN',paycode='ShangHai',distribution_channel='SD00',city='ShangHai',sregion='ShangHai',POcode='032')>
+success insert data <Customer(id='0001100003',name='CrazyDaff', street='SiPing',postcode='130031',country='CH',language='CN',paycode='ShangHai',distribution_channel='SD00',city='ShangHai',sregion='ShangHai',POcode='033')>
+success insert data <Customer(id='0001100004',name='CrazyDaff', street='SiPing',postcode='130031',country='CH',language='CN',paycode='ShangHai',distribution_channel='SD00',city='ShangHai',sregion='ShangHai',POcode='034')>

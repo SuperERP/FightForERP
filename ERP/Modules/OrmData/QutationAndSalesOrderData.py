@@ -9,9 +9,7 @@ class DiscountDic(Base):
 
     id = Column(String(10), primary_key=True)
     name = Column(Text())
-    # A代表百分比，B代表固定数值
-
-    discountCalcu = Column(Enum('A', 'B'))
+    discountCalcu = Column(Enum('Quantification', 'Percentage'))
 
     def __init__(self, **kwargs):
         self.id = kwargs['id']

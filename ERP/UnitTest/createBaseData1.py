@@ -21,10 +21,8 @@ materialList = [
 ]
 
 discountList = [
-    {'id': 'Discount101', 'name': 'K004', 'discountCalcu': 'A'},
-    {'id': 'Discount102', 'name': 'K004', 'discountCalcu': 'A'},
-    {'id': 'Discount103', 'name': 'RA00', 'discountCalcu': 'B'},
-    {'id': 'Discount104', 'name': 'RA00', 'discountCalcu': 'B'},
+    {'id': 'Discount101', 'name': 'K004', 'discountCalcu': 'Quantification'},
+    {'id': 'Discount102', 'name': 'RA00', 'discountCalcu': 'Percentage'},
 ]
 
 warehouse = [

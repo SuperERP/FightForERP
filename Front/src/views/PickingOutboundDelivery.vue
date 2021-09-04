@@ -237,6 +237,7 @@ export default {
         )
         this.$message({ message: 'Post GI成功', type: 'success' })
         this.dialogVisible = false
+        this.goToLink1()
       }
     },
     // Post GI判断日期为空，弹窗提示
