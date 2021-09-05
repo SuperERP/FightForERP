@@ -19,7 +19,7 @@
         <el-col :span="8">
 <!--      sold to party搜索功能-->
           <el-form-item label="Sold-To Party:" prop="customerId">
-            <el-input style="width:110px;" v-model.number="form.customerId">
+            <el-input style="width:110px;" v-model="form.customerId">
               <!--带搜索按钮的输入框-->
               <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
             <!-- 第一层查询 -->
@@ -559,7 +559,7 @@ export default {
     textclick (row) { // 对应Sold-To Party
       this.Visible1 = false
       this.Visible2 = false
-      this.form.customerId = parseInt(row.id)
+      this.form.customerId = row.id
     },
     plantTextClick (row) {
       this.plantVisible = false

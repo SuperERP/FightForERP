@@ -18,8 +18,6 @@ success insert data <Warehouse()>
 'Inventory' object has no attribute 'name'
 请重新检查数据插入
 'Inventory' object has no attribute 'name'
-请重新检查数据插入
-'Inventory' object has no attribute 'name'
 success insert data <Customer(id='0001100000',name='CrazyDaff', street='SiPing',postcode='130031',country='CH',language='CN',paycode='ShangHai',distribution_channel='SD00',city='ShangHai',sregion='ShangHai',POcode='030')>
 success insert data <Customer(id='0001100001',name='CrazyDaff', street='SiPing',postcode='130031',country='CH',language='CN',paycode='ShangHai',distribution_channel='SD00',city='ShangHai',sregion='ShangHai',POcode='031')>
 success insert data <Customer(id='0001100002',name='CrazyDaff', street='SiPing',postcode='130031',country='CH',language='CN',paycode='ShangHai',distribution_channel='SD00',city='ShangHai',sregion='ShangHai',POcode='032')>

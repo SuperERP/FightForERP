@@ -29,7 +29,7 @@
                 <!-- 查询表单-->
                 <el-form :model="quotSearchForm" :rules="quotSearchFormRules" ref="quotSearchForm">
                   <el-form-item label="Sold-To Party:" prop="customerId" :label-width="formLabelWidth1">
-                    <el-input style="width: 160px;" v-model.number="quotSearchForm.customerId" size="mini">
+                    <el-input style="width: 160px;" v-model="quotSearchForm.customerId" size="mini">
                       <!--带搜索按钮的输入框-->
                       <el-button type="text" icon="el-icon-search" slot="suffix"  @click="VisibleForInquiryButton1"></el-button></el-input>
                     <!-- 第一层查询 -->
@@ -215,7 +215,7 @@
         <el-row :gutter="50" style="margin-top:10px">
           <el-col :span="8">
             <el-form-item label="Sold-To Party:" prop="customerId">
-              <el-input style="width:110px;" v-model.number="form.customerId">
+              <el-input style="width:110px;" v-model="form.customerId">
                 <!--带搜索按钮的输入框-->
                 <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
               <!-- 第一层查询 -->
@@ -1030,12 +1030,12 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.form.customerId = parseInt(row.id)
+      this.form.customerId = row.id
     },
     textclickForInquiry (row) { // ForInquiry
       this.Visible1ForInquiry = false
       this.Visible2ForInquiry = false
-      this.quotSearchForm.customerId = parseInt(row.id)
+      this.quotSearchForm.customerId = row.id
     },
     textclickGetInquiryId (row) { // 表单处理
       this.Visible6 = false

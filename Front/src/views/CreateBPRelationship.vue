@@ -360,7 +360,7 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.form.customerId = parseInt(row.id)
+      this.form.customerId = row.id
     },
     textclick1 (row) {
       this.Visible3 = false

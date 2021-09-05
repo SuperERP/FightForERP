@@ -29,7 +29,7 @@
                 <!-- 查询表单-->
                 <el-form :model="inquirySearchForm" :rules="inquirySearchFormRules" ref="inquirySearchForm">
                   <el-form-item label="Sold-To Party:" prop="customerId" :label-width="formLabelWidth1">
-                    <el-input style="width: 160px;" v-model.number="inquirySearchForm.customerId" size="mini">
+                    <el-input style="width: 160px;" v-model="inquirySearchForm.customerId" size="mini">
                       <!--带搜索按钮的输入框-->
                       <el-button type="text" icon="el-icon-search" slot="suffix"  @click="VisibleForInquiryButton1"></el-button></el-input>
                     <!-- 第一层查询 -->
@@ -210,7 +210,7 @@
         <el-row :gutter="50" style="margin-top:10px">
           <el-col :span="8">
             <el-form-item label="Sold-To Party:" prop="customerId">
-              <el-input style="width:110px;" v-model.number="form.customerId">
+              <el-input style="width:110px;" v-model="form.customerId">
                 <!--带搜索按钮的输入框-->
                 <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
               <!-- 第一层查询 -->

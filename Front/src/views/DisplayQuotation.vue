@@ -37,7 +37,7 @@
         <el-row :gutter="50">
           <el-col :span="8">
             <el-form-item label="Plant:" prop="warehouseId">
-              <el-input style="width:110px;" v-model.number="form.warehouseId" :disabled="true"></el-input>
+              <el-input style="width:110px;" v-model="form.warehouseId" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12"><el-form-item label="Req. Deliv. Date:" prop="requestedDeliveryDate">

@@ -628,7 +628,7 @@ export default {
     textclickForsalesOrder (row) { // 关于SoldToParty
       this.Visible1ForsalesOrder = false
       this.Visible2ForsalesOrder = false
-      this.salesOrderSearchForm.customerId = parseInt(row.id)
+      this.salesOrderSearchForm.customerId = row.id
       console.log(row.id)
       console.log(this.salesOrderSearchForm.customerId)
     },

@@ -55,13 +55,6 @@ inventorys=[
         'onOrderStock':0
     },
     {
-        'warehouseId':'SH00',
-        'materialDicId':'Material104',
-        'volume':500000,
-        'requestVolume':0,
-        'onOrderStock':0
-    },
-    {
         'warehouseId':'MI00',
         'materialDicId':'Material101',
         'volume':500000,

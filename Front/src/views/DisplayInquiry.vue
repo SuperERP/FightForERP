@@ -36,7 +36,7 @@
             </el-form-item></el-col></el-row>
         <!--      plant搜索框-->
         <el-form-item label="Plant:" prop="warehouseId">
-          <el-input style="width:110px;" v-model.number="form.warehouseId" :disabled="true">
+          <el-input style="width:110px;" v-model="form.warehouseId" :disabled="true">
           </el-input>
         </el-form-item>
 

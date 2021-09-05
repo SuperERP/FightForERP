@@ -65,7 +65,7 @@
         <el-form ref="customerForm" style="text-align: center" :inline="true" :rules="customerFormRules" :model="customerForm" label-width="200px" size="mini">
         <div>
             <el-form-item v-if="isCustomer" label="Customer:" prop="id">
-              <el-input v-model.number="customerForm.id">
+              <el-input v-model="customerForm.id">
                 <!--带搜索按钮的输入框-->
                 <el-button type="text" icon="el-icon-search" slot="suffix"  @click="Visible1 = true"></el-button></el-input>
               <!-- 第一层查询 -->
@@ -388,8 +388,7 @@ export default {
       // 规则
       customerFormRules: {
         id: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },
       contactPersonFormRules: {
@@ -516,7 +515,7 @@ export default {
     textclick (row) {
       this.Visible1 = false
       this.Visible2 = false
-      this.customerForm.id = parseInt(row.id)
+      this.customerForm.id = row.id
     },
     textclick1 (row) {
       this.Visible3 = false
