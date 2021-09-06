@@ -255,8 +255,7 @@ export default {
           { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         customerId: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         contactId: [
           { required: true, message: 'Please enter...', trigger: 'blur' }

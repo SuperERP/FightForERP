@@ -453,8 +453,7 @@ export default {
       // 规则
       rules: {
         customerId: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ],
         POcode: [
           { required: true, message: 'Please enter...', trigger: 'blur' },

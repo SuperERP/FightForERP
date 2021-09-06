@@ -886,14 +886,12 @@ export default {
       },
       createWithReferenceFormRules: {
         inquiryNum: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },
       inquirySearchFormRules: {
         purchaseOrderNum: [
-          { required: true, message: 'Please enter...', trigger: 'blur' },
-          { type: 'number', message: 'must be a number' }
+          { required: true, message: 'Please enter...', trigger: 'blur' }
         ]
       },
       // 客户查询对话框第一层表单的验证规则对象
